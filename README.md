@@ -1,1 +1,1 @@
-Recipedia
+Stylepalette
