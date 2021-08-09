@@ -4,20 +4,7 @@ import Button from '../components/Button/Button';
 import styled from 'styled-components';
 import axios from 'axios';
 import { serverUrl } from '../utils/constants';
-
-//Style
-const ModalContainer = styled.div`
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: fixed;
-    z-index: 10;
-    background: rgba(219, 219, 219, 0.9);
-    left: 0;
-    top: 0;
-`;
+import Modal from './Modal';
 
 const LoginWrapper = styled.div`
     width: 400px;
@@ -91,7 +78,7 @@ export default function Login() {
     };
 
     return (
-        <ModalContainer>
+        <Modal>
             <LoginWrapper>
                 <CloseButton>
                     <Button close>X</Button>
@@ -127,6 +114,6 @@ export default function Login() {
                     <Button primary>회원가입</Button>
                 </LoginFooter>
             </LoginWrapper>
-        </ModalContainer>
+        </Modal>
     );
 }
