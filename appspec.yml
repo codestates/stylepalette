@@ -5,6 +5,8 @@ files:
     destination: /home/ubuntu/stylepalette
 
 hooks:
+  BeforeInstall:
+    - location: scripts/beforeinstall.sh
   ApplicationStop:
     - location: scripts/stop.sh
       runas: root
