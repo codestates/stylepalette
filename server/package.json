@@ -39,6 +39,7 @@
     "typescript": "^4.3.5"
   },
   "devDependencies": {
-    "@types/cors": "^2.8.12"
+    "@types/cors": "^2.8.12",
+    "@types/mysql": "^2.15.19"
   }
 }
