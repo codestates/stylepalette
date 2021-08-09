@@ -20,7 +20,6 @@ function App() {
             <BrowserRouter>
                 <Switch>
                     <Route exact path="/">
-                        <Login />
                         <Text size="large" />
                         <header className="App-header">
                             <StyledText size="small">
