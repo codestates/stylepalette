@@ -1,7 +1,8 @@
-import "./App.css";
-import Text from "./components/Text/Text";
-import Button from "./components/Button/Button";
-import StyledText from "./components/Text/Text";
+import './App.css';
+
+import Text from './components/Text/Text';
+import Button from './components/Button/Button';
+import StyledText from './components/Text/Text';
 
 function App() {
   return (
