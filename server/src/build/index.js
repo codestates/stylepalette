@@ -8,7 +8,7 @@ app.use(cors());
 app.get('/', (req, res) => {
     db.default.query('use stylepalette', (err) => {
         if (err) {
-            res.send('Error');
+            res.send(err);
         } else {
             res.send('DB connected - stylepalette');
         }
