@@ -1,30 +1,29 @@
 import './App.css';
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
 
 import Text from './components/Text/Text';
 import Button from './components/Button/Button';
 import StyledText from './components/Text/Text';
+import StyledSignUp from './modals/signup';
+
+const TestButton = styled.button`
+  width: 200px;
+  height: 100px;
+`;
 
 function App() {
-  return (
-    <div className="App">
-      <Text size="large" />
-      <header className="App-header">
-        <StyledText size="small">
-          Edit <code>src/App.js</code> and save to reload.
-        </StyledText>
+  const [bModal, setModal] = useState(false);
 
-        <Button>Hello</Button>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  const openModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
+  return <div className="App"></div>;
 }
 
 export default App;
