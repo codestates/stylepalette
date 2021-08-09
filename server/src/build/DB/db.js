@@ -9,6 +9,7 @@ const connection = mysql.createConnection({
     password: process.env.DATABASE_PASSWORD,
     port: Number(process.env.DATABASE_PORT),
 });
+console.log(process.env.DATABASE_HOST);
 connection.connect((err) => {
     if (err) {
         connection.end();
