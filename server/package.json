@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node ./src/build/index.js",
-    "build": "rm -rf ./build && tsc",
+    "build": "npx tsc",
     "dev": "nodemon --config ./nodemon.json",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
