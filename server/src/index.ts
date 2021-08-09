@@ -6,9 +6,9 @@ const app = express()
 app.use(cors())
 
 app.get("/", (req, res) => {
-  res.send("Hello World");
+  res.status(200).send("Hello World");
 });
 
-app.listen(3000, () => {
-  console.log("open server http://localhost:3000")
+app.listen(80, () => {
+  console.log("open server http://localhost:80")
 })
