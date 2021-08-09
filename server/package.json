@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/codestates/recipedia.git"
+    "url": "git+https://github.com/codestates/stylepalette.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/codestates/recipedia/issues"
+    "url": "https://github.com/codestates/stylepalette/issues"
   },
-  "homepage": "https://github.com/codestates/recipedia#readme",
+  "homepage": "https://github.com/codestates/stylepalette#readme",
   "dependencies": {
     "axios": "^0.21.1",
     "cookie-parser": "^1.4.5",
