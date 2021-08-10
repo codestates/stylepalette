@@ -4,6 +4,7 @@ import Text from './components/Text/Text';
 import Button from './components/Button/Button';
 import StyledText from './components/Text/Text';
 // import Login from './modals/Login';
+import PostInfo from './modals/PostInfo';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -20,6 +21,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
+            <PostInfo />
             {/* <Login /> */}
             <Text size="large" />
             <header className="App-header">
