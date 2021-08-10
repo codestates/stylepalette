@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { PrimaryButton, SecondaryButton, DefaultButton } from "./Button.styled";
+import React from 'react';
+import styled from 'styled-components';
+import { PrimaryButton, SecondaryButton, DefaultButton } from './Button.styled';
 
 interface ButtonProps {
   primary?: string;
@@ -43,7 +43,7 @@ export const StyledButton = styled.button<ButtonProps>`
     // change opacity
   }
 
-  &::hover {
+  &:hover {
     // change color
   }
 `;
