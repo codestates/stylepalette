@@ -1,29 +1,53 @@
-import './App.css';
-import { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { createGlobalStyle } from 'styled-components';
 import Text from './components/Text/Text';
 import Button from './components/Button/Button';
 import StyledText from './components/Text/Text';
-import StyledSignUp from './modals/signup';
+import Login from './modals/Login';
 
-const TestButton = styled.button`
-  width: 200px;
-  height: 100px;
+const GlobalStyle = createGlobalStyle`
+  * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 `;
 
 function App() {
-  const [bModal, setModal] = useState(false);
+  return (
+    <>
+      <GlobalStyle />
+      <BrowserRouter>
+        <Switch>
+          <Route exact path="/">
+            <Login />
+            <Text size="large" />
+            <header className="App-header">
+              <StyledText size="small">
+                Edit <code>src/App.js</code> and save to reload.
+              </StyledText>
 
-  const openModal = () => {
-    setModal(true);
-  };
-
-  const closeModal = () => {
-    setModal(false);
-  };
-
-  return <div className="App"></div>;
+              <Button primary>Hello</Button>
+              <a
+                className="App-link"
+                href="https://reactjs.org"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Learn React
+              </a>
+            </header>
+          </Route>
+          <Route exact path="/mypage">
+            mypage
+          </Route>
+          <Route exact path="/gallery">
+            gallery
+          </Route>
+        </Switch>
+      </BrowserRouter>
+    </>
+  );
 }
 
 export default App;
