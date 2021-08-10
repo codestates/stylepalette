@@ -51,8 +51,7 @@ export const StyledButton = styled.button<ButtonProps>`
     &:disabled {
         // change opacity
     }
-
-    &::hover {
-        // change color
-    }
+  &:hover {
+    // change color
+  }
 `;
