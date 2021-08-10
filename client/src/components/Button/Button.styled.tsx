@@ -12,7 +12,7 @@ export const DefaultButton = styled.button`
     // change opacity
   }
 
-  &::hover {
+  &:hover {
     // change color
   }
 `;
