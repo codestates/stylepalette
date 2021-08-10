@@ -16,14 +16,10 @@ const LoginWrapper = styled.div`
   flex-direction: column;
 `;
 
-const CloseButton = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const LoginHeader = styled.div`
   display: flex;
   justify-content: center;
+  padding: 1em;
 `;
 
 const LoginContainer = styled.div`
@@ -90,9 +86,6 @@ export default function Login() {
   return (
     <Modal>
       <LoginWrapper>
-        <CloseButton>
-          <Button close>X</Button>
-        </CloseButton>
         <LoginHeader>로그인</LoginHeader>
         <LoginContainer>
           <InputWrapper>

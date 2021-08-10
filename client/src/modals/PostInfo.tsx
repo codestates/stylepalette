@@ -3,7 +3,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
-import Button from '../components/Button/Button';
 import { serverUrl } from '../utils/constants';
 import Modal from './Modal';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
@@ -15,11 +14,6 @@ const PostInfoWrapper = styled.div`
   border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
-`;
-
-const CloseButton = styled.div`
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const PostTitle = styled.div``;
@@ -74,10 +68,6 @@ export default function PostInfo() {
   return (
     <Modal>
       <PostInfoWrapper>
-        {/* <CloseButton>
-          <Button close>X</Button>
-        </CloseButton> */}
-
         <PostImage src={post.image} alt="post-img" />
         <LikeContainer>
           <LikeIconWrapper>

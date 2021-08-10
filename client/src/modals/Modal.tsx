@@ -1,5 +1,7 @@
 import React from 'react';
+// import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Button from '../components/Button/Button';
 
 const ModalContainer = styled.div`
   width: 100vw;
@@ -19,5 +21,12 @@ interface ModalProps {
 }
 
 export default function Modal(props: ModalProps) {
-  return <ModalContainer>{props.children}</ModalContainer>;
+  // const isModalOpen = useSelector();
+
+  return (
+    <ModalContainer>
+      <Button close>X</Button>
+      {props.children}
+    </ModalContainer>
+  );
 }
