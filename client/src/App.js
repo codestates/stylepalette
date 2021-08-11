@@ -4,6 +4,8 @@ import Text from './components/Text/Text';
 import Button from './components/Button/Button';
 import StyledText from './components/Text/Text';
 import Login from './modals/Login';
+import SignUp from './modals/SignUp';
+import PostSharing from './modals/PostSharing';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -46,6 +48,7 @@ function App() {
           </Route>
         </Switch>
       </BrowserRouter>
+      <PostSharing />
     </>
   );
 }
