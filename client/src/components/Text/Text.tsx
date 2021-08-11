@@ -1,13 +1,11 @@
-import React from 'react';
 import styled from 'styled-components';
 
 interface TextProps {
   size?: string; // small, medium, large
-  color?: string; // any CSS color
+  color: string; // any CSS color
 }
 const StyledText = styled.div<TextProps>`
   font-size: 17px; // Default font size is medium
-
   ${(props) => {
     if (props.size === 'small') {
       return `
@@ -24,8 +22,8 @@ const StyledText = styled.div<TextProps>`
         font-size: 25px;
         color: ${props.color};
     `;
-        }
-    }}
+    }
+  }}
 `;
 
 export default StyledText;

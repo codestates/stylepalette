@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import Button from '../components/Button/Button';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import axios from 'axios';
+import Button from '../components/Button/Button';
 import { serverUrl } from '../utils/constants';
 import Modal from './Modal';
+import { logIn } from '../redux/actions/action';
 
 const LoginWrapper = styled.div`
   width: 400px;
@@ -14,14 +16,10 @@ const LoginWrapper = styled.div`
   flex-direction: column;
 `;
 
-const CloseButton = styled.div`
-  display: flex;
-  justify-content: flex-end;
-`;
-
 const LoginHeader = styled.div`
   display: flex;
   justify-content: center;
+  padding: 1em;
 `;
 
 const LoginContainer = styled.div`
@@ -56,8 +54,9 @@ const LoginFooter = styled.div`
 `;
 
 export default function Login() {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const dispatch = useDispatch();
 
   const handleChangeUsername = (event: React.FormEvent<HTMLInputElement>) => {
     const str = event.currentTarget && event.currentTarget.value;
@@ -69,20 +68,24 @@ export default function Login() {
     setPassword(str);
   };
 
-  const requestSignin = async () => {
-    const result = await axios.post(`${serverUrl}/signin`, {
-      username: username,
-      password: password,
-    });
-    console.log(result);
+  const requestSignin = () => {
+    const userCredentials = {
+      username,
+      password,
+    };
+    dispatch(logIn(userCredentials));
   };
+  // const requestSignin = async () => {
+  //     const result = await axios.post(`${serverUrl}/signin`, {
+  //         username: username,
+  //         password: password,
+  //     });
+  //     console.log(result);
+  // };
 
   return (
     <Modal>
       <LoginWrapper>
-        <CloseButton>
-          <Button close>X</Button>
-        </CloseButton>
         <LoginHeader>로그인</LoginHeader>
         <LoginContainer>
           <InputWrapper>
