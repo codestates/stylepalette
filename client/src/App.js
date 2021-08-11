@@ -3,7 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import Text from './components/Text/Text';
 import Button from './components/Button/Button';
 import StyledText from './components/Text/Text';
-import Login from './modals/Login';
+// import Login from './modals/Login';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -20,7 +20,7 @@ function App() {
       <BrowserRouter>
         <Switch>
           <Route exact path="/">
-            <Login />
+            {/* <Login /> */}
             <Text size="large" />
             <header className="App-header">
               <StyledText size="small">
