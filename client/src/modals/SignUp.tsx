@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { serverUrl } from '../utils/constants';
 import Modal from './Modal';
-import { PrimaryButton, CloseButton } from '../components/Button/Button.styled';
 import Button from '../components/Button/Button';
 import axios from 'axios';
 
@@ -24,11 +23,6 @@ const SignUpContainer = styled.div`
   border: 1px solid palevioletred;
   padding: 15px;
   margin: 15px;
-`;
-
-const CloseButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const SignUpHeader = styled.div`
@@ -120,9 +114,6 @@ function SignUp() {
   return (
     <Modal>
       <SignUpWrapper>
-        <CloseButtonWrapper>
-          <Button close>X</Button>
-        </CloseButtonWrapper>
         <SignUpHeader>회원 가입</SignUpHeader>
         <SignUpContainer>
           <InputWrapper>
