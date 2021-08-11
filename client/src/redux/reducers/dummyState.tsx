@@ -19,4 +19,8 @@ export const dummyState = {
       createdAt: '2021-06-23T16:17:47.000Z',
     },
   ],
+  modal: {
+    isOpen: false,
+    type: '',
+  },
 };

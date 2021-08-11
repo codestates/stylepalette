@@ -5,7 +5,6 @@ import styled from 'styled-components';
 import axios from 'axios';
 import Button from '../components/Button/Button';
 import { serverUrl } from '../utils/constants';
-import Modal from './Modal';
 import { logIn } from '../redux/actions/action';
 
 const LoginWrapper = styled.div`
@@ -84,31 +83,29 @@ export default function Login() {
   // };
 
   return (
-    <Modal>
-      <LoginWrapper>
-        <LoginHeader>로그인</LoginHeader>
-        <LoginContainer>
-          <InputWrapper>
-            <Label>유저네임</Label>
-            <input type="text" value={username} onChange={handleChangeUsername}></input>
-          </InputWrapper>
-          <InputWrapper>
-            <Label>비밀번호</Label>
-            <input type="password" value={password} onChange={handleChangePassword}></input>
-          </InputWrapper>
-          <SocialButtonContainer>
-            <Button primary onClick={requestSignin}>
-              로그인
-            </Button>
-            <Button>카카오로그인</Button>
-            <Button>구글로그인</Button>
-          </SocialButtonContainer>
-        </LoginContainer>
-        <LoginFooter>
-          <span>아직 회원이 아니신가요?</span>
-          <Button primary>회원가입</Button>
-        </LoginFooter>
-      </LoginWrapper>
-    </Modal>
+    <LoginWrapper>
+      <LoginHeader>로그인</LoginHeader>
+      <LoginContainer>
+        <InputWrapper>
+          <Label>유저네임</Label>
+          <input type="text" value={username} onChange={handleChangeUsername}></input>
+        </InputWrapper>
+        <InputWrapper>
+          <Label>비밀번호</Label>
+          <input type="password" value={password} onChange={handleChangePassword}></input>
+        </InputWrapper>
+        <SocialButtonContainer>
+          <Button primary onClick={requestSignin}>
+            로그인
+          </Button>
+          <Button>카카오로그인</Button>
+          <Button>구글로그인</Button>
+        </SocialButtonContainer>
+      </LoginContainer>
+      <LoginFooter>
+        <span>아직 회원이 아니신가요?</span>
+        <Button primary>회원가입</Button>
+      </LoginFooter>
+    </LoginWrapper>
   );
 }
