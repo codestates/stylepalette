@@ -21,6 +21,16 @@ export const DefaultButton = styled.button`
 export const PrimaryButton = styled(DefaultButton)`
   background: palevioletred;
   color: white;
+
+&:active {
+    outline: none;
+    background-color: #f8bbd0;
+    border-color: #f8bbd0;
+  }
+
+  &:disabled {
+    opacity: 50%;
+  }
 `;
 
 export const SecondaryButton = styled(DefaultButton)`

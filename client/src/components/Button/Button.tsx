@@ -6,19 +6,37 @@ interface ButtonProps {
   primary?: boolean;
   secondary?: boolean;
   close?: boolean;
+  disabled?: boolean;
   onClick?: () => void;
   children?: any;
 }
 
 export default function Button(props: ButtonProps) {
   if (props.primary) {
-    return <PrimaryButton onClick={props.onClick}>{props.children}</PrimaryButton>;
+    return (
+      <PrimaryButton onClick={props.onClick} disabled={props.disabled}>
+        {props.children}
+      </PrimaryButton>
+    );
   } else if (props.secondary) {
-    return <SecondaryButton onClick={props.onClick}>{props.children}</SecondaryButton>;
+    return (
+      <SecondaryButton onClick={props.onClick} disabled={props.disabled}>
+        {props.children}
+      </SecondaryButton>
+    );
   } else if (props.close) {
-    return <CloseButton onClick={props.onClick}>{props.children}</CloseButton>;
+    return (
+      <CloseButton onClick={props.onClick} disabled={props.disabled}>
+        {props.children}
+      </CloseButton>
+    );
   }
-  return <DefaultButton onClick={props.onClick}>{props.children}</DefaultButton>;
+
+  return (
+    <DefaultButton onClick={props.onClick} disabled={props.disabled}>
+      {props.children}
+    </DefaultButton>
+  );
 }
 
 export const StyledButton = styled.button<ButtonProps>`
@@ -48,5 +66,10 @@ export const StyledButton = styled.button<ButtonProps>`
   }
   &:hover {
     // change color
+  }
+
+  &:active {
+    outline: none;
+    background-color: #fce4ec;
   }
 `;
