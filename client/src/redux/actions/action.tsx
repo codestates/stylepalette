@@ -7,6 +7,11 @@ interface LoginProps {
   username: string;
   password: string;
 }
+
+interface HandleModalProps {
+  isOpen: boolean;
+  type?: string;
+}
 // actions creator functions
 export const logIn = (data: LoginProps) => {
   return {
@@ -21,7 +26,7 @@ export const logOut = () => {
   };
 };
 
-export const handleModal = (data: any) => {
+export const handleModal = (data: HandleModalProps) => {
   return {
     type: HANDLE_MODAL,
     payload: data,

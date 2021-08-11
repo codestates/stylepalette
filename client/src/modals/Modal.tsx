@@ -30,7 +30,7 @@ export default function Modal(props: ModalProps) {
   const modalType = useSelector(getModalType);
 
   const handleModalClose = () => {
-    dispatch(handleModal(false));
+    dispatch(handleModal({ isOpen: false }));
   };
 
   const renderModalContentComponent = () => {

@@ -6,6 +6,7 @@ import axios from 'axios';
 import Button from '../components/Button/Button';
 import { serverUrl } from '../utils/constants';
 import { logIn } from '../redux/actions/action';
+import { handleModal } from '../redux/actions/action';
 
 const LoginWrapper = styled.div`
   width: 400px;
@@ -81,6 +82,9 @@ export default function Login() {
   //     });
   //     console.log(result);
   // };
+  const handleClickSignUp = () => {
+    dispatch(handleModal({ isOpen: true, type: 'signup' }));
+  };
 
   return (
     <LoginWrapper>
@@ -104,7 +108,9 @@ export default function Login() {
       </LoginContainer>
       <LoginFooter>
         <span>아직 회원이 아니신가요?</span>
-        <Button primary>회원가입</Button>
+        <Button primary onClick={handleClickSignUp}>
+          회원가입
+        </Button>
       </LoginFooter>
     </LoginWrapper>
   );

@@ -1,10 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
+import { useDispatch } from 'react-redux';
 import { serverUrl } from '../utils/constants';
 import Button from '../components/Button/Button';
 import axios from 'axios';
+import { handleModal } from '../redux/actions/action';
 
 const SignUpWrapper = styled.div`
   width: 400px;
@@ -70,6 +71,7 @@ function SignUp() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     enAble();
@@ -110,6 +112,9 @@ function SignUp() {
     console.log(result);
   };
 
+  const handleClickLogIn = () => {
+    dispatch(handleModal({ isOpen: true, type: 'login' }));
+  };
   return (
     <SignUpWrapper>
       <SignUpHeader>회원 가입</SignUpHeader>
@@ -168,7 +173,9 @@ function SignUp() {
       </SignUpContainer>
       <SignUpFooter>
         <span>계정이 있으신가요?</span>
-        <Button primary>로그인</Button>
+        <Button primary onClick={handleClickLogIn}>
+          로그인
+        </Button>
       </SignUpFooter>
     </SignUpWrapper>
   );
