@@ -13,9 +13,9 @@ import femalePNG from '../images/female.png';
 const GenderWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  position: fixed;
+  /* position: fixed; */
   display: flex;
-  z-index: 10;
+  /* z-index: 10; */
   background-color: white;
   flex-direction: column;
   left: 0;
