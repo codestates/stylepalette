@@ -11,11 +11,9 @@ import MalePNG from '../images/male.png';
 import femalePNG from '../images/female.png';
 
 const GenderWrapper = styled.div`
-  width: 100vw;
-  height: 100vh;
-  position: fixed;
+  width: 100%;
+  height: 100%;
   display: flex;
-  z-index: 10;
   background-color: white;
   flex-direction: column;
   left: 0;
@@ -27,11 +25,11 @@ const GenderContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 15px;
-  margin: 15px;
 `;
 
-const GenderHeader = styled.div``;
+const ContentWrapper = styled.div`
+  padding: 50px;
+`;
 
 const GenderContent = styled.h1`
   display: flex;
@@ -43,10 +41,6 @@ const GenderContent = styled.h1`
 const PhotoContent = styled.h2`
   text-align: center;
   font-size: 2.5rem;
-`;
-
-const ContentWrapper = styled.div`
-  padding: 50px;
 `;
 
 const GenderFooter = styled.div`
@@ -151,7 +145,7 @@ function GenderSelect() {
 
   return (
     <GenderWrapper>
-      <GenderHeader></GenderHeader>
+      {/* <Header /> */}
       <GenderContainer>
         <ContentWrapper>
           <GenderContent>안녕하세요</GenderContent>

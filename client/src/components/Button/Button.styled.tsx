@@ -14,7 +14,7 @@ export const DefaultButton = styled.button`
 
   &:hover {
     // change color
-    color: white;
+    /* color: #dbdbdb; */
   }
 `;
 
@@ -22,7 +22,7 @@ export const PrimaryButton = styled(DefaultButton)`
   background: palevioletred;
   color: white;
 
-&:active {
+  &:active {
     outline: none;
     background-color: #f8bbd0;
     border-color: #f8bbd0;

@@ -6,6 +6,7 @@ import StyledText from './components/Text/Text';
 import Header from './components/Header/Header';
 
 import GenderSelect from './pages/GenderSelect';
+import MyPage from './pages/MyPage';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -39,8 +40,11 @@ function App() {
               </a>
             </header>
           </Route>
+          <Route exact path="/genderselect">
+            <GenderSelect />
+          </Route>
           <Route exact path="/mypage">
-            mypage
+            <MyPage />
           </Route>
           <Route exact path="/gallery">
             gallery
