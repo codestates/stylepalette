@@ -3,6 +3,7 @@ import { createGlobalStyle } from 'styled-components';
 import Text from './components/Text/Text';
 import Button from './components/Button/Button';
 import StyledText from './components/Text/Text';
+import Header from './components/Header/Header';
 
 import GenderSelect from './pages/GenderSelect';
 
@@ -19,6 +20,7 @@ function App() {
     <>
       <GlobalStyle />
       <BrowserRouter>
+        <Header />
         <Switch>
           <Route exact path="/">
             <Text size="large" />
@@ -45,7 +47,6 @@ function App() {
           </Route>
         </Switch>
       </BrowserRouter>
-      <GenderSelect />
     </>
   );
 }
