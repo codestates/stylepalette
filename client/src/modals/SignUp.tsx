@@ -1,12 +1,11 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
+import { useDispatch } from 'react-redux';
 import { serverUrl } from '../utils/constants';
-import Modal from './Modal';
-import { PrimaryButton, CloseButton } from '../components/Button/Button.styled';
 import Button from '../components/Button/Button';
 import axios from 'axios';
+import { handleModal } from '../redux/actions/action';
 
 const SignUpWrapper = styled.div`
   width: 400px;
@@ -24,11 +23,6 @@ const SignUpContainer = styled.div`
   border: 1px solid palevioletred;
   padding: 15px;
   margin: 15px;
-`;
-
-const CloseButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const SignUpHeader = styled.div`
@@ -77,6 +71,7 @@ function SignUp() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     enAble();
@@ -117,72 +112,72 @@ function SignUp() {
     console.log(result);
   };
 
+  const handleClickLogIn = () => {
+    dispatch(handleModal({ isOpen: true, type: 'login' }));
+  };
   return (
-    <Modal>
-      <SignUpWrapper>
-        <CloseButtonWrapper>
-          <Button close>X</Button>
-        </CloseButtonWrapper>
-        <SignUpHeader>회원 가입</SignUpHeader>
-        <SignUpContainer>
-          <InputWrapper>
-            <SignUpInput
-              type="text"
-              name="이름"
-              placeholder="성명"
-              autoComplete="off"
-              value={name}
-              onChange={handleChangeName}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <SignUpInput
-              type="text"
-              name="이메일"
-              placeholder="이메일"
-              autoComplete="off"
-              value={email}
-              onChange={handleChangeEmail}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <SignUpInput
-              type="text"
-              name="아이디"
-              placeholder="아이디"
-              autoComplete="off"
-              value={username}
-              onChange={handleChangeUsername}
-            />
-          </InputWrapper>
-          <InputWrapper>
-            <SignUpInput
-              type="password"
-              name="비밀번호"
-              placeholder="비밀번호"
-              autoComplete="off"
-              value={password}
-              onChange={handleChangePassword}
-            />
-          </InputWrapper>
-          <ButtonContainer>
-            {disabled ? (
-              <Button primary onClick={requestSignup}>
-                회원가입
-              </Button>
-            ) : (
-              <Button primary disabled>
-                회원가입
-              </Button>
-            )}
-          </ButtonContainer>
-        </SignUpContainer>
-        <SignUpFooter>
-          <span>계정이 있으신가요?</span>
-          <Button primary>로그인</Button>
-        </SignUpFooter>
-      </SignUpWrapper>
-    </Modal>
+    <SignUpWrapper>
+      <SignUpHeader>회원 가입</SignUpHeader>
+      <SignUpContainer>
+        <InputWrapper>
+          <SignUpInput
+            type="text"
+            name="이름"
+            placeholder="성명"
+            autoComplete="off"
+            value={name}
+            onChange={handleChangeName}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <SignUpInput
+            type="text"
+            name="이메일"
+            placeholder="이메일"
+            autoComplete="off"
+            value={email}
+            onChange={handleChangeEmail}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <SignUpInput
+            type="text"
+            name="아이디"
+            placeholder="아이디"
+            autoComplete="off"
+            value={username}
+            onChange={handleChangeUsername}
+          />
+        </InputWrapper>
+        <InputWrapper>
+          <SignUpInput
+            type="password"
+            name="비밀번호"
+            placeholder="비밀번호"
+            autoComplete="off"
+            value={password}
+            onChange={handleChangePassword}
+          />
+        </InputWrapper>
+        <ButtonContainer>
+          {disabled ? (
+            <Button primary onClick={requestSignup}>
+              회원가입
+            </Button>
+          ) : (
+            <Button primary disabled>
+              회원가입
+            </Button>
+          )}
+        </ButtonContainer>
+      </SignUpContainer>
+      <SignUpFooter>
+        <span>계정이 있으신가요?</span>
+        <Button primary onClick={handleClickLogIn}>
+          로그인
+        </Button>
+      </SignUpFooter>
+    </SignUpWrapper>
   );
 }
 

@@ -6,4 +6,8 @@ export const initialState = {
     userimage: '',
   },
   posts: [],
+  modal: {
+    isOpen: false,
+    type: '',
+  },
 };
