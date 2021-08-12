@@ -5,6 +5,8 @@ import Button from './components/Button/Button';
 import StyledText from './components/Text/Text';
 import Header from './components/Header/Header';
 
+import GenderSelect from './pages/GenderSelect';
+
 const GlobalStyle = createGlobalStyle`
   * {
   box-sizing: border-box;
@@ -26,7 +28,6 @@ function App() {
               <StyledText size="small">
                 Edit <code>src/App.js</code> and save to reload.
               </StyledText>
-
               <Button primary>Hello</Button>
               <a
                 className="App-link"
