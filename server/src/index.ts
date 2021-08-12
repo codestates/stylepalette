@@ -1,23 +1,42 @@
-import express = require("express")
-import cors = require("cors")
-import db = require("./DB/db")
-import dotenv = require("dotenv")
+import express from "express";
+import cors from "cors";
+import dotenv from "dotenv";
+import {sequelize} from "./models"
+
 dotenv.config()
+ 
+import router from "./router";
 
 const app = express()
 
 app.use(cors())
+app.use(express.json());
+app.use(express.urlencoded({extended: false}))
 
-app.get("/", (req, res) => {
-  db.default.query("use stylepalette", (err)=>{
-    if(err) {
-      res.send(`${err}, ${process.env.DATABASE_HOST}`)
-    } else {
-      res.send("DB connected - stylepalette")
-    }
+app.use(router)
+
+app.get("/", async (req, res) => {
+  await sequelize.authenticate()
+  .then(async () => {
+    res.send("connection success with DB")
+  })
+  .catch((e) => {
+    res.send("Error : " + e)
   })
 });
 
-app.listen(80, () => {
-  console.log("open server http://localhost:80")
+app.listen(3000, async () => {
+  console.log("open server http://localhost:3000")
+
+  await sequelize.authenticate()
+  .then(async () => {
+    console.log("connection success with DB")
+  })
+  .catch((e) => {
+    console.log("Error : " + e)
+  })
+ 
 })
+
+
+
