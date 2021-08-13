@@ -12,6 +12,7 @@ interface HandleModalProps {
   isOpen: boolean;
   type?: string;
 }
+
 // actions creator functions
 export const logIn = (data: LoginProps) => {
   return {

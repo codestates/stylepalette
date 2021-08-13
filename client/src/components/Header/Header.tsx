@@ -18,6 +18,8 @@ const HeaderWrapper = styled.div`
   position: sticky;
   top: 0;
   border-bottom: solid 1px #dbdbdb;
+  z-index: 10;
+  opacity: 90%;
 `;
 const LogoWrapper = styled.span`
   padding-left: 1em;
@@ -28,6 +30,26 @@ const NavWrapper = styled.div`
   align-items: center;
   @media (max-width: 767px) {
     display: none;
+  }
+`;
+
+const LinkedLoGo = styled(Link)`
+  text-decoration: none;
+  color: #666666;
+  font-size: 2rem;
+
+  &:hover {
+    opacity: 70%;
+  }
+`;
+
+const Linked = styled(Link)`
+  text-decoration: none;
+  color: #666666;
+  font-size: 1.15rem;
+
+  &:hover {
+    opacity: 70%;
   }
 `;
 
@@ -69,26 +91,26 @@ export default function Header() {
     <>
       <HeaderWrapper>
         <LogoWrapper>
-          <Link to="/">StylePalette</Link>
+          <LinkedLoGo to="/">StylePalette</LinkedLoGo>
         </LogoWrapper>
         <NavWrapper>
           {isLoggedIn ? (
             <>
-              <Link to="/mypage">
+              <Linked to="/mypage">
                 <NavIcon>마이페이지</NavIcon>
-              </Link>
-              <Link to="/gallery">
+              </Linked>
+              <Linked to="/gallery">
                 <NavIcon>갤러리</NavIcon>
-              </Link>
-
+              </Linked>
               <NavIcon onClick={handleClickLogOut}>
-                <Link to="/">로그아웃</Link>
+                <Linked to="/">로그아웃</Linked>
               </NavIcon>
-
-              <Link to="/genderselect">
+              <Linked to="/genderselect">
                 <NavIcon>성별선택</NavIcon>
-              </Link>
-
+              </Linked>
+              <Linked to="/otheruserpage">
+                <NavIcon>다른유저페이지</NavIcon>
+              </Linked>
             </>
           ) : (
             <>

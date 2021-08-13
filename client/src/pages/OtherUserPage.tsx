@@ -3,12 +3,11 @@ import { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
-import { handleModal } from '../redux/actions/action';
 import ProfilePhoto from '../images/TestPhoto.jpg';
-import { PrimaryButton } from '../components/Button/Button.styled';
+import { handleModal } from '../redux/actions/action';
 import Photo from '../dummyData/dummyPhoto';
 
-const MyPageWrapper = styled.div`
+const OtherUserPageWrapper = styled.div`
   width: 100%;
   height: 100vw;
   display: flex;
@@ -18,7 +17,7 @@ const MyPageWrapper = styled.div`
   top: 0;
 `;
 
-const MyPageContainer = styled.div`
+const OtherUserPageContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -26,14 +25,14 @@ const MyPageContainer = styled.div`
   margin: 15px;
 `;
 
-const MyPageFooter = styled.div`
+const OtherUserPageFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 10px 0;
 `;
 
-const UserInfoContainer = styled.div`
+const OtherUserInfoContainer = styled.div`
   display: flex;
   padding: 0 15px 15px 15px;
   margin: 0 15px 15px 15px;
@@ -43,18 +42,18 @@ const UserInfoContainer = styled.div`
   border-color: #dbdbdb;
 `;
 
-const UserPhotoWrapper = styled.div`
+const OtherUserPhotoWrapper = styled.div`
   padding: 50px;
 `;
 
-const UserInfoWrapper = styled.div`
+const OtherUserInfoWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 50px 30px;
 `;
 
-const UserPostWrapper = styled.div`
+const OtherUserPostWrapper = styled.div`
   display: inline-block;
   width: 95%;
   text-align: left;
@@ -89,18 +88,12 @@ const UserPhoto = styled.img`
   border-radius: 90px;
 `;
 
-const UserInfoContent = styled.span`
+const OtherUserInfoContent = styled.span`
   padding: 10px;
   font-size: 34px;
 `;
 
-const UserEditButton = styled(PrimaryButton)`
-  width: 150px;
-  height: 50px;
-  padding: 10px;
-`;
-
-function MyPage() {
+function OtherUserPage() {
   const dispatch = useDispatch();
 
   const handleClickPostInfo = (event: React.MouseEvent) => {
@@ -108,18 +101,17 @@ function MyPage() {
   };
 
   return (
-    <MyPageWrapper>
-      <MyPageContainer>
-        <UserInfoContainer>
-          <UserPhotoWrapper>
+    <OtherUserPageWrapper>
+      <OtherUserPageContainer>
+        <OtherUserInfoContainer>
+          <OtherUserPhotoWrapper>
             <UserPhoto src={ProfilePhoto} />
-          </UserPhotoWrapper>
-          <UserInfoWrapper>
-            <UserInfoContent>전지호</UserInfoContent> <br />
-            <UserEditButton>정보 수정</UserEditButton>
-          </UserInfoWrapper>
-        </UserInfoContainer>
-        <UserPostWrapper>
+          </OtherUserPhotoWrapper>
+          <OtherUserInfoWrapper>
+            <OtherUserInfoContent>전지호</OtherUserInfoContent> <br />
+          </OtherUserInfoWrapper>
+        </OtherUserInfoContainer>
+        <OtherUserPostWrapper>
           {Photo.map((el, idx) => {
             return (
               <NavIcon onClick={handleClickPostInfo}>
@@ -127,11 +119,11 @@ function MyPage() {
               </NavIcon>
             );
           })}
-        </UserPostWrapper>
-      </MyPageContainer>
-      <MyPageFooter></MyPageFooter>
-    </MyPageWrapper>
+        </OtherUserPostWrapper>
+      </OtherUserPageContainer>
+      <OtherUserPageFooter></OtherUserPageFooter>
+    </OtherUserPageWrapper>
   );
 }
 
-export default MyPage;
+export default OtherUserPage;

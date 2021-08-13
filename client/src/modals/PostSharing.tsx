@@ -89,37 +89,35 @@ function PostSharing() {
   };
 
   return (
-    <Modal>
-      <PostWrapper>
-        <CloseButtonWrapper>
-          <Button close>X</Button>
-        </CloseButtonWrapper>
-        <PostHeader>게시물 공유</PostHeader>
-        <PostContainer>
-          <InputWrapper>
-            <PostInput
-              type="text"
-              name="게시물 제목"
-              placeholder="게시물 제목을 입력해주세요"
-              autoComplete="off"
-              value={postTitle}
-              onChange={handleChangePostName}
-            ></PostInput>
-          </InputWrapper>
-          <InputWrapper>
-            <PostImage src={img} />
-          </InputWrapper>
-        </PostContainer>
-        <PostFooter>
-          <Button primary onClick={() => requestSignup(true)}>
-            공유하기
-          </Button>
-          <Button primary onClick={() => requestSignup(false)}>
-            저장하기
-          </Button>
-        </PostFooter>
-      </PostWrapper>
-    </Modal>
+    <PostWrapper>
+      <CloseButtonWrapper>
+        <Button close>X</Button>
+      </CloseButtonWrapper>
+      <PostHeader>게시물 공유</PostHeader>
+      <PostContainer>
+        <InputWrapper>
+          <PostInput
+            type="text"
+            name="게시물 제목"
+            placeholder="게시물 제목을 입력해주세요"
+            autoComplete="off"
+            value={postTitle}
+            onChange={handleChangePostName}
+          ></PostInput>
+        </InputWrapper>
+        <InputWrapper>
+          <PostImage src={img} />
+        </InputWrapper>
+      </PostContainer>
+      <PostFooter>
+        <Button primary onClick={() => requestSignup(true)}>
+          공유하기
+        </Button>
+        <Button primary onClick={() => requestSignup(false)}>
+          저장하기
+        </Button>
+      </PostFooter>
+    </PostWrapper>
   );
 }
 
