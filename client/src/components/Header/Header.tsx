@@ -80,9 +80,15 @@ export default function Header() {
               <Link to="/gallery">
                 <NavIcon>갤러리</NavIcon>
               </Link>
+
               <NavIcon onClick={handleClickLogOut}>
                 <Link to="/">로그아웃</Link>
               </NavIcon>
+
+              <Link to="/genderselect">
+                <NavIcon>성별선택</NavIcon>
+              </Link>
+
             </>
           ) : (
             <>

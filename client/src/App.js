@@ -6,6 +6,7 @@ import StyledText from './components/Text/Text';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import GenderSelect from './pages/GenderSelect';
+import MyPage from './pages/MyPage';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -26,9 +27,11 @@ function App() {
             {/* TODO: Add landing page once completed */}
             Landing Page
           </Route>
+          <Route exact path="/genderselect">
+            <GenderSelect />
+          </Route>
           <Route exact path="/mypage">
-            {/* TODO: Add mypage once completed*/}
-            Mypage
+            <MyPage />
           </Route>
           <Route exact path="/gallery">
             {/* TODO: Add gallery once completed */}
