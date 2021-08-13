@@ -7,6 +7,7 @@ import Login from './Login';
 import SignUp from './SignUp';
 import { getModalType } from '../redux/selectors';
 import PostInfo from './PostInfo';
+import Menu from './Menu';
 
 const ModalContainer = styled.div`
   width: 100vw;
@@ -40,6 +41,8 @@ export default function Modal(props: ModalProps) {
       return <SignUp />;
     } else if (modalType === 'postInfo') {
       return <PostInfo />;
+    } else if (modalType === 'menu') {
+      return <Menu />;
     }
   };
 

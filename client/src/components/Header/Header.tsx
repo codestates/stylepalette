@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import { getIsLoggedIn, getIsModalOpen } from '../../redux/selectors';
 import { handleModal, logOut } from '../../redux/actions/action';
 import Modal from '../../modals/Modal';
+import { ReactComponent as MenuIcon } from '../../images/menu.svg';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -25,8 +26,17 @@ const LogoWrapper = styled.span`
 const NavWrapper = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
+const NavMobile = styled.span`
+  @media (min-width: 768px) {
+    display: none;
+  }
+  padding-right: 1em;
+`;
 const NavIcon = styled.span`
   padding-right: 1em;
 `;
@@ -50,6 +60,11 @@ export default function Header() {
     dispatch(logOut());
   };
 
+  const handleClickMenuIcon = (event: React.MouseEvent) => {
+    console.log('HANDLE CLICK');
+    dispatch(handleModal({ isOpen: true, type: 'menu' }));
+  };
+
   return (
     <>
       <HeaderWrapper>
@@ -62,13 +77,18 @@ export default function Header() {
               <Link to="/mypage">
                 <NavIcon>마이페이지</NavIcon>
               </Link>
-              <NavIcon onClick={handleClickLogOut}>로그아웃</NavIcon>
               <Link to="/gallery">
                 <NavIcon>갤러리</NavIcon>
               </Link>
+
+              <NavIcon onClick={handleClickLogOut}>
+                <Link to="/">로그아웃</Link>
+              </NavIcon>
+
               <Link to="/genderselect">
                 <NavIcon>성별선택</NavIcon>
               </Link>
+
             </>
           ) : (
             <>
@@ -77,6 +97,9 @@ export default function Header() {
             </>
           )}
         </NavWrapper>
+        <NavMobile onClick={handleClickMenuIcon}>
+          <MenuIcon />
+        </NavMobile>
       </HeaderWrapper>
       {isModalOpen && <Modal />}
     </>
