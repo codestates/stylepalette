@@ -1,14 +1,15 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-
+import { useDispatch } from 'react-redux';
 import ProfilePhoto from '../images/TestPhoto.jpg';
 import { PrimaryButton } from '../components/Button/Button.styled';
 import Photo from '../dummyData/dummyPhoto';
+import { handleModal } from '../redux/actions/action';
 
 const MyPageWrapper = styled.div`
   width: 100%;
-  height: 100vw;
+  /* height: 100vw; */
   display: flex;
   background-color: white;
   flex-direction: column;
@@ -84,6 +85,11 @@ const UserEditButton = styled(PrimaryButton)`
 `;
 
 function MyPage() {
+  const dispatch = useDispatch();
+
+  const handleClickProfileEditButton = () => {
+    dispatch(handleModal({ isOpen: true, type: 'profileEdit' }));
+  };
   return (
     <MyPageWrapper>
       <MyPageContainer>
@@ -93,7 +99,7 @@ function MyPage() {
           </UserPhotoWrapper>
           <UserInfoWrapper>
             <UserInfoContent>전지호</UserInfoContent> <br />
-            <UserEditButton>정보 수정</UserEditButton>
+            <UserEditButton onClick={handleClickProfileEditButton}>정보 수정</UserEditButton>
           </UserInfoWrapper>
         </UserInfoContainer>
         <UserPostWrapper>

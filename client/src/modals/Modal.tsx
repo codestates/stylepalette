@@ -8,6 +8,7 @@ import SignUp from './SignUp';
 import { getModalType } from '../redux/selectors';
 import PostInfo from './PostInfo';
 import Menu from './Menu';
+import ProfileEdit from './ProfileEdit';
 
 const ModalContainer = styled.div`
   width: 100vw;
@@ -43,6 +44,8 @@ export default function Modal(props: ModalProps) {
       return <PostInfo />;
     } else if (modalType === 'menu') {
       return <Menu />;
+    } else if (modalType === `profileEdit`) {
+      return <ProfileEdit />;
     }
   };
 

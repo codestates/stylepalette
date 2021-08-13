@@ -1,10 +1,10 @@
 export const dummyState = {
   user: {
     userid: 1,
-    username: 'kimcoding',
+    username: 'kcoding',
+    realname: 'kimcoding',
     email: 'kimcoding@gmail.com',
-    userimage:
-      'http://thumbnail.10x10.co.kr/webimage/image/basic600/349/B003499095-1.jpg?cmd=thumb&w=400&h=400&fit=true&ws=false',
+    userimage: 'https://pbs.twimg.com/profile_images/970625933160857601/R8RSJs1w.jpg',
   },
   posts: [
     {

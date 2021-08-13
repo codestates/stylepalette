@@ -11,7 +11,6 @@ const FooterContainer = styled.div`
   width: 100%;
   height: 5rem;
   bottom: 0;
-  position: fixed;
 `;
 
 const LogoWrapper = styled.span`
