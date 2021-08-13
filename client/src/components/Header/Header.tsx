@@ -66,6 +66,9 @@ export default function Header() {
               <Link to="/gallery">
                 <NavIcon>갤러리</NavIcon>
               </Link>
+              <Link to="/genderselect">
+                <NavIcon>성별선택</NavIcon>
+              </Link>
             </>
           ) : (
             <>
