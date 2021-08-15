@@ -44,6 +44,10 @@ const OtherUserInfoContainer = styled.div`
 
 const OtherUserPhotoWrapper = styled.div`
   padding: 50px;
+
+  @media (max-width: 768px) {
+    padding: 50px 50px 50px 125px;
+  }
 `;
 
 const OtherUserInfoWrapper = styled.div`
@@ -67,6 +71,12 @@ const NavIcon = styled.button`
   height: 300px;
   background-color: white;
   border-style: none;
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 200px;
+    margin: 0 60px 60px 60px;
+  }
 `;
 
 const PostPhoto = styled.img`
@@ -80,6 +90,11 @@ const PostPhoto = styled.img`
     opacity: 80%;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 200px;
+  }
 `;
 
 const UserPhoto = styled.img`
@@ -91,6 +106,10 @@ const UserPhoto = styled.img`
 const OtherUserInfoContent = styled.span`
   padding: 10px;
   font-size: 34px;
+
+  @media (max-width: 768px) {
+    font-size: 34px;
+  }
 `;
 
 function OtherUserPage() {

@@ -1,10 +1,9 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import { handleModal } from '../redux/actions/action';
-import Button from '../components/Button/Button';
 
 import { serverUrl } from '../utils/constants';
 import axios from 'axios';
@@ -53,6 +52,10 @@ const ColorList = styled.li`
     opacity: 80%;
     background-color: #c79a00;
   }
+
+  &:active {
+    background-color: #c79a00;
+  }
 `;
 
 const GalleryContainer = styled.div`
@@ -74,6 +77,12 @@ const NavIcon = styled.button`
   height: 300px;
   background-color: white;
   border-style: none;
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 200px;
+    margin: 0 50px 50px 50px;
+  }
 `;
 
 const PostPhoto = styled.img`
@@ -87,6 +96,11 @@ const PostPhoto = styled.img`
     opacity: 80%;
     cursor: pointer;
   }
+
+  @media (max-width: 768px) {
+    width: 200px;
+    height: 200px;
+  }
 `;
 
 function Gallery() {
@@ -96,10 +110,6 @@ function Gallery() {
   const handleClickPostInfo = (event: React.MouseEvent) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
   };
-
-  useEffect(() => {
-    console.log('colorData:', colorData);
-  }, [colorData]);
 
   const handleGetCategory = (value?: string) => {
     switch (value) {
