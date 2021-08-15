@@ -16,7 +16,14 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
   if (foundUser) {
     const accessToken = signing.getToken(foundUser)
     if (accessToken) {
-      res.cookie("jwt", accessToken, {}).status(200).send({ message : "Successed Sign in"})
+      res.cookie("jwt", accessToken, {
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        domain: "https://localhost:3000",
+        path: "/",
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none'
+      }).status(200).send({ message : "Successed Sign in"})
     } else {
       res.status(400).send({ message : "Failed Sign in, No Token"})
     }
