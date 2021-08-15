@@ -14,6 +14,9 @@ export class User extends Model {
   password!: string
 
   @Column
+  salt!: string
+
+  @Column
   email!: string
 
   @Column

@@ -9,7 +9,9 @@ const roulette = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const recommend = async (req: Request, res: Response, next: NextFunction) => {
-
+  let colors = await color.recommend(req.body.selectedcolor);
+  console.log(colors)
+  res.status(200).send(colors)
 
 };
 

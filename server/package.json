@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./src/build/index.js",
     "build": "npx tsc",
-    "dev": "nodemon --config ./nodemon.json",
+    "dev": "sudo npx nodemon ./src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -42,6 +42,7 @@
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
+    "@types/jsonwebtoken": "^8.5.4",
     "@types/mysql": "^2.15.19",
     "@types/node": "^16.4.13",
     "@types/validator": "^13.6.3"
