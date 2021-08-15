@@ -18,7 +18,7 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
     if (accessToken) {
       res.cookie("jwt", accessToken, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        domain: "https://localhost:3000",
+        domain: "https://api.stylepalette.net",
         path: "/",
         secure: true,
         httpOnly: true,
