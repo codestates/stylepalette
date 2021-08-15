@@ -7,6 +7,7 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import GenderSelect from './pages/GenderSelect';
 import MyPage from './pages/MyPage';
+import Result from './pages/Result';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -39,6 +40,7 @@ function App() {
           </Route>
         </Switch>
         {/* <GenderSelect /> */}
+        <Result />
         <Footer />
       </BrowserRouter>
     </>

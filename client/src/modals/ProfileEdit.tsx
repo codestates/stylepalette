@@ -1,9 +1,11 @@
 import React from 'react';
+import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
 import { getUser } from '../redux/selectors';
-import { handleModal } from '../redux/actions/action';
+import { handleModal, profileEdit } from '../redux/actions/action';
+import { UserState } from '../redux/reducers/initialState';
 
 const ProfileEditWrapper = styled.div`
   width: 400px;
@@ -70,8 +72,36 @@ const SubmitButtonWrapper = styled.div`
 `;
 
 export default function ProfileEdit() {
-  const user = useSelector(getUser);
+  const user: UserState = useSelector(getUser);
   const dispatch = useDispatch();
+  const { realname, username, email, userimage } = user;
+  const [newUserName, setNewUserName] = useState<string>(username);
+  const [newRealName, setNewRealName] = useState<string>(realname);
+  const [newEmail, setNewEmail] = useState<string>(email);
+
+  const submitNewUserCredentials = () => {
+    const userCredentials = {
+      realname: newRealName,
+      username: newUserName,
+      email: newEmail,
+    };
+    dispatch(profileEdit(userCredentials));
+  };
+
+  const handleRealNameChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const str = event.currentTarget && event.currentTarget.value;
+    setNewRealName(str);
+  };
+
+  const handleUserNameChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const str = event.currentTarget && event.currentTarget.value;
+    setNewUserName(str);
+  };
+
+  const handleEmailChange = (event: React.FormEvent<HTMLInputElement>) => {
+    const str = event.currentTarget && event.currentTarget.value;
+    setNewEmail(str);
+  };
 
   const handleClickPasswordChange = () => {
     dispatch(handleModal({ isOpen: true, type: 'passwordChange' }));
@@ -81,7 +111,7 @@ export default function ProfileEdit() {
     <ProfileEditWrapper>
       <ProfileEditHeader>
         <div>회원 정보 수정</div>
-        <ProfilePhoto src={user.userimage} alt="user-profile-pic"></ProfilePhoto>
+        <ProfilePhoto src={userimage} alt="user-profile-pic"></ProfilePhoto>
         <Button>프로필 사진 수정</Button>
       </ProfileEditHeader>
       <InputOuterWrapper>
@@ -91,13 +121,15 @@ export default function ProfileEdit() {
           <Label>이메일</Label>
         </LabelContainer>
         <InputWrapper>
-          <Input type="text" value={user.realname}></Input>
-          <Input type="text" value={user.username}></Input>
-          <Input type="text" value={user.email}></Input>
+          <Input type="text" value={newRealName} onChange={handleRealNameChange}></Input>
+          <Input type="text" value={newUserName} onChange={handleUserNameChange}></Input>
+          <Input type="text" value={newEmail} onChange={handleEmailChange}></Input>
         </InputWrapper>
       </InputOuterWrapper>
       <SubmitButtonWrapper>
-        <Button primary>정보 수정 완료</Button>
+        <Button primary onClick={submitNewUserCredentials}>
+          정보 수정 완료
+        </Button>
         <Button onClick={handleClickPasswordChange}>비밀 번호 변경</Button>
       </SubmitButtonWrapper>
     </ProfileEditWrapper>

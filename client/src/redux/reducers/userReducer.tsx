@@ -1,8 +1,11 @@
-import { LOG_IN, LOG_OUT } from '../actions/action';
-import { initialState } from './initialState';
+import { LOG_IN, LOG_OUT, PROFILE_EDIT } from '../actions/action';
+import { initialState, UserState } from './initialState';
 import { dummyState } from './dummyState';
 
-const userReducer = (state = dummyState.user, action: { type: string; payload: any }) => {
+const userReducer = (
+  state: UserState = dummyState.user,
+  action: { type: string; payload: any },
+) => {
   switch (action.type) {
     case LOG_IN:
       // operation to update state
@@ -18,6 +21,16 @@ const userReducer = (state = dummyState.user, action: { type: string; payload: a
         userimage: '',
       });
       return newState;
+
+    case PROFILE_EDIT:
+      const { realname, username, email } = action.payload;
+      const newProfileState = Object.assign({}, state, {
+        realname,
+        username,
+        email,
+      });
+      return newProfileState;
+
     default:
       return state;
   }
