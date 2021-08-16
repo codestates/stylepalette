@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { serverUrl } from '../utils/constants';
 
 import Button from '../components/Button/Button';
-import axios from 'axios';
+import { signup } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 
 const SignUpWrapper = styled.div`
@@ -103,14 +103,14 @@ function SignUp() {
   }
 
   const requestSignup = async () => {
-    const result = await axios.post(`${serverUrl}/signin`, {
-      name: name,
-      username: username,
-      email: email,
-      password: password,
-    });
+    const result = {
+      name,
+      email,
+      username,
+      password,
+    };
 
-    console.log(result);
+    dispatch(signup(result));
   };
 
   const handleClickLogIn = () => {

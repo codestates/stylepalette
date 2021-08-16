@@ -29,6 +29,10 @@ const GenderContainer = styled.div`
 
 const ContentWrapper = styled.div`
   padding: 50px;
+
+  @media (max-width: 768px) {
+    padding: 50px 50px 30px 50px;
+  }
 `;
 
 const GenderContent = styled.h1`
@@ -60,12 +64,21 @@ const PhotoContainer = styled.div`
 
 const PhotoWrapper = styled.div`
   padding: 30px 225px;
+
+  @media (max-width: 768px) {
+    padding: 30px 80px;
+  }
 `;
 
 const GenderPhoto = styled.img`
   width: 350px;
   height: 350px;
   margin: 10px 0 30px;
+
+  @media (max-width: 768px) {
+    width: 250px;
+    height: 250px;
+  }
 `;
 
 const PhotoButton = styled.button`
@@ -83,6 +96,11 @@ const PhotoButton = styled.button`
   &:focus {
     background-color: #dedede;
   }
+
+  @media (max-width: 768px) {
+    width: 250px;
+    height: 280px;
+  }
 `;
 
 const NextButtonWrapper = styled.div`
@@ -90,6 +108,11 @@ const NextButtonWrapper = styled.div`
   justify-content: flex-end;
   width: 100vw;
   align-items: center;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 30px;
+  }
 `;
 
 const NextButton = styled.button`
@@ -117,10 +140,51 @@ const NextButton = styled.button`
       margin: 10px 130px 10px 100px;
     }
   }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const NextIcons = styled(ArrowLongRight)`
   color: #222222;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const SelectButton = styled.button`
+  display: none;
+  width: 150px;
+  height: 80px;
+  border: none;
+  text-align: center;
+  background-color: white;
+  font-size: 20px;
+
+  &:disabled {
+    opacity: 70%;
+  }
+
+  &:hover {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dbdbdb;
+    border-radius: 45px;
+  }
+
+  &:focus {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dbdbdb;
+    border-radius: 45px;
+    background-color: #efefef;
+  }
+
+  @media (max-width: 768px) {
+    display: inline;
+  }
 `;
 
 function GenderSelect() {
@@ -174,6 +238,11 @@ function GenderSelect() {
             <NextButton disabled>
               <NextIcons size="100"></NextIcons>
             </NextButton>
+          )}
+          {disabled ? (
+            <SelectButton>선택 완료</SelectButton>
+          ) : (
+            <SelectButton disabled>선택 완료</SelectButton>
           )}
         </NextButtonWrapper>
       </GenderContainer>

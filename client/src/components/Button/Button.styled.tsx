@@ -15,12 +15,19 @@ export const DefaultButton = styled.button`
   &:hover {
     // change color
     /* color: #dbdbdb; */
+    cursor: pointer;
+    opacity: 90%;
   }
 `;
 
 export const PrimaryButton = styled(DefaultButton)`
   background: palevioletred;
   color: white;
+
+  &:hover {
+    cursor: pointer;
+    opacity: 90%;
+  }
 
   &:active {
     outline: none;
@@ -36,14 +43,22 @@ export const PrimaryButton = styled(DefaultButton)`
 export const SecondaryButton = styled(DefaultButton)`
   background: skyblue;
   color: black;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
 
 export const CloseButton = styled(DefaultButton)`
   border: none;
-  padding: 0.25em;
-  margin: 5px;
+  padding: 1em;
+  margin: 20px;
   right: 0;
   top: 0;
   position: absolute;
   font-size: 20px;
+
+  &:hover {
+    cursor: pointer;
+  }
 `;
