@@ -1,16 +1,13 @@
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-
-import Text from './components/Text/Text';
-import Button from './components/Button/Button';
-import StyledText from './components/Text/Text';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import GenderSelect from './pages/GenderSelect';
 import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
-import PostInfo from './modals/PostInfo';
+// import PostInfo from './modals/PostInfo';
+// import Result from './pages/Result';
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -45,6 +42,7 @@ function App() {
           </Route>
         </Switch>
         {/* <GenderSelect /> */}
+        {/* <Result /> */}
         <Footer />
       </BrowserRouter>
     </>

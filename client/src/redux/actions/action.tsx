@@ -3,6 +3,8 @@ export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
 export const HANDLE_MODAL = 'HANDLE_MODAL';
 export const SIGN_UP = 'SIGN_UP';
+export const PROFILE_EDIT = 'PROFILE_EDIT';
+export const PASSWORD_CHANGE = 'PASSWORD_CHANGE';
 
 interface LoginProps {
   username: string;
@@ -21,6 +23,15 @@ interface SignUpProps {
   password: string;
 }
 
+interface ProfileEditProps {
+  realname: string;
+  username: string;
+  email: string;
+}
+
+interface PasswordChangeProps {
+  password: string;
+}
 // actions creator functions
 export const logIn = (data: LoginProps) => {
   return {
@@ -45,6 +56,20 @@ export const handleModal = (data: HandleModalProps) => {
 export const signup = (data: SignUpProps) => {
   return {
     type: SIGN_UP,
+    payload: data,
+  };
+};
+
+export const profileEdit = (data: ProfileEditProps) => {
+  return {
+    type: PROFILE_EDIT,
+    payload: data,
+  };
+};
+
+export const passwordChange = (data: PasswordChangeProps) => {
+  return {
+    type: PASSWORD_CHANGE,
     payload: data,
   };
 };
