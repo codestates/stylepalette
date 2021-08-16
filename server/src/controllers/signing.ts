@@ -5,8 +5,11 @@ import { signing } from "../service";
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
 
   const foundUser = await signing.createUser(req.body)
-  res.status(201).send(foundUser)
-
+  if (!foundUser) {
+    res.status(201).send({ message : "Completed sign up" })
+  } else {
+    res.status(201).send({ message : "Already existed" })
+  }
 };
 
 const signIn = async (req: Request, res: Response, next: NextFunction) => {
@@ -17,12 +20,12 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
     const accessToken = signing.getToken(foundUser)
     if (accessToken) {
       res.cookie("jwt", accessToken, {
-        // maxAge: 1000 * 60 * 60 * 24 * 7,
-        // domain: ".stylepalette.net",
-        // path: "/",
-        // secure: true,
-        // httpOnly: true,
-        // sameSite: 'none'
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        domain: ".stylepalette.net",
+        path: "/",
+        secure: true,
+        httpOnly: true,
+        sameSite: 'none'
       }).status(200).send({ message : "Successed Sign in"})
     } else {
       res.status(400).send({ message : "Failed Sign in, No Token"})
@@ -41,9 +44,6 @@ const signOut = async (req: Request, res: Response, next: NextFunction) => {
   } else {
     res.status(404).send({ message : "Not found"})
   };
-  
- 
-
 }
 
 export default {
