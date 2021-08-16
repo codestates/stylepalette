@@ -66,21 +66,19 @@ export default function PostInfo() {
   console.log('user: ', user);
   console.log('posts: ', posts);
   return (
-    <Modal>
-      <PostInfoWrapper>
-        <PostImage src={post.image} alt="post-img" />
-        <LikeContainer>
-          <LikeIconWrapper>
-            <HeartIcon />
-          </LikeIconWrapper>
-          <LikeCount>32 likes</LikeCount>
-        </LikeContainer>
-        <PostContentContainer>
-          <PostOwnerProfileImage src={user.userimage} alt="user-profile-pic" />
-          <PostOwerUserName>{user.username}</PostOwerUserName>
-          <PostTitle>{post.title}</PostTitle>
-        </PostContentContainer>
-      </PostInfoWrapper>
-    </Modal>
+    <PostInfoWrapper>
+      <PostImage src={post.image} alt="post-img" />
+      <LikeContainer>
+        <LikeIconWrapper>
+          <HeartIcon />
+        </LikeIconWrapper>
+        <LikeCount>32 likes</LikeCount>
+      </LikeContainer>
+      <PostContentContainer>
+        <PostOwnerProfileImage src={user.userimage} alt="user-profile-pic" />
+        <PostOwerUserName>{user.username}</PostOwerUserName>
+        <PostTitle>{post.title}</PostTitle>
+      </PostContentContainer>
+    </PostInfoWrapper>
   );
 }
