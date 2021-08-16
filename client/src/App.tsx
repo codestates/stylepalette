@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
+import MainPage from './pages/MainPage';
 import GenderSelect from './pages/GenderSelect';
 import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
@@ -23,6 +24,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
+        <MainPage />
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}
