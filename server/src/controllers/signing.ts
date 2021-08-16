@@ -17,12 +17,12 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
     const accessToken = signing.getToken(foundUser)
     if (accessToken) {
       res.cookie("jwt", accessToken, {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        domain: ".stylepalette.net",
-        path: "/",
-        secure: true,
-        httpOnly: true,
-        sameSite: 'none'
+        // maxAge: 1000 * 60 * 60 * 24 * 7,
+        // domain: ".stylepalette.net",
+        // path: "/",
+        // secure: true,
+        // httpOnly: true,
+        // sameSite: 'none'
       }).status(200).send({ message : "Successed Sign in"})
     } else {
       res.status(400).send({ message : "Failed Sign in, No Token"})
@@ -34,10 +34,10 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
 
 const signOut = async (req: Request, res: Response, next: NextFunction) => {
   //토큰조회
-  const cookie = req.headers.cookie?.split("=") 
+  const cookie = req.cookies.jwt
+  console.log(cookie)
   if (cookie) {
-    const accessToken = cookie[0]
-    res.clearCookie(accessToken).status(200).send({ message : "Successed Sign out" })
+    res.clearCookie(cookie).status(200).send({ message : "Successed Sign out" })
   } else {
     res.status(404).send({ message : "Not found"})
   };
