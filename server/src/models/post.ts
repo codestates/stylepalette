@@ -17,6 +17,9 @@ export class Post extends Model {
   bottomcolor!: string
 
   @Column
+  likeCount!: number
+
+  @Column
   isPublic!: boolean
 
   @ForeignKey(() => User)
