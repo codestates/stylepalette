@@ -1,4 +1,4 @@
-import { LOG_IN, LOG_OUT, PROFILE_EDIT } from '../actions/action';
+import { LOG_IN, LOG_OUT, PROFILE_EDIT, PASSWORD_CHANGE } from '../actions/action';
 import { initialState, UserState } from './initialState';
 import { dummyState } from './dummyState';
 
@@ -30,6 +30,13 @@ const userReducer = (
         email,
       });
       return newProfileState;
+
+    case PASSWORD_CHANGE:
+      const { password } = action.payload;
+      const newPasswordState = Object.assign({}, state, {
+        password,
+      });
+      return newPasswordState;
 
     default:
       return state;

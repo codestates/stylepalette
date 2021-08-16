@@ -1,8 +1,8 @@
 export const dummyState = {
   user: {
     userid: 1,
-    username: 'kcoding',
     realname: 'kimcoding',
+    username: 'kcoding',
     email: 'kimcoding@gmail.com',
     userimage: 'https://pbs.twimg.com/profile_images/970625933160857601/R8RSJs1w.jpg',
   },
