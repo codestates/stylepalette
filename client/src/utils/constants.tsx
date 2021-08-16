@@ -1,1 +1,1 @@
-export const serverUrl = 'api.stylepalette.net';
+export const serverUrl = 'https://api.stylepalette.net';

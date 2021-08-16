@@ -1,19 +1,20 @@
-import { LOG_IN, LOG_OUT, PROFILE_EDIT, PASSWORD_CHANGE, SIGN_UP } from '../actions/action';
+import {
+  LOGIN_SUCCESS,
+  LOGOUT_SUCCESS,
+  PROFILE_EDIT,
+  PASSWORD_CHANGE,
+  SIGNUP_SUCCESS,
+} from '../actions/action';
 import { initialState, UserState } from './initialState';
 import { dummyState } from './dummyState';
 
 const userReducer = (
-  state: UserState = dummyState.user,
+  // state: UserState = dummyState.user,
+  state: UserState = initialState.user,
   action: { type: string; payload: any },
 ) => {
   switch (action.type) {
-    case LOG_IN:
-      // operation to update state
-      // state.user = response
-      return state;
-    // break;
-
-    case LOG_OUT:
+    case LOGOUT_SUCCESS:
       const newState = Object.assign({}, state, {
         userid: null,
         username: '',
@@ -22,16 +23,26 @@ const userReducer = (
       });
       return newState;
 
-    case SIGN_UP: {
+    case LOGIN_SUCCESS: {
+      const { realname, username, email } = action.payload;
+
       const newUserInfo = {
-        name: action.payload.name,
-        email: action.payload.email,
-        username: action.payload.username,
-        password: action.payload.password,
+        realname,
+        username,
+        email,
       };
 
       return newUserInfo;
     }
+
+    case SIGNUP_SUCCESS: {
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessages: message,
+      });
+      return newUserState;
+    }
+
     case PROFILE_EDIT:
       const { realname, username, email } = action.payload;
       const newProfileState = Object.assign({}, state, {

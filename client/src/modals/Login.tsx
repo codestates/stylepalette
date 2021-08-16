@@ -2,9 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
 import Button from '../components/Button/Button';
-import { serverUrl } from '../utils/constants';
 import { logIn } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 
@@ -75,6 +73,7 @@ export default function Login() {
     };
     dispatch(logIn(userCredentials));
   };
+
   // const requestSignin = async () => {
   //     const result = await axios.post(`${serverUrl}/signin`, {
   //         username: username,
@@ -82,6 +81,7 @@ export default function Login() {
   //     });
   //     console.log(result);
   // };
+
   const handleClickSignUp = () => {
     dispatch(handleModal({ isOpen: true, type: 'signup' }));
   };
