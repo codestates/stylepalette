@@ -8,6 +8,9 @@ import SignUp from './SignUp';
 import { getModalType } from '../redux/selectors';
 import PostInfo from './PostInfo';
 import Menu from './Menu';
+import ProfileEdit from './ProfileEdit';
+import PasswordChange from './PasswordChange';
+import PostSharing from './PostSharing';
 
 const ModalContainer = styled.div`
   width: 100vw;
@@ -43,6 +46,12 @@ export default function Modal(props: ModalProps) {
       return <PostInfo />;
     } else if (modalType === 'menu') {
       return <Menu />;
+    } else if (modalType === `profileEdit`) {
+      return <ProfileEdit />;
+    } else if (modalType === `passwordChange`) {
+      return <PasswordChange />;
+    } else if (modalType === `postSharing`) {
+      return <PostSharing />;
     }
   };
 

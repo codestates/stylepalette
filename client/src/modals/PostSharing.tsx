@@ -1,9 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import styled from 'styled-components';
-
 import { serverUrl } from '../utils/constants';
-import Modal from './Modal';
 import Button from '../components/Button/Button';
 import axios from 'axios';
 
@@ -23,11 +21,6 @@ const PostContainer = styled.div`
   border: 1px solid palevioletred;
   padding: 15px;
   margin: 15px;
-`;
-
-const CloseButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
 `;
 
 const PostHeader = styled.div`
@@ -90,9 +83,6 @@ function PostSharing() {
 
   return (
     <PostWrapper>
-      <CloseButtonWrapper>
-        <Button close>X</Button>
-      </CloseButtonWrapper>
       <PostHeader>게시물 공유</PostHeader>
       <PostContainer>
         <InputWrapper>
