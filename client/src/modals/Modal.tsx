@@ -1,0 +1,66 @@
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import Button from '../components/Button/Button';
+import { handleModal } from '../redux/actions/action';
+import Login from './Login';
+import SignUp from './SignUp';
+import { getModalType } from '../redux/selectors';
+import PostInfo from './PostInfo';
+import Menu from './Menu';
+import ProfileEdit from './ProfileEdit';
+import PasswordChange from './PasswordChange';
+import PostSharing from './PostSharing';
+
+const ModalContainer = styled.div`
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  z-index: 10;
+  background: rgba(33, 33, 33, 0.5);
+  left: 0;
+  top: 0;
+`;
+
+interface ModalProps {
+  children?: any;
+}
+
+export default function Modal(props: ModalProps) {
+  const dispatch = useDispatch();
+  const modalType = useSelector(getModalType);
+
+  const handleModalClose = () => {
+    dispatch(handleModal({ isOpen: false }));
+  };
+
+  const renderModalContentComponent = () => {
+    if (modalType === 'login') {
+      return <Login />;
+    } else if (modalType === 'signup') {
+      return <SignUp />;
+    } else if (modalType === 'postInfo') {
+      return <PostInfo />;
+    } else if (modalType === 'menu') {
+      return <Menu />;
+    } else if (modalType === `profileEdit`) {
+      return <ProfileEdit />;
+    } else if (modalType === `passwordChange`) {
+      return <PasswordChange />;
+    } else if (modalType === `postSharing`) {
+      return <PostSharing />;
+    }
+  };
+
+  return (
+    <ModalContainer>
+      <Button close onClick={handleModalClose}>
+        X
+      </Button>
+      {renderModalContentComponent()}
+    </ModalContainer>
+  );
+}

@@ -1,0 +1,254 @@
+import React from 'react';
+import { useState, useEffect } from 'react';
+import styled from 'styled-components';
+
+import { ArrowLongRight } from '@styled-icons/entypo/ArrowLongRight';
+
+import { serverUrl } from '../utils/constants';
+import axios from 'axios';
+
+import MalePNG from '../images/male.png';
+import femalePNG from '../images/female.png';
+
+const GenderWrapper = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: white;
+  flex-direction: column;
+  left: 0;
+  top: 0;
+`;
+
+const GenderContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+`;
+
+const ContentWrapper = styled.div`
+  padding: 50px;
+
+  @media (max-width: 768px) {
+    padding: 50px 50px 30px 50px;
+  }
+`;
+
+const GenderContent = styled.h1`
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-size: 2.8rem;
+`;
+
+const PhotoContent = styled.h2`
+  text-align: center;
+  font-size: 2.5rem;
+`;
+
+const GenderFooter = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 10px 0;
+`;
+
+const PhotoContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+`;
+
+const PhotoWrapper = styled.div`
+  padding: 30px 225px;
+
+  @media (max-width: 768px) {
+    padding: 30px 80px;
+  }
+`;
+
+const GenderPhoto = styled.img`
+  width: 350px;
+  height: 350px;
+  margin: 10px 0 30px;
+
+  @media (max-width: 768px) {
+    width: 250px;
+    height: 250px;
+  }
+`;
+
+const PhotoButton = styled.button`
+  width: 350px;
+  height: 380px;
+  border-style: none;
+  border-radius: 45px;
+  background-color: white;
+  text-align: center;
+
+  &:hover {
+    opacity: 70%;
+  }
+
+  &:focus {
+    background-color: #dedede;
+  }
+
+  @media (max-width: 768px) {
+    width: 250px;
+    height: 280px;
+  }
+`;
+
+const NextButtonWrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100vw;
+  align-items: center;
+
+  @media (max-width: 768px) {
+    justify-content: center;
+    padding: 30px;
+  }
+`;
+
+const NextButton = styled.button`
+  width: 150px;
+  height: 100px;
+  border: none;
+  text-align: center;
+  margin: 10px 100px 10px 100px;
+  background-color: white;
+  animation: moveArrow 0.5s infinite linear alternate;
+
+  &:disabled {
+    opacity: 70%;
+    animation-play-state: paused;
+  }
+
+  &:hover {
+    background-color: #efefef;
+    border-radius: 45px;
+    animation-play-state: paused;
+  }
+
+  @keyframes moveArrow {
+    100% {
+      margin: 10px 130px 10px 100px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const NextIcons = styled(ArrowLongRight)`
+  color: #222222;
+
+  @media (max-width: 768px) {
+    display: none;
+  }
+`;
+
+const SelectButton = styled.button`
+  display: none;
+  width: 150px;
+  height: 80px;
+  border: none;
+  text-align: center;
+  background-color: white;
+  font-size: 20px;
+
+  &:disabled {
+    opacity: 70%;
+  }
+
+  &:hover {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dbdbdb;
+    border-radius: 45px;
+  }
+
+  &:focus {
+    border-style: solid;
+    border-width: 1px;
+    border-color: #dbdbdb;
+    border-radius: 45px;
+    background-color: #efefef;
+  }
+
+  @media (max-width: 768px) {
+    display: inline;
+  }
+`;
+
+function GenderSelect() {
+  const [gender, setGender] = useState<string>('');
+  const [disabled, setDisabled] = useState<boolean>(false);
+
+  useEffect(() => {
+    enAble();
+  }, [gender]);
+
+  function enAble() {
+    if (gender === '') {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  }
+
+  function handleChangeGender(e: React.MouseEvent<HTMLButtonElement>) {
+    setGender(e.currentTarget.value);
+  }
+
+  return (
+    <GenderWrapper>
+      {/* <Header /> */}
+      <GenderContainer>
+        <ContentWrapper>
+          <GenderContent>안녕하세요</GenderContent>
+          <GenderContent>성별을 선택해주세요</GenderContent>
+        </ContentWrapper>
+        <PhotoContainer>
+          <PhotoWrapper>
+            <PhotoButton onClick={handleChangeGender} value={'남성'}>
+              <GenderPhoto src={MalePNG} />
+            </PhotoButton>
+            <PhotoContent>남성</PhotoContent>
+          </PhotoWrapper>
+          <PhotoWrapper>
+            <PhotoButton onClick={handleChangeGender} value={'여성'}>
+              <GenderPhoto src={femalePNG} />
+            </PhotoButton>
+            <PhotoContent>여성</PhotoContent>
+          </PhotoWrapper>
+        </PhotoContainer>
+        <NextButtonWrapper>
+          {disabled ? (
+            <NextButton>
+              <NextIcons size="100"></NextIcons>
+            </NextButton>
+          ) : (
+            <NextButton disabled>
+              <NextIcons size="100"></NextIcons>
+            </NextButton>
+          )}
+          {disabled ? (
+            <SelectButton>선택 완료</SelectButton>
+          ) : (
+            <SelectButton disabled>선택 완료</SelectButton>
+          )}
+        </NextButtonWrapper>
+      </GenderContainer>
+      <GenderFooter></GenderFooter>
+    </GenderWrapper>
+  );
+}
+
+export default GenderSelect;
