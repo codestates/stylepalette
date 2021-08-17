@@ -57,10 +57,10 @@ const NavMobile = styled.span`
   @media (min-width: 768px) {
     display: none;
   }
-  padding-right: 1em;
+  padding-right: 0.8em;
 `;
 const NavIcon = styled.span`
-  padding-right: 1em;
+  padding-right: 0.8em;
 `;
 
 // If user is logged in: nav will show: mypage, logout, gallery

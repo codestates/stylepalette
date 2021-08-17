@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
 import Header from './components/Header/Header';
@@ -21,18 +22,24 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
+  const [gender, setGender] = useState<string>('');
+
   return (
     <>
       <GlobalStyle />
       <BrowserRouter>
         <Header />
+        <MainPage gender={gender} />
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}
             Landing Page
           </Route>
           <Route exact path="/genderselect">
-            <GenderSelect />
+            <GenderSelect setGender={setGender} />
+          </Route>
+          <Route exact path="/mainpage">
+            <MainPage gender={gender} />
           </Route>
           <Route exact path="/mypage">
             <MyPage />
@@ -48,7 +55,6 @@ function App() {
         {/* <Result /> */}
         <Footer />
       </BrowserRouter>
-      {/* <MainPage /> */}
     </>
   );
 }

@@ -12,6 +12,7 @@ export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
+export const RECOMMEND_COLOR = 'RECOMMEND_COLOR';
 
 interface LoginProps {
   username: string;
@@ -39,6 +40,10 @@ interface ProfileEditProps {
 
 interface PasswordChangeProps {
   password: string;
+}
+
+interface RecommendColor {
+  selectedcolor: string;
 }
 
 // actions creator functions
@@ -158,5 +163,35 @@ export const passwordChange = (data: PasswordChangeProps) => {
   return {
     type: PASSWORD_CHANGE,
     payload: data,
+  };
+};
+
+export const successRecommendColor = (data: any) => {
+  return {
+    type: RECOMMEND_COLOR,
+    payload: data,
+  };
+};
+
+export const recommendColor = (data: RecommendColor) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    const { selectedcolor } = data;
+    axios
+      .post(
+        `${serverUrl}/color/recommend`,
+        {
+          selectedcolor,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
+        const data = res.data;
+        dispatch(successRecommendColor(data));
+      })
+      .catch((res) => {
+        return res;
+      });
   };
 };
