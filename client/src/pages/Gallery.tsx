@@ -10,7 +10,7 @@ import axios from 'axios';
 
 import Photo from '../dummyData/dummyPhoto';
 
-const Color = ['인기순', '빨강', '주황', '노랑', '파랑', '남색', '보라', '하양', '검정'];
+const Color = ['인기순', '빨강', '주황', '노랑', '초록', '파랑', '남색', '보라', '하양', '검정'];
 
 const GalleryWrapper = styled.div`
   width: 100vw;
