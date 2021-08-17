@@ -5,6 +5,7 @@ export const initialState = {
     username: '',
     email: '',
     userimage: '',
+    apiMessages: '',
   },
   posts: [],
   modal: {

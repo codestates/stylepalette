@@ -2,9 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
 import Button from '../components/Button/Button';
-import { serverUrl } from '../utils/constants';
 import { logIn } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 
@@ -27,7 +25,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid palevioletred;
+  border: 1px solid black;
   padding: 15px;
   margin: 15px;
 `;
@@ -75,13 +73,7 @@ export default function Login() {
     };
     dispatch(logIn(userCredentials));
   };
-  // const requestSignin = async () => {
-  //     const result = await axios.post(`${serverUrl}/signin`, {
-  //         username: username,
-  //         password: password,
-  //     });
-  //     console.log(result);
-  // };
+
   const handleClickSignUp = () => {
     dispatch(handleModal({ isOpen: true, type: 'signup' }));
   };
@@ -92,7 +84,12 @@ export default function Login() {
       <LoginContainer>
         <InputWrapper>
           <Label>유저네임</Label>
-          <input type="text" value={username} onChange={handleChangeUsername}></input>
+          <input
+            type="text"
+            value={username}
+            placeholder="아이디"
+            onChange={handleChangeUsername}
+          ></input>
         </InputWrapper>
         <InputWrapper>
           <Label>비밀번호</Label>

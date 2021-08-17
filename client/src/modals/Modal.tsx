@@ -20,16 +20,16 @@ const ModalContainer = styled.div`
   align-items: center;
   position: fixed;
   z-index: 10;
-  background: rgba(33, 33, 33, 0.5);
   left: 0;
   top: 0;
+  background: rgba(250, 250, 250, 0.95);
 `;
 
-interface ModalProps {
-  children?: any;
-}
+//placeholder to stop event propagation
+//https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
+const ModalContent = styled.div``;
 
-export default function Modal(props: ModalProps) {
+export default function Modal() {
   const dispatch = useDispatch();
   const modalType = useSelector(getModalType);
 
@@ -56,11 +56,13 @@ export default function Modal(props: ModalProps) {
   };
 
   return (
-    <ModalContainer>
+    <ModalContainer onClick={handleModalClose}>
       <Button close onClick={handleModalClose}>
         X
       </Button>
-      {renderModalContentComponent()}
+      <ModalContent onClick={(e) => e.stopPropagation()}>
+        {renderModalContentComponent()}
+      </ModalContent>
     </ModalContainer>
   );
 }

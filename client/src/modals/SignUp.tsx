@@ -67,7 +67,7 @@ const ButtonContainer = styled.div`
 `;
 
 function SignUp() {
-  const [name, setName] = useState<string>('');
+  const [realname, setRealname] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
@@ -76,10 +76,11 @@ function SignUp() {
 
   useEffect(() => {
     enAble();
-  }, [name, email, username, password]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [realname, email, username, password]);
 
   function enAble() {
-    if (email === '' || name === '' || username === '' || password === '') {
+    if (email === '' || realname === '' || username === '' || password === '') {
       setDisabled(false);
     } else {
       setDisabled(true);
@@ -87,7 +88,7 @@ function SignUp() {
   }
 
   function handleChangeName(e: React.FormEvent<HTMLInputElement>) {
-    setName(e.currentTarget.value);
+    setRealname(e.currentTarget.value);
   }
 
   function handleChangeEmail(e: React.FormEvent<HTMLInputElement>) {
@@ -103,14 +104,15 @@ function SignUp() {
   }
 
   const requestSignup = async () => {
-    const result = {
-      name,
+    const userInput = {
+      realname,
       email,
       username,
       password,
+      userimage: '',
     };
 
-    dispatch(signup(result));
+    dispatch(signup(userInput));
   };
 
   const handleClickLogIn = () => {
@@ -126,7 +128,7 @@ function SignUp() {
             name="이름"
             placeholder="성명"
             autoComplete="off"
-            value={name}
+            value={realname}
             onChange={handleChangeName}
           />
         </InputWrapper>
