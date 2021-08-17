@@ -24,7 +24,6 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        <MainPage />
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}
@@ -47,6 +46,7 @@ function App() {
         {/* <Result /> */}
         <Footer />
       </BrowserRouter>
+      {/* <MainPage /> */}
     </>
   );
 }
