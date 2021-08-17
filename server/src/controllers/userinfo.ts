@@ -36,11 +36,12 @@ const patchUserinfo = async (req: Request, res: Response, next: NextFunction) =>
   } else {
     res.status(400).send({ message : "Failed changing your information" })
   }
-
-
 };
+const postUserImage = async (req: Request, res: Response, next: NextFunction) => {
 
+}
 export default {
   getUserinfo,
-  patchUserinfo
+  patchUserinfo,
+  postUserImage
 }

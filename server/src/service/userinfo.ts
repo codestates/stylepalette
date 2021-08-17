@@ -1,5 +1,6 @@
 import { ITokenInfo, IPatchUserInfo } from "../interfaces/IUserinfo";
 import { createHashedPassword, IHashedPasswordSalt } from "../interfaces/IUser";
+import awsSDK from "aws-sdk"
 import {User} from "../models/user";
 import {Post} from "../models/post";
 
@@ -40,11 +41,14 @@ const patchuserinfo = async (payload : IPatchUserInfo, pathParameter : string) =
 
   return updatedUserInfo
 }
-
+const imageUpload = () => {
+  
+}
 
 export default {
   getuserinfo,
-  patchuserinfo
+  patchuserinfo,
+  imageUpload
 };
 
 // {

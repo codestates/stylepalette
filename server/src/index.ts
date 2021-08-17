@@ -13,7 +13,7 @@ import router from "./router";
 const app = express()
 
 app.use(cors({
-  origin: ['https://stylepalette.net', 'https://localhost:3000'],
+  origin: ['https://www.stylepalette.net', 'https://stylepalette.net', 'https://localhost:3000'],
   credentials: true,
   methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
 }))
