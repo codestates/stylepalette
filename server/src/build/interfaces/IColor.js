@@ -41,13 +41,13 @@ exports.tonInton = function (rgbvalue) {
     ];
     return tones;
 };
-exports.tonOnton = function (rgbvalue) {
+exports.tonOnton = function (rgbvalue, distance) {
     let tones = [rgbvalue];
     let Cmax = Math.max(rgbvalue.r / 255, rgbvalue.g / 255, rgbvalue.b / 255);
     let Cmim = Math.min(rgbvalue.r / 255, rgbvalue.g / 255, rgbvalue.b / 255);
     let lightness = Math.floor(((Cmax + Cmim) / 2) * 1000) / 10;
-    let lighterValue = Math.floor((100 - lightness) / 5);
-    let darkerValue = Math.floor(lightness / 5);
+    let lighterValue = Math.floor((100 - lightness) / distance);
+    let darkerValue = Math.floor(lightness / distance);
     let lighterR = (255 - rgbvalue.r) / lighterValue;
     let lighterG = (255 - rgbvalue.g) / lighterValue;
     let lighterB = (255 - rgbvalue.b) / lighterValue;

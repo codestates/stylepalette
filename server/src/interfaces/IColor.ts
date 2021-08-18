@@ -1,3 +1,5 @@
+import { Number } from "aws-sdk/clients/iot";
+
 export interface rgbvalue {
   r : number
   g : number
@@ -59,15 +61,15 @@ export const tonInton : tone = function(rgbvalue: rgbvalue) : rgbvalue[] {
   return tones
 }
 
-export const tonOnton = function(rgbvalue: rgbvalue) : rgbvalue[] {
+export const tonOnton = function(rgbvalue: rgbvalue, distance: number) : rgbvalue[] {
   let tones = [rgbvalue];
 
   let Cmax : number = Math.max(rgbvalue.r / 255, rgbvalue.g / 255, rgbvalue.b / 255);
   let Cmim : number = Math.min(rgbvalue.r / 255, rgbvalue.g / 255, rgbvalue.b / 255);
   let lightness : number = Math.floor(((Cmax + Cmim) / 2) * 1000) / 10;
 
-  let lighterValue = Math.floor((100 - lightness) / 5);
-  let darkerValue = Math.floor(lightness / 5);
+  let lighterValue = Math.floor((100 - lightness) / distance);
+  let darkerValue = Math.floor(lightness / distance);
 
   let lighterR = (255 - rgbvalue.r) / lighterValue;
   let lighterG = (255 - rgbvalue.g) / lighterValue;
