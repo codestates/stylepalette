@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 
-import { ArrowLongRight } from '@styled-icons/entypo/ArrowLongRight';
+import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
+import { RestartAlt } from '@styled-icons/material-twotone/RestartAlt';
 import { ReactComponent as Man } from '../images/Man/Man-default.svg';
 import { ReactComponent as Woman } from '../images/Woman/Woman-default.svg';
 
-import { recommendColor } from '../redux/actions/action';
-import { RecommendColor } from '../redux/reducers/initialState';
-import { getRecommendColor } from '../redux/selectors';
+import { recommendColor, rouletteColor } from '../redux/actions/action';
+import { RecommendColor, RouletteColor } from '../redux/reducers/initialState';
+import { getRecommendColor, getRouletteColor } from '../redux/selectors';
 
 const Color = [
   '#FF0000',
@@ -24,7 +25,6 @@ const Color = [
 
 const SelectList = ['피부톤', '상의', '하의', '준비중'];
 const recommendTab = ['톤인톤', '톤온톤', '모노'];
-
 const ClothList: any = {
   피부톤: [],
   상의: ['맨투맨', '라운드티', '셔츠'],
@@ -37,7 +37,6 @@ interface MainProps {
 }
 
 interface imgProps {
-  color?: string;
   picktopcolor?: string;
   pickbottomcolor?: string;
 }
@@ -50,10 +49,18 @@ interface currRecommandProps {
   currrecommandtap?: string;
 }
 
+interface rouletteWrapperProps {
+  degree?: number;
+}
+
+interface rouletteProps {
+  color?: string;
+  degree?: number;
+}
+
 const MainWrapper = styled.div`
   width: 100vw;
   height: 100vh;
-  overflow: hidden;
   background-color: white;
   left: 0;
   top: 0;
@@ -66,7 +73,7 @@ const PalletteContainer = styled.ul`
   text-align: center;
   max-width: 270px;
   max-height: 280px;
-  margin: 20px 30px;
+  margin: 15px;
   width: 100%;
   height: 100%;
   border-radius: 45px;
@@ -89,14 +96,12 @@ const Pallette = styled.button`
   }
 
   &:focus {
-    width: 70px;
-    height: 70px;
+    transform: scale(1.2, 1.2);
   }
 
   @keyframes hoverColor {
     100% {
-      width: 70px;
-      height: 70px;
+      transform: scale(1.2, 1.2);
     }
   }
 `;
@@ -228,28 +233,49 @@ const NextButtonWrapper = styled.div`
   display: inline;
   position: absolute;
   text-align: center;
-  width: 125px;
-  height: 125px;
+  width: 205px;
+  height: 100px;
 
-  left: 92%;
-  top: 85%;
+  left: 89%;
+  top: 88%;
 `;
 
 const NextButton = styled.button`
-  width: 125px;
-  height: 125px;
+  width: 80px;
+  height: 80px;
   border: none;
+  border-radius: 50%;
   text-align: center;
-  background-color: white;
+  background-color: black;
   cursor: pointer;
+  margin: 10px;
 
   &:hover {
     opacity: 50%;
   }
 `;
 
-const NextIcons = styled(ArrowLongRight)`
-  color: black;
+const NextIcons = styled(NavigateNext)`
+  color: white;
+`;
+
+const ResetButton = styled.button`
+  width: 80px;
+  height: 80px;
+  border: none;
+  border-radius: 50%;
+  text-align: center;
+  background-color: black;
+  cursor: pointer;
+  margin: 10px;
+
+  &:hover {
+    opacity: 50%;
+  }
+`;
+
+const ResetIcons = styled(RestartAlt)`
+  color: white;
 `;
 
 const RecommendSelectWrapper = styled.div`
@@ -293,6 +319,7 @@ const RecommendColorWrapper = styled.div`
 const RecommendTabWrapper = styled.div`
   max-width: 550px;
   text-align: left;
+  background-color: black;
 `;
 
 const RecommendTabName = styled.span`
@@ -301,6 +328,26 @@ const RecommendTabName = styled.span`
   padding: 5px;
   padding-left: 10px;
   padding-top: 0;
+  color: white;
+`;
+
+const RecommendTabButton = styled.button`
+  position: absolute;
+  top: -4%;
+  left: 90%;
+  font-size: 18px;
+  font-style: bold;
+  border: 1px solid rgba(0, 0, 0);
+  width: 50px;
+  height: 30px;
+  padding: 5px;
+  text-align: center;
+  color: white;
+  background-color: black;
+
+  &:hover {
+    opacity: 50%;
+  }
 `;
 
 const RecommendContentWrapper = styled.div`
@@ -357,35 +404,137 @@ const RecommendContent = styled.button<recommandProps>`
   }}
 `;
 
+const RouletteWrapper = styled.div<rouletteWrapperProps>`
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  left: 85%;
+  top: 35%;
+  border-radius: 50%;
+
+  ${(props) => {
+    return `
+    transform: rotate(${props.degree}deg);
+  `;
+  }}
+`;
+
+const RouletteCenter = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 180px;
+  height: 180px;
+  border: 2px solid rgba(0, 0, 0);
+  border-radius: 50%;
+  background-color: white;
+  z-index: 5;
+  margin: -90px 0 0 -90px;
+`;
+
+const Roulette = styled.button<rouletteProps>`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+
+  border: 2px solid rgba(0, 0, 0);
+  border-radius: 50%;
+  -webkit-clip-path: polygon(0% 0%, 50% 50%, 0% 50%, 0% 0%);
+  clip-path: polygon(0% 0%, 50% 50%, 0% 31%, 0% 0%);
+
+  &:hover {
+    opacity: 50%;
+  }
+
+  ${(props) => {
+    return `
+      background-color: ${props.color};
+      transform: rotate(${props.degree}deg);
+    `;
+  }}
+`;
+
 function MainPage(props: MainProps) {
   const dispatch = useDispatch();
-  const recommendColors: RecommendColor = useSelector(getRecommendColor);
-  const [selectColor, setSelectColor] = useState<string>('');
+  let recommendColors: RecommendColor = useSelector(getRecommendColor);
+  let rouletteColors: RouletteColor = useSelector(getRouletteColor);
+
+  const [roulettePalettes, setRoulettePalettes] = useState<string[]>([]);
   const [currSelectTap, setCurrSelectTap] = useState<string>('');
   const [pickSubSelect, setPickSubSelect] = useState<boolean>(false);
+  const [isRoulette, setIsRoulette] = useState<boolean>(false);
+  const [isRecommend, setIsRecommend] = useState<boolean>(false);
   const [currRecommendTap, setCurrRecommendTap] = useState<string>('');
   const [pickTopColor, setPickTopColor] = useState<string>('#FFFFFF');
   const [pickBottomColor, setPickBottomColor] = useState<string>('#FFFFFF');
 
+  //? 이미지 스크롤
   const [isDrag, setIsDrag] = useState<boolean>(false);
   const [startX, setStartX] = useState<any>();
-
   const scrollRef = useRef<any>(null);
+
+  //? 룰렛
+  const [isRotate, setIsRotate] = useState<boolean>(false);
+  const [startY, setStartY] = useState<any>();
+  const [degree, setDegree] = useState<number>(0);
+  const rotateSpeed = 10;
+  let rouletteContentDegree = 0;
+
+  //? Recommend 컬러
   const { tonInton, tonOnton, monoton } = recommendColors;
 
-  function handleCurrSelectTap(value: string) {
-    setCurrSelectTap(value);
+  //? Roulette 컬러
+  const { palette } = rouletteColors;
+
+  useEffect(() => {
+    const temp = palette.filter((el, idx) => {
+      return idx < 14;
+    });
+
+    temp.push('#ffffff');
+
+    setRoulettePalettes(temp);
+  }, [palette]);
+
+  //! 리셋
+  function handleReset(event: React.MouseEvent<HTMLButtonElement>) {
+    setRoulettePalettes([]);
+    setCurrSelectTap('');
+    setPickSubSelect(false);
+    setIsRoulette(false);
+    setIsRecommend(false);
+    setCurrRecommendTap('');
+    setPickTopColor('#ffffff');
+    setPickBottomColor('#ffffff');
   }
 
+  //! 상의, 하의 선택 탭
+  function handleCurrSelectTap(value: string) {
+    setCurrSelectTap(value);
+    setPickSubSelect(false);
+  }
+
+  //! 팔레트 오리지널 색 선택
+  function handleOriginColor(value: string) {
+    setIsRoulette(true);
+
+    const originColors = {
+      maincolor: value,
+    };
+    dispatch(rouletteColor(originColors));
+  }
+
+  //! 룰렛 선택 색상
   function handleSelectColor(value: string) {
-    const currentColor = {
+    const data = {
       selectedcolor: value,
     };
-    dispatch(recommendColor(currentColor));
 
-    console.log('recommendColors:', recommendColors);
+    dispatch(recommendColor(data));
 
-    setSelectColor(value);
     if (currSelectTap === '상의') {
       setPickTopColor(value);
     } else if (currSelectTap === '하의') {
@@ -394,19 +543,25 @@ function MainPage(props: MainProps) {
   }
 
   function handlePickSelect(value: string) {
-    setPickSubSelect(false);
-
     if (value === '상의' || value === '하의') {
       setPickSubSelect(true);
-    } else {
-      setPickSubSelect(false);
     }
   }
 
+  //! Recommend 관련 함수
   function handleRecommendTap(event: string) {
     setCurrRecommendTap(event);
   }
 
+  function handleIsRecommendTrue(event: React.MouseEvent<HTMLButtonElement>) {
+    setIsRecommend(true);
+  }
+
+  function handleIsRecommendFalse(event: React.MouseEvent<HTMLButtonElement>) {
+    setIsRecommend(false);
+  }
+
+  //! Recommend 이미지 슬라이드 관련 함수
   function onDragStart(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
     setIsDrag(true);
@@ -431,6 +586,30 @@ function MainPage(props: MainProps) {
     }
   };
 
+  //! 룰렛 관련 함수
+  function onRotateStart(event: React.MouseEvent<HTMLDivElement>) {
+    event.preventDefault();
+    setIsRotate(true);
+    setStartY(event.pageY);
+  }
+
+  function onRotateEnd(event: React.MouseEvent<HTMLDivElement>) {
+    setIsRotate(false);
+  }
+
+  const onRotateMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    if (isRotate) {
+      if (startY <= event.pageY) {
+        setDegree(degree - rotateSpeed);
+        setStartY(event.pageY);
+      } else if (startY >= event.pageY) {
+        setDegree(degree + rotateSpeed);
+        setStartY(event.pageY);
+      }
+    }
+  };
+
+  //! 이벤트 딜레이 관련 함수
   const delay = 10;
   const throttle = (func: any, ms: number) => {
     let throttled = false;
@@ -446,8 +625,7 @@ function MainPage(props: MainProps) {
   };
 
   const onThrottleDragMove = throttle(onDragMove, delay);
-
-  //TODO: 내일은 룰렛 만들고 div 범위 이미지로 저장해야함
+  const onThrottleRotateMove = throttle(onRotateMove, 15);
 
   return (
     <>
@@ -468,63 +646,93 @@ function MainPage(props: MainProps) {
             </SubSelectButton>
           </SubSelectContainer>
         ) : null}
+        {isRoulette ? (
+          <RouletteWrapper
+            onMouseDown={onRotateStart}
+            onMouseMove={onThrottleRotateMove}
+            onMouseUp={onRotateEnd}
+            onMouseLeave={onRotateEnd}
+            degree={degree}
+          >
+            {roulettePalettes.map((el, idx) => {
+              return (
+                <Roulette
+                  onClick={() => handleSelectColor(el)}
+                  key={idx}
+                  color={el}
+                  degree={(rouletteContentDegree += 24)}
+                />
+              );
+            })}
+            <RouletteCenter></RouletteCenter>
+          </RouletteWrapper>
+        ) : null}
         <RecommendSelectWrapper>
           {recommendTab.map((el, idx) => {
             return (
-              <RecommendSelectTab key={idx} onClick={() => handleRecommendTap(el)}>
+              <RecommendSelectTab
+                key={idx}
+                onClick={(event) => {
+                  handleRecommendTap(el);
+                  handleIsRecommendTrue(event);
+                }}
+              >
                 {el}
               </RecommendSelectTab>
             );
           })}
         </RecommendSelectWrapper>
-        <RecommendColorWrapper>
-          <RecommendTabWrapper>
-            <RecommendTabName>{currRecommendTap}</RecommendTabName>
-          </RecommendTabWrapper>
-          <RecommendContentWrapper
-            onMouseDown={onDragStart}
-            onMouseMove={onThrottleDragMove}
-            onMouseUp={onDragEnd}
-            onMouseLeave={onDragEnd}
-            ref={scrollRef}
-          >
-            <RecommendContentContainer currrecommandtap={currRecommendTap}>
-              {currRecommendTap === '톤인톤'
-                ? tonInton.map((el, idx) => {
-                    return (
-                      <RecommendContent
-                        key={idx}
-                        color={el}
-                        onClick={() => handleSelectColor(el)}
-                      ></RecommendContent>
-                    );
-                  })
-                : null}
-              {currRecommendTap === '톤온톤'
-                ? tonOnton.map((el, idx) => {
-                    return (
-                      <RecommendContent
-                        onClick={() => handleSelectColor(el)}
-                        color={el}
-                        key={idx}
-                      ></RecommendContent>
-                    );
-                  })
-                : null}
-              {currRecommendTap === '모노'
-                ? monoton.map((el, idx) => {
-                    return (
-                      <RecommendContent
-                        onClick={() => handleSelectColor(el)}
-                        color={el}
-                        key={idx}
-                      ></RecommendContent>
-                    );
-                  })
-                : null}
-            </RecommendContentContainer>
-          </RecommendContentWrapper>
-        </RecommendColorWrapper>
+        {isRecommend ? (
+          <RecommendColorWrapper>
+            <RecommendTabWrapper>
+              <RecommendTabName>{currRecommendTap}</RecommendTabName>
+              <RecommendTabButton onClick={handleIsRecommendFalse}>닫기</RecommendTabButton>
+            </RecommendTabWrapper>
+            <RecommendContentWrapper
+              onMouseDown={onDragStart}
+              onMouseMove={onThrottleDragMove}
+              onMouseUp={onDragEnd}
+              onMouseLeave={onDragEnd}
+              ref={scrollRef}
+            >
+              <RecommendContentContainer currrecommandtap={currRecommendTap}>
+                {currRecommendTap === '톤인톤'
+                  ? tonInton.map((el, idx) => {
+                      return (
+                        <RecommendContent
+                          key={idx}
+                          color={el}
+                          onClick={() => handleSelectColor(el)}
+                        ></RecommendContent>
+                      );
+                    })
+                  : null}
+                {currRecommendTap === '톤온톤'
+                  ? tonOnton.map((el, idx) => {
+                      return (
+                        <RecommendContent
+                          onClick={() => handleSelectColor(el)}
+                          color={el}
+                          key={idx}
+                        ></RecommendContent>
+                      );
+                    })
+                  : null}
+                {currRecommendTap === '모노'
+                  ? monoton.map((el, idx) => {
+                      return (
+                        <RecommendContent
+                          onClick={() => handleSelectColor(el)}
+                          color={el}
+                          key={idx}
+                        ></RecommendContent>
+                      );
+                    })
+                  : null}
+              </RecommendContentContainer>
+            </RecommendContentWrapper>
+          </RecommendColorWrapper>
+        ) : null}
         {pickSubSelect ? (
           <ClothContainer>
             {ClothList[currSelectTap].map((el: string) => {
@@ -534,25 +742,20 @@ function MainPage(props: MainProps) {
         ) : null}
         <PalletteContainer>
           {Color.map((el, idx) => {
-            return <Pallette key={idx} onClick={() => handleSelectColor(el)} color={el}></Pallette>;
+            return <Pallette key={idx} onClick={() => handleOriginColor(el)} color={el}></Pallette>;
           })}
         </PalletteContainer>
         <ImageContainer>
           {props.gender === '남성' ? (
-            <ImageMan
-              color={selectColor}
-              picktopcolor={pickTopColor}
-              pickbottomcolor={pickBottomColor}
-            />
+            <ImageMan picktopcolor={pickTopColor} pickbottomcolor={pickBottomColor} />
           ) : (
-            <ImageWoMan
-              color={selectColor}
-              picktopcolor={pickTopColor}
-              pickbottomcolor={pickBottomColor}
-            />
+            <ImageWoMan picktopcolor={pickTopColor} pickbottomcolor={pickBottomColor} />
           )}
         </ImageContainer>
         <NextButtonWrapper>
+          <ResetButton onClick={handleReset}>
+            <ResetIcons />
+          </ResetButton>
           <NextButton>
             <NextIcons />
           </NextButton>
