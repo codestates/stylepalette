@@ -1,0 +1,10 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const awsS3_1 = require("../interfaces/awsS3");
+const router = express_1.Router();
+router.get('/', controllers_1.userinfo.getUserinfo);
+router.post('/checkuser', controllers_1.userinfo.postCheckUser);
+router.patch('/:userid', awsS3_1.profileUpload.single("profile"), controllers_1.userinfo.patchUserinfo);
+exports.default = router;
