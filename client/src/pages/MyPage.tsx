@@ -125,8 +125,9 @@ function MyPage() {
   };
 
   const handleClickProfileEditButton = () => {
-    dispatch(handleModal({ isOpen: true, type: 'profileEdit' }));
+    dispatch(handleModal({ isOpen: true, type: 'passwordCheck' }));
   };
+
   return (
     <MyPageWrapper>
       <MyPageContainer>

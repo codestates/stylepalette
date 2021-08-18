@@ -2,7 +2,7 @@ import {
   LOGIN_SUCCESS,
   LOGOUT_SUCCESS,
   PROFILE_EDIT,
-  PASSWORD_CHANGE,
+  PASSWORD_CHECK,
   SIGNUP_SUCCESS,
 } from '../actions/action';
 import { initialState, UserState } from './initialState';
@@ -25,12 +25,10 @@ const userReducer = (
     }
 
     case LOGIN_SUCCESS: {
-      const { realname, username, email } = action.payload;
+      const { token } = action.payload;
 
       const newUserInfo = {
-        realname,
-        username,
-        email,
+        token,
       };
 
       return newUserInfo;
@@ -44,24 +42,23 @@ const userReducer = (
       return newUserState;
     }
 
-    case PROFILE_EDIT: {
-      const { realname, username, email } = action.payload;
+    case PROFILE_EDIT:
+      const { realname, username, email, password, userimage } = action.payload;
       const newProfileState = Object.assign({}, state, {
         realname,
         username,
         email,
+        password,
+        userimage,
       });
       return newProfileState;
-    }
 
-    case PASSWORD_CHANGE: {
-      const { password } = action.payload;
-      const newPasswordState = Object.assign({}, state, {
-        password,
-      });
-      return newPasswordState;
-    }
-
+    // case PASSWORD_CHECK:
+    //   const { password } = action.payload;
+    //   const newPasswordState = Object.assign({}, state, {
+    //     password,
+    //   });
+    //   return newPasswordState;
     default:
       return state;
   }

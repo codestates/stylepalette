@@ -15,12 +15,12 @@ const SignUpWrapper = styled.div`
   flex-direction: column;
 `;
 
-const SignUpContainer = styled.div`
+const SignUpContainer = styled.form`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid palevioletred;
+  border: 1px solid black;
   padding: 15px;
   margin: 15px;
 `;
@@ -28,6 +28,7 @@ const SignUpContainer = styled.div`
 const SignUpHeader = styled.div`
   display: flex;
   justify-content: center;
+  padding: 1em;
 `;
 
 const InputWrapper = styled.div`
@@ -59,6 +60,10 @@ const SignUpInput = styled.input`
   }
 `;
 
+const MessageWrapper = styled.div`
+  color: red;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -70,6 +75,8 @@ function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [passwordMsg, setPasswordMsg] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
   const dispatch = useDispatch();
 
@@ -100,6 +107,13 @@ function SignUp() {
 
   function handleChangePassword(e: React.FormEvent<HTMLInputElement>) {
     setPassword(e.currentTarget.value);
+  }
+
+  function handleChangePasswordCheck(e: React.FormEvent<HTMLInputElement>) {
+    setPasswordCheck(e.currentTarget.value);
+    if (password !== e.currentTarget.value) {
+      setPasswordMsg('비밀번호가 일치하지 않습니다.');
+    }
   }
 
   const requestSignup = async () => {
@@ -141,6 +155,7 @@ function SignUp() {
             onChange={handleChangeEmail}
           />
         </InputWrapper>
+        <MessageWrapper></MessageWrapper>
         <InputWrapper>
           <SignUpInput
             type="text"
@@ -151,6 +166,7 @@ function SignUp() {
             onChange={handleChangeUsername}
           />
         </InputWrapper>
+        <MessageWrapper></MessageWrapper>
         <InputWrapper>
           <SignUpInput
             type="password"
@@ -161,6 +177,17 @@ function SignUp() {
             onChange={handleChangePassword}
           />
         </InputWrapper>
+        <InputWrapper>
+          <SignUpInput
+            type="password"
+            name="비밀번호 확인"
+            placeholder="비밀번호 확인"
+            autoComplete="off"
+            value={passwordCheck}
+            onChange={handleChangePasswordCheck}
+          />
+        </InputWrapper>
+        <MessageWrapper>{passwordMsg}</MessageWrapper>
         <ButtonContainer>
           {disabled ? (
             <Button primary onClick={requestSignup}>

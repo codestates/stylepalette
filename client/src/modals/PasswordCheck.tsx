@@ -3,9 +3,10 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
-// import { passwordChange } from '../redux/actions/action';
+import { passwordCheck } from '../redux/actions/action';
+import { getUser } from '../redux/selectors';
 
-const PasswordWrapper = styled.div`
+const PasswordCheckWrapper = styled.div`
   width: 400px;
   background-color: white;
   border: solid 1px #dbdbdb;
@@ -13,7 +14,7 @@ const PasswordWrapper = styled.div`
   flex-direction: column;
 `;
 
-const PasswordChangeHeader = styled.div`
+const PasswordCheckHeader = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -25,7 +26,7 @@ const InputOuterWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  border: 1px solid palevioletred;
+  border: 1px solid black;
   padding: 15px;
   margin: 15px;
 `;
@@ -63,38 +64,38 @@ const SubmitButtonWrapper = styled.div`
 
 export default function PasswordChange() {
   const dispatch = useDispatch();
-  const [newPassword, setNewPassword] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const handleChangeNewPassword = (event: React.FormEvent<HTMLInputElement>) => {
+  const handleCheckPassword = (event: React.FormEvent<HTMLInputElement>) => {
     const str = event.currentTarget && event.currentTarget.value;
-    setNewPassword(str);
+    setPassword(str);
   };
-  const requestPasswordChange = () => {
-    const userNewPassword = {
-      password: newPassword,
+
+  const user = useSelector(getUser);
+
+  const requestPasswordCheck = () => {
+    const userInfo = {
+      username: user.username,
+      password: password,
     };
-    // dispatch(passwordChange(userNewPassword));
+    dispatch(passwordCheck(userInfo));
   };
   return (
-    <PasswordWrapper>
-      <PasswordChangeHeader>비밀번호 변경</PasswordChangeHeader>
+    <PasswordCheckWrapper>
+      <PasswordCheckHeader>현재 비밀번호를 입력해주세요</PasswordCheckHeader>
       <InputOuterWrapper>
         <LabelContainer>
-          <Label>현재 비밀번호</Label>
-          <Label>새 비밀번호</Label>
-          <Label>새 비밀번호 확인</Label>
+          <Label>비밀번호</Label>
         </LabelContainer>
         <InputWrapper>
-          <Input type="password"></Input>
-          <Input type="password"></Input>
-          <Input type="password" onChange={handleChangeNewPassword}></Input>
+          <Input type="password" onChange={handleCheckPassword}></Input>
         </InputWrapper>
       </InputOuterWrapper>
       <SubmitButtonWrapper>
-        <Button primary onClick={requestPasswordChange}>
-          변경 완료
+        <Button primary onClick={requestPasswordCheck}>
+          확인
         </Button>
       </SubmitButtonWrapper>
-    </PasswordWrapper>
+    </PasswordCheckWrapper>
   );
 }

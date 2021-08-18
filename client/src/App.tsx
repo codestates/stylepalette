@@ -1,6 +1,10 @@
 import { useState } from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginSuccess } from '../src/redux/actions/action';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
+import { getIsModalOpen } from './redux/selectors/index';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import MainPage from './pages/MainPage';
@@ -8,8 +12,21 @@ import GenderSelect from './pages/GenderSelect';
 import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
-// import PostInfo from './modals/PostInfo';
 // import Result from './pages/Result';
+// import ProfileEdit from './modals/ProfileEdit';
+
+interface WrapperProps {
+  isModalOpen: boolean;
+}
+
+const Wrapper = styled.div<WrapperProps>`
+  ${(props) => {
+    if (props.isModalOpen) {
+      return `overflow-y: hidden;
+    `;
+    }
+  }}
+`;
 
 const GlobalStyle = createGlobalStyle`
   * {
@@ -23,9 +40,20 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const [gender, setGender] = useState<string>('');
+  const dispatch = useDispatch();
+  useEffect(() => {
+    // check if user has logged in
+    const cookie = localStorage.getItem('cookie');
+    if (cookie) {
+      dispatch(loginSuccess(cookie));
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const isModalOpen = useSelector(getIsModalOpen);
 
   return (
-    <>
+    <Wrapper isModalOpen={isModalOpen}>
       <GlobalStyle />
       <BrowserRouter>
         <Header />
@@ -53,9 +81,11 @@ function App() {
         </Switch>
         {/* <GenderSelect /> */}
         {/* <Result /> */}
+        {/* <ProfileEdit /> */}
         <Footer />
       </BrowserRouter>
-    </>
+      {/* <MainPage /> */}
+    </Wrapper>
   );
 }
 

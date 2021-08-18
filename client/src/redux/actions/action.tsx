@@ -7,12 +7,14 @@ export const LOGOUT_SUCCESS = 'LOG_OUT';
 export const HANDLE_MODAL = 'HANDLE_MODAL';
 export const SIGN_UP = 'SIGN_UP';
 export const PROFILE_EDIT = 'PROFILE_EDIT';
-export const PASSWORD_CHANGE = 'PASSWORD_CHANGE';
+export const PASSWORD_CHECK = 'PASSWORD_CHECK';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const RECOMMEND_COLOR = 'RECOMMEND_COLOR';
+export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
+export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
 
 interface LoginProps {
   username: string;
@@ -20,7 +22,7 @@ interface LoginProps {
 }
 
 interface HandleModalProps {
-  isOpen: boolean;
+  isOpen?: boolean;
   type?: string;
 }
 
@@ -38,7 +40,8 @@ interface ProfileEditProps {
   email: string;
 }
 
-interface PasswordChangeProps {
+interface PasswordCheckProps {
+  username: string;
   password: string;
 }
 
@@ -77,7 +80,10 @@ export const logIn = (data: LoginProps) => {
       )
       .then((response) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.headers);
+        console.log('RESPONSE', response);
         dispatch(loginSuccess(data));
+        dispatch(handleModal({ isOpen: false }));
+        localStorage.setItem('token', response.data.token);
       })
       .catch((response) => {
         console.log('LOGIN RESPONSE in FAILURE: ', response);
@@ -144,6 +150,7 @@ export const signup = (data: SignUpProps) => {
         // @ts-ignore
         const message = response.message || '';
         dispatch(signupSuccess(message));
+        dispatch(handleModal({ isOpen: true, type: 'login' }));
       })
       .catch((response) => {
         console.log('SIGNUP RESPONSE in FAILURE: ', response);
@@ -159,10 +166,42 @@ export const profileEdit = (data: ProfileEditProps) => {
   };
 };
 
-export const passwordChange = (data: PasswordChangeProps) => {
+export const passwordCheckSuccess = (message: string) => {
   return {
-    type: PASSWORD_CHANGE,
-    payload: data,
+    type: PASSWORDCHECK_SUCCESS,
+    payload: message,
+  };
+};
+
+export const passwordCheckFailure = (message: string) => {
+  return {
+    type: PASSWORDCHECK_FAILURE,
+    payload: message,
+  };
+};
+
+export const passwordCheck = (data: PasswordCheckProps) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    const { username, password } = data;
+    axios
+      .post(
+        `${serverUrl}/checkuser`,
+        {
+          username: username,
+          password: password,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        console.log('CHECKUSER RESPONSE in SUCCESS: ', response);
+        dispatch(handleModal({ isOpen: true, type: 'profileEdit' }));
+      })
+      .catch((response) => {
+        console.log('CHECKUSER RESPONSE in FAILURE: ', response);
+        dispatch(passwordCheckFailure(response));
+      });
   };
 };
 

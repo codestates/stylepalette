@@ -78,12 +78,16 @@ export default function ProfileEdit() {
   const [newUserName, setNewUserName] = useState<string>(username);
   const [newRealName, setNewRealName] = useState<string>(realname);
   const [newEmail, setNewEmail] = useState<string>(email);
+  const [newPassword, setNewPassword] = useState<string>('');
+  const [newUserImage, setNewUserImage] = useState<string>('');
 
   const submitNewUserCredentials = () => {
     const userCredentials = {
       realname: newRealName,
       username: newUserName,
       email: newEmail,
+      password: newPassword,
+      // userimage: newUserImage,
     };
     dispatch(profileEdit(userCredentials));
   };
@@ -102,10 +106,14 @@ export default function ProfileEdit() {
     const str = event.currentTarget && event.currentTarget.value;
     setNewEmail(str);
   };
-
-  const handleClickPasswordChange = () => {
-    dispatch(handleModal({ isOpen: true, type: 'passwordChange' }));
+  const handleChangeNewPassword = (event: React.FormEvent<HTMLInputElement>) => {
+    const str = event.currentTarget && event.currentTarget.value;
+    setNewPassword(str);
   };
+
+  // const handleClickPasswordChange = () => {
+  //   dispatch(handleModal({ isOpen: true, type: 'passwordChange' }));
+  // };
 
   return (
     <ProfileEditWrapper>
@@ -119,18 +127,22 @@ export default function ProfileEdit() {
           <Label>이름</Label>
           <Label>유저네임</Label>
           <Label>이메일</Label>
+          <Label>새 비밀번호</Label>
+          <Label>새 비밀번호 확인</Label>
         </LabelContainer>
         <InputWrapper>
           <Input type="text" value={newRealName} onChange={handleRealNameChange}></Input>
           <Input type="text" value={newUserName} onChange={handleUserNameChange}></Input>
           <Input type="text" value={newEmail} onChange={handleEmailChange}></Input>
+          <Input type="password"></Input>
+          <Input type="password" onChange={handleChangeNewPassword}></Input>
         </InputWrapper>
       </InputOuterWrapper>
       <SubmitButtonWrapper>
         <Button primary onClick={submitNewUserCredentials}>
           정보 수정 완료
         </Button>
-        <Button onClick={handleClickPasswordChange}>비밀 번호 변경</Button>
+        {/* <Button onClick={handleClickPasswordChange}>비밀 번호 변경</Button> */}
       </SubmitButtonWrapper>
     </ProfileEditWrapper>
   );
