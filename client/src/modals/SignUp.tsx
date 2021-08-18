@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-
 import Button from '../components/Button/Button';
 import { signup } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
@@ -15,7 +14,7 @@ const SignUpWrapper = styled.div`
   flex-direction: column;
 `;
 
-const SignUpContainer = styled.form`
+const SignUpContainer = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -110,27 +109,33 @@ function SignUp() {
   }
 
   function handleChangePasswordCheck(e: React.FormEvent<HTMLInputElement>) {
-    setPasswordCheck(e.currentTarget.value);
-    if (password !== e.currentTarget.value) {
+    const passwordCheckInput = e.currentTarget.value;
+    setPasswordCheck(passwordCheckInput);
+    console.log('OUTSIDE', passwordCheckInput);
+
+    if (password !== passwordCheckInput) {
+      console.log(password);
+      console.log('INSIDE', passwordCheckInput);
       setPasswordMsg('비밀번호가 일치하지 않습니다.');
     }
   }
 
-  const requestSignup = async () => {
+  const requestSignup = () => {
     const userInput = {
       realname,
       email,
       username,
       password,
-      userimage: '',
     };
 
+    console.log('SIGNUP CLICK');
     dispatch(signup(userInput));
   };
 
   const handleClickLogIn = () => {
     dispatch(handleModal({ isOpen: true, type: 'login' }));
   };
+
   return (
     <SignUpWrapper>
       <SignUpHeader>회원 가입</SignUpHeader>

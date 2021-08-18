@@ -143,7 +143,7 @@ function MyPage() {
         <UserPostWrapper>
           {Photo.map((el, idx) => {
             return (
-              <NavIcon onClick={handleClickPostInfo}>
+              <NavIcon key={idx} onClick={handleClickPostInfo}>
                 <PostPhoto src={el} />
               </NavIcon>
             );

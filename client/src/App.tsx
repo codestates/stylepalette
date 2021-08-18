@@ -43,9 +43,9 @@ function App() {
   const dispatch = useDispatch();
   useEffect(() => {
     // check if user has logged in
-    const cookie = localStorage.getItem('cookie');
-    if (cookie) {
-      dispatch(loginSuccess(cookie));
+    const token = localStorage.getItem('token');
+    if (token) {
+      dispatch(loginSuccess(token));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -57,7 +57,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        <MainPage gender={gender} />
+        {/* <MainPage gender={gender} /> */}
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}

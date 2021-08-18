@@ -31,7 +31,6 @@ interface SignUpProps {
   username: string;
   email: string;
   password: string;
-  userimage: string;
 }
 
 interface ProfileEditProps {
@@ -80,10 +79,11 @@ export const logIn = (data: LoginProps) => {
       )
       .then((response) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.headers);
-        console.log('RESPONSE', response);
-        dispatch(loginSuccess(data));
         dispatch(handleModal({ isOpen: false }));
-        localStorage.setItem('token', response.data.token);
+        console.log('token', response.data.payload);
+
+        localStorage.setItem('token', response.data.payload);
+        dispatch(loginSuccess(response.data.payload));
       })
       .catch((response) => {
         console.log('LOGIN RESPONSE in FAILURE: ', response);
@@ -101,7 +101,7 @@ export const logOutSuccess = () => {
 export const logOut = () => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios.get(`${serverUrl}/signout`, { withCredentials: true }).then((response) => {
-      window.document.cookie = '';
+      localStorage.setItem('token', '');
       dispatch(logOutSuccess());
     });
   };
@@ -130,12 +130,11 @@ export const signupFailure = (data: any) => {
 
 export const signup = (data: SignUpProps) => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    const { userimage, realname, username, email, password } = data;
+    const { realname, username, email, password } = data;
     axios
       .post(
         `${serverUrl}/signup`,
         {
-          userimage: userimage,
           realname: realname,
           username: username,
           email: email,

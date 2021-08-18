@@ -6,7 +6,6 @@ import {
   SIGNUP_SUCCESS,
 } from '../actions/action';
 import { initialState, UserState } from './initialState';
-import { dummyState } from './dummyState';
 
 const userReducer = (
   // state: UserState = dummyState.user,
@@ -20,18 +19,19 @@ const userReducer = (
         username: '',
         email: '',
         userimage: '',
+        token: '',
       });
+      localStorage.setItem('token', '');
       return newState;
     }
 
     case LOGIN_SUCCESS: {
-      const { token } = action.payload;
+      const token = action.payload;
+      const newState = Object.assign({}, state, {
+        token: token,
+      });
 
-      const newUserInfo = {
-        token,
-      };
-
-      return newUserInfo;
+      return newState;
     }
 
     case SIGNUP_SUCCESS: {
@@ -43,13 +43,12 @@ const userReducer = (
     }
 
     case PROFILE_EDIT:
-      const { realname, username, email, password, userimage } = action.payload;
+      const { realname, username, email, password } = action.payload;
       const newProfileState = Object.assign({}, state, {
         realname,
         username,
         email,
         password,
-        userimage,
       });
       return newProfileState;
 
