@@ -1,10 +1,10 @@
-<svg width="209" height="484" viewBox="0 0 209 484" fill="none" xmlns="http://www.w3.org/2000/svg">
+<svg width="207" height="483" viewBox="0 0 207 483" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="Man / Bottom" filter="url(#filter0_d)">
-<path id="Pants" d="M133.561 116.404L60.7936 475.5H5L71.7361 1H203.73L199.137 473.666L182.014 473.912L149.415 474.395H149.296L140.982 474.514L133.561 116.404Z" fill="current" stroke="black" stroke-opacity="0.2009"/>
-<path id="Stroke 1" opacity="0.200893" fill-rule="evenodd" clip-rule="evenodd" d="M133.761 113.743L146.313 58.1886L136.869 226.613L133.761 113.743Z" fill="black"/>
+<path id="Pants" d="M132.561 115.404L59.7936 474.5H4L70.7361 0H202.73L198.137 472.666L181.014 472.912L148.415 473.395H148.296L139.982 473.514L132.561 115.404Z" fill="#000000"/>
+<path id="Stroke 1" opacity="0.200893" fill-rule="evenodd" clip-rule="evenodd" d="M132.761 112.743L145.313 57.1886L135.869 225.613L132.761 112.743Z" fill="black"/>
 </g>
 <defs>
-<filter id="filter0_d" x="0.424759" y="0.5" width="207.81" height="483.5" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+<filter id="filter0_d" x="0" y="0" width="207" height="483" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
 <feFlood flood-opacity="0" result="BackgroundImageFix"/>
 <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
 <feOffset dy="4"/>

@@ -2,7 +2,6 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { serverUrl } from '../utils/constants';
 
 import Button from '../components/Button/Button';
 import { signup } from '../redux/actions/action';

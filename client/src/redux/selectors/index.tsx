@@ -17,3 +17,7 @@ export const getIsModalOpen = (state: any): boolean => {
 export const getModalType = (state: any) => {
   return state.modalState.type;
 };
+
+export const getRecommendColor = (state: any) => {
+  return state.recommendcolorState;
+};

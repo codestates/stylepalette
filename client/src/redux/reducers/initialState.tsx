@@ -12,6 +12,11 @@ export const initialState = {
     isOpen: false,
     type: '',
   },
+  recommendcolor: {
+    tonInton: [],
+    tonOnton: [],
+    monoton: [],
+  },
 };
 
 export interface UserState {
@@ -27,8 +32,15 @@ export interface ModalState {
   type: string;
 }
 
+export interface RecommendColor {
+  tonInton: string[];
+  tonOnton: string[];
+  monoton: string[];
+}
+
 export interface RootState {
   user: UserState;
   posts: [];
   modal: ModalState;
+  recommendcolor: RecommendColor;
 }

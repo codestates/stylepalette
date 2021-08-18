@@ -1,14 +1,16 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { ArrowLongRight } from '@styled-icons/entypo/ArrowLongRight';
 
-import { serverUrl } from '../utils/constants';
-import axios from 'axios';
-
 import MalePNG from '../images/male.png';
 import femalePNG from '../images/female.png';
+
+interface GenderSelectProps {
+  setGender?: any;
+}
 
 const GenderWrapper = styled.div`
   width: 100%;
@@ -63,7 +65,7 @@ const PhotoContainer = styled.div`
 `;
 
 const PhotoWrapper = styled.div`
-  padding: 30px 225px;
+  padding: 30px 225px 20px 225px;
 
   @media (max-width: 768px) {
     padding: 30px 80px;
@@ -107,6 +109,7 @@ const NextButtonWrapper = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100vw;
+  height: 100px;
   align-items: center;
 
   @media (max-width: 768px) {
@@ -120,7 +123,7 @@ const NextButton = styled.button`
   height: 100px;
   border: none;
   text-align: center;
-  margin: 10px 100px 10px 100px;
+  margin: 10px 80px 10px 80px;
   background-color: white;
   animation: moveArrow 0.5s infinite linear alternate;
 
@@ -137,7 +140,7 @@ const NextButton = styled.button`
 
   @keyframes moveArrow {
     100% {
-      margin: 10px 130px 10px 100px;
+      margin-right: 60px;
     }
   }
 
@@ -187,12 +190,13 @@ const SelectButton = styled.button`
   }
 `;
 
-function GenderSelect() {
+function GenderSelect(props: GenderSelectProps) {
   const [gender, setGender] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     enAble();
+    props.setGender(gender);
   }, [gender]);
 
   function enAble() {
@@ -231,9 +235,11 @@ function GenderSelect() {
         </PhotoContainer>
         <NextButtonWrapper>
           {disabled ? (
-            <NextButton>
-              <NextIcons size="100"></NextIcons>
-            </NextButton>
+            <Link to="/mainpage">
+              <NextButton>
+                <NextIcons size="100"></NextIcons>
+              </NextButton>
+            </Link>
           ) : (
             <NextButton disabled>
               <NextIcons size="100"></NextIcons>

@@ -14,7 +14,7 @@ const userReducer = (
   action: { type: string; payload: any },
 ) => {
   switch (action.type) {
-    case LOGOUT_SUCCESS:
+    case LOGOUT_SUCCESS: {
       const newState = Object.assign({}, state, {
         userid: null,
         username: '',
@@ -22,6 +22,7 @@ const userReducer = (
         userimage: '',
       });
       return newState;
+    }
 
     case LOGIN_SUCCESS: {
       const { realname, username, email } = action.payload;
@@ -43,7 +44,7 @@ const userReducer = (
       return newUserState;
     }
 
-    case PROFILE_EDIT:
+    case PROFILE_EDIT: {
       const { realname, username, email } = action.payload;
       const newProfileState = Object.assign({}, state, {
         realname,
@@ -51,13 +52,15 @@ const userReducer = (
         email,
       });
       return newProfileState;
+    }
 
-    case PASSWORD_CHANGE:
+    case PASSWORD_CHANGE: {
       const { password } = action.payload;
       const newPasswordState = Object.assign({}, state, {
         password,
       });
       return newPasswordState;
+    }
 
     default:
       return state;
