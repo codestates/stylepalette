@@ -6,7 +6,8 @@ const router = Router();
 
 router.get('/:postid', post.getPost);
 router.get('/posts/all', post.getPosts);
-router.post('/', resultUpload.single("result"), post.postPost);
+router.post('/', post.postPost);
+router.post('/:postid/result', resultUpload.single("result"), post.postResult)
 router.post('/:postid/like', post.postLike)
 router.delete('/:postid', post.deletePost);
 

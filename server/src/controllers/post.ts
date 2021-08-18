@@ -27,23 +27,32 @@ const getPosts = async (req: Request, res: Response, next: NextFunction) => {
 
 };
 
-//파일업로드부분과 본문내용에 관한 요청을 분리
+//본문내용 저장
 const postPost = async (req: Request, res: Response, next: NextFunction) => {
-  if (req.body && req.file) {
+  if (req.body && req.params) {
     const payload : IPost = req.body
-    payload.image = req.file.location
-
-    console.log(payload)
     const result = await post.postpost(payload)
-    console.log(result)
     if (result) {
-      res.status(201).send({ message : "Successed saving post" })
+      res.status(201).send({ message : "Successed saving post", postid : result.id})
     } else {
       res.status(404).send({ message : "Failed saving post" })
     }
   }
-
 };
+
+//결과이미지 저장
+const postResult = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.file && req.params) {
+    const pathPatameter : string = req.params.postid
+    const payload : string = req.file.location
+    const result = await post.postresult(payload, pathPatameter)
+    if (result) {
+      res.status(201).send({ message : "Successed saving result image" })
+    } else {
+      res.status(404).send({ message : "Failed saving result image" })
+    }
+  }
+}
 
 const postLike = async (req: Request, res: Response, next: NextFunction) => {
   const pathPatameter : string = req.params.postid
@@ -75,6 +84,7 @@ export default {
   getPost,
   getPosts,
   postPost,
+  postResult,
   postLike,
   deletePost
 }
