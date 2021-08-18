@@ -28,6 +28,10 @@ export interface IUserCheck {
   password : string;
 }
 
+export interface ICheckPassword {
+  password : string
+}
+
 export const createSalt = function () : Promise<string>{
   return new Promise((resolve, reject) => {
     crypto.randomBytes(64, (err, buf) => {
@@ -49,7 +53,7 @@ export const createHashedPassword = async function(password : string) : Promise<
 }
 
 
-export const checkHashedPassword = (password : string, salt : string) : Promise<object> => {
+export const checkHashedPassword = (password : string, salt : string) : Promise<ICheckPassword> => {
   return new Promise((resolve, reject) => {
     crypto.pbkdf2(password, salt, 9999, 64, 'sha512', (err, key) => {
       if (err) reject(err);

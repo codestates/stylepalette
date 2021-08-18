@@ -42,9 +42,21 @@ export const checkUser = async function (data : IUserCheck) {
     }
   })
 
-  return user
+  const salt =  user?.salt
+  if (salt) {
+    const checkecdPassword = await checkHashedPassword(data.password, salt)
+    if (user?.password === checkecdPassword.password) {
+      return user
+    } else {
+      const message : string = "Wrong password"
+      return message
+    }
+  } else {
+    return user
+  }
+  
+   
 }
-
 
 export const getToken = function (data : User) {
   let accessSecret = process.env.ACCESS_SECRET ? process.env.ACCESS_SECRET : undefined

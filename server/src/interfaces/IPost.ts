@@ -4,10 +4,6 @@ export interface IPost{
   topcolor: string;
   bottomcolor: string;
   isPublic: boolean;
-  userid: number;
+  userId: number;
 
-}
-
-export interface postUniqueSearchInput {
-  postid : number;
 }
