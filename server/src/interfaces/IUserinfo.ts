@@ -15,3 +15,8 @@ export interface IPatchUserInfo {
   password? : string
   salt? : string
 }
+
+export interface ICheckUser {
+  username: string
+  password : string
+}

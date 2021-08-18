@@ -1,6 +1,5 @@
-import { ITokenInfo, IPatchUserInfo } from "../interfaces/IUserinfo";
-import { createHashedPassword, IHashedPasswordSalt } from "../interfaces/IUser";
-import awsSDK from "aws-sdk"
+import { ITokenInfo, IPatchUserInfo, ICheckUser } from "../interfaces/IUserinfo";
+import { createHashedPassword, IHashedPasswordSalt, checkHashedPassword } from "../interfaces/IUser";
 import {User} from "../models/user";
 import {Post} from "../models/post";
 
@@ -32,7 +31,6 @@ const patchuserinfo = async (payload : IPatchUserInfo, pathParameter : string) =
     payload.password = newPasswordAndSalt.password
     payload.salt = newPasswordAndSalt.salt
   }
-  console.log(payload)
   const updatedUserInfo = User.update(payload, {
     where : {
       id : pathParameter
@@ -41,14 +39,44 @@ const patchuserinfo = async (payload : IPatchUserInfo, pathParameter : string) =
 
   return updatedUserInfo
 }
-const imageUpload = () => {
-  
+const imageUpload = (location : string, pathParameter : string) => {
+  const updateUserImage = User.update({
+    userimage : location
+  }, {
+    where : {
+      id : pathParameter
+    }
+  })
+
+  return updateUserImage
+}
+
+const checkUser = async (payload : ICheckUser) => {
+
+  const user = await User.findOne({
+    where : {
+      username : payload.username,
+    }
+  })
+
+  const salt =  user?.salt
+  if (salt) {
+    const checkecdPassword = await checkHashedPassword(payload.password, salt)
+    if (user?.password === checkecdPassword.password) {
+      return user
+    } else {
+      return undefined
+    }
+  } else {
+    return undefined
+  }
 }
 
 export default {
   getuserinfo,
   patchuserinfo,
-  imageUpload
+  imageUpload,
+  checkUser
 };
 
 // {

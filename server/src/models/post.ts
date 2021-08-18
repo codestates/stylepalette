@@ -1,4 +1,4 @@
-import { Table, Column, Model, ForeignKey, BelongsTo, BelongsToMany } from 'sequelize-typescript'
+import { Table, Column, Model, HasMany, ForeignKey, BelongsTo, BelongsToMany, Default } from 'sequelize-typescript'
 import { tb_like } from './tb_like'
 import { User } from './user'
 
@@ -16,6 +16,7 @@ export class Post extends Model {
   @Column
   bottomcolor!: string
 
+  @Default(0)
   @Column
   likeCount!: number
 
@@ -30,6 +31,9 @@ export class Post extends Model {
   user!: User
 
   @BelongsToMany(() => User, () => tb_like)
-  like!: User[]
+  userlike!: User[]
+
+  @HasMany(() => tb_like)
+  like!: tb_like[]
 
 }

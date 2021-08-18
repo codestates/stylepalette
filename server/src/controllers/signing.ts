@@ -8,7 +8,7 @@ const signUp = async (req: Request, res: Response, next: NextFunction) => {
   if (!foundUser) {
     res.status(201).send({ message : "Completed sign up" })
   } else {
-    res.status(201).send({ message : "Already existed" })
+    res.status(400).send({ message : "Already existed" })
   }
 };
 
@@ -16,7 +16,10 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
   //데이터베이스 조회
   const foundUser = await signing.checkUser(req.body)
   //데이터베이스에 있으면 토큰생성하여 리스폰스로 전달
-  if (foundUser) {
+  if (typeof foundUser === "string") {
+    res.status(400).send({ message : "Wrong password"})
+  }
+  if (foundUser && typeof foundUser !== "string") {
     const accessToken = signing.getToken(foundUser)
     if (accessToken) {
       res.cookie("jwt", accessToken, {
@@ -26,12 +29,12 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
         secure: true,
         httpOnly: true,
         sameSite: 'none'
-      }).status(200).send({ message : "Successed Sign in"})
+      }).status(200).send({ message : "Successed Sign in", payload : accessToken})
     } else {
       res.status(400).send({ message : "Failed Sign in, No Token"})
     }
   } else {
-    res.status(400).send({ message : "Failed Sign in"})
+    res.status(400).send({ message : "There is no such a username"})
   }
 };
 

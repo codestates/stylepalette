@@ -1,4 +1,4 @@
-import { Table, Column, Model, HasMany, BelongsToMany } from 'sequelize-typescript'
+import { Table, Column, Model, HasMany, BelongsToMany, Default } from 'sequelize-typescript'
 import { Post } from './post'
 import { tb_like } from './tb_like'
 
@@ -19,13 +19,18 @@ export class User extends Model {
   @Column
   email!: string
 
+  @Default("https://stylepalette-s3.s3.ap-northeast-2.amazonaws.com/profileimage/1629174885444.png")
   @Column
   userimage!: string
+  
 
   @HasMany(() => Post)
   post!: Post[]
 
   @BelongsToMany(() => Post, () => tb_like)
-  like!: Post[]
+  postlike!: Post[]
+
+  @HasMany(() => tb_like)
+  like!: tb_like[]
 
 }

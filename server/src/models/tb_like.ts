@@ -1,4 +1,4 @@
-import {Model, Column, Table, ForeignKey} from "sequelize-typescript";
+import {Model, Column, Table, BelongsTo, ForeignKey} from "sequelize-typescript";
 import {User} from "./user";
 import {Post} from "./post";
 
@@ -12,4 +12,10 @@ export class tb_like extends Model {
   @ForeignKey(() => Post)
   @Column
   postId!: number;
+
+  @BelongsTo(() => User)
+  userlike!: User
+
+  @BelongsTo(() => Post)
+  postlike!: Post
 }

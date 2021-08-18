@@ -1,13 +1,11 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import {sequelize} from "./models"
 import cookieparser from "cookie-parser"
 import * as fs from "fs"
 import https from "https"
-
+import dotenv from "dotenv";
 dotenv.config()
- 
 import router from "./router";
 
 const app = express()
@@ -71,7 +69,7 @@ app.get("/", async (req, res) => {
       console.log("Error : " + e)
     })
   });
-//}
+// }
 
 
 

@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from "express";
-import { ITokenInfo, IPatchUserInfo } from "../interfaces/IUserinfo";
+import { ITokenInfo, IPatchUserInfo, ICheckUser } from "../interfaces/IUserinfo";
 import { verify } from "jsonwebtoken"
 import { userinfo } from "../service";
 import dotenv from "dotenv"
 dotenv.config()
-
 
 const getUserinfo = async (req: Request, res: Response, next: NextFunction) => {
   if (req.cookies.jwt) {
@@ -22,26 +21,49 @@ const getUserinfo = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+//사진업로드부분과 본문내용에 관한 요청을 분리
 const patchUserinfo = async (req: Request, res: Response, next: NextFunction) => {
   
-  if (req.params && req.body) {
+  if (req.file || req.body) {
     const payload : IPatchUserInfo = req.body
+    const location = req.file?.location
     const pathParameter : string = req.params.userid
-    const result = await userinfo.patchuserinfo(payload, pathParameter)
-    if (result) {
+    let resultArray = []
+    if (location) {
+      const result = await userinfo.imageUpload(location, pathParameter)
+      resultArray.push(result)
+    }
+    if (payload) {
+      const result = await userinfo.patchuserinfo(payload, pathParameter)
+      resultArray.push(result)
+    }
+    
+    if (resultArray.length > 0) {
       res.status(200).send({ message : "Successed changing your information" })
     } else {
       res.status(400).send({ message : "Failed changing your information" })
     }
   } else {
-    res.status(400).send({ message : "Failed changing your information" })
+    res.status(400).send({ message : "There is no information to change" })
   }
 };
-const postUserImage = async (req: Request, res: Response, next: NextFunction) => {
+
+const postCheckUser = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.body) {
+    const payload : ICheckUser = req.body
+    const result = await userinfo.checkUser(payload)
+
+    if (result) {
+      res.status(200).send({ message : "This user is verified"})
+    } else {
+      res.status(400).send({ message : "Invalid user"})
+    }
+  }
+ 
 
 }
 export default {
   getUserinfo,
   patchUserinfo,
-  postUserImage
+  postCheckUser
 }
