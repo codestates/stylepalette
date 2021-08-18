@@ -25,17 +25,27 @@ const getPosts = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, f
     }
 });
 const postPost = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    if (req.body && req.file) {
+    if (req.body && req.params) {
         const payload = req.body;
-        payload.image = req.file.location;
-        console.log(payload);
         const result = yield service_1.post.postpost(payload);
-        console.log(result);
         if (result) {
-            res.status(201).send({ message: "Successed saving post" });
+            res.status(201).send({ message: "Successed saving post", postid: result.id });
         }
         else {
             res.status(404).send({ message: "Failed saving post" });
+        }
+    }
+});
+const postResult = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    if (req.file && req.params) {
+        const pathPatameter = req.params.postid;
+        const payload = req.file.location;
+        const result = yield service_1.post.postresult(payload, pathPatameter);
+        if (result) {
+            res.status(201).send({ message: "Successed saving result image" });
+        }
+        else {
+            res.status(404).send({ message: "Failed saving result image" });
         }
     }
 });
@@ -66,6 +76,7 @@ exports.default = {
     getPost,
     getPosts,
     postPost,
+    postResult,
     postLike,
     deletePost
 };

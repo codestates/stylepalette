@@ -28,6 +28,16 @@ const postpost = (payload) => {
     const createdPost = post_1.Post.create(payload);
     return createdPost;
 };
+const postresult = (payload, pathParameter) => {
+    const updatedPost = post_1.Post.update({
+        location: payload
+    }, {
+        where: {
+            id: pathParameter
+        }
+    });
+    return updatedPost;
+};
 const postlike = (postid, userid) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const likeRecord = yield tb_like_1.tb_like.findOne({
         where: {
@@ -76,6 +86,7 @@ exports.default = {
     getpost,
     getposts,
     postpost,
+    postresult,
     postlike,
     deletepost
 };
