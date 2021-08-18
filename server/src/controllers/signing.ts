@@ -5,10 +5,12 @@ import { signing } from "../service";
 const signUp = async (req: Request, res: Response, next: NextFunction) => {
 
   const foundUser = await signing.createUser(req.body)
-  if (!foundUser) {
+  if (!foundUser.username && !foundUser.email) {
     res.status(201).send({ message : "Completed sign up" })
-  } else {
-    res.status(400).send({ message : "Already existed" })
+  } else if (foundUser.username){
+    res.status(400).send({ message : "Already existed username" })
+  } else if (foundUser.email) {
+    res.status(400).send({ message : "Already existed email" })
   }
 };
 

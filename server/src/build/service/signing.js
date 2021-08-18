@@ -8,16 +8,23 @@ const dotenv_1 = tslib_1.__importDefault(require("dotenv"));
 dotenv_1.default.config();
 const createUser = (data) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     console.log(data);
-    const user = yield user_1.User.findOne({
+    const userUsername = yield user_1.User.findOne({
         where: {
-            username: data.username,
+            username: data.username
+        },
+        attributes: {
+            exclude: ["createdAt", "updatedAt"]
+        }
+    });
+    const userEmail = yield user_1.User.findOne({
+        where: {
             email: data.email
         },
         attributes: {
             exclude: ["createdAt", "updatedAt"]
         }
     });
-    if (!user) {
+    if (!userUsername && !userEmail) {
         const passwordAndSalt = yield IUser_1.createHashedPassword(data.password);
         yield user_1.User.create({
             realname: data.realname,
@@ -29,7 +36,7 @@ const createUser = (data) => tslib_1.__awaiter(void 0, void 0, void 0, function*
         })
             .then(res => console.log(res));
     }
-    return user;
+    return { username: userUsername, email: userEmail };
 });
 exports.checkUser = function (data) {
     return tslib_1.__awaiter(this, void 0, void 0, function* () {
