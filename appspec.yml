@@ -1,18 +1,18 @@
 version: 0.0
 os: linux
 files:
-  - source: /
-    destination: /home/ubuntu/stylepalette
+    - source: /
+      destination: /home/ubuntu/stylepalette
 
 hooks:
-  # BeforeInstall:
-  #   - location: scripts/beforeinstall.sh
-  ApplicationStop:
-    - location: scripts/stop.sh
-      runas: root
-  AfterInstall:
-    - location: scripts/initialize.sh
-      runas: root
-  ApplicationStart:
-    - location: scripts/start.sh
-      runas: root
+    BeforeInstall:
+        - location: scripts/beforeinstall.sh
+    ApplicationStop:
+        - location: scripts/stop.sh
+          runas: root
+    AfterInstall:
+        - location: scripts/initialize.sh
+          runas: root
+    ApplicationStart:
+        - location: scripts/start.sh
+          runas: root
