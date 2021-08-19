@@ -1,10 +1,11 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { handleModal } from '../redux/actions/action';
-import ProfilePhoto from '../images/TestPhoto.jpg';
+import { handleModal, getUserInfo } from '../redux/actions/action';
+// import ProfilePhoto from '../images/TestPhoto.jpg';
 import { PrimaryButton } from '../components/Button/Button.styled';
-import Photo from '../dummyData/dummyPhoto';
+// import Photo from '../dummyData/dummyPhoto';
+import { getUser } from '../redux/selectors';
 
 const MyPageWrapper = styled.div`
   width: 100%;
@@ -118,31 +119,39 @@ const UserEditButton = styled(PrimaryButton)`
 `;
 
 function MyPage() {
+  useEffect(() => {
+    // get user info
+    dispatch(getUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
 
   const handleClickPostInfo = (event: React.MouseEvent) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
   };
 
   const handleClickProfileEditButton = () => {
-    dispatch(handleModal({ isOpen: true, type: 'profileEdit' }));
+    dispatch(handleModal({ isOpen: true, type: 'passwordCheck' }));
   };
+
   return (
     <MyPageWrapper>
       <MyPageContainer>
         <UserInfoContainer>
           <UserPhotoWrapper>
-            <UserPhoto src={ProfilePhoto} />
+            <UserPhoto src={user.userimage} />
           </UserPhotoWrapper>
           <UserInfoWrapper>
-            <UserInfoContent>전지호</UserInfoContent> <br />
+            <UserInfoContent>{user.realname}</UserInfoContent> <br />
             <UserEditButton onClick={handleClickProfileEditButton}>정보 수정</UserEditButton>
           </UserInfoWrapper>
         </UserInfoContainer>
         <UserPostWrapper>
-          {Photo.map((el, idx) => {
+          {user.post.map((el: string | undefined, idx: React.Key | null | undefined) => {
             return (
-              <NavIcon onClick={handleClickPostInfo}>
+              <NavIcon key={idx} onClick={handleClickPostInfo}>
                 <PostPhoto src={el} />
               </NavIcon>
             );

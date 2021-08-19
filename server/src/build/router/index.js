@@ -1,0 +1,16 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const tslib_1 = require("tslib");
+const express_1 = require("express");
+const signing_1 = tslib_1.__importDefault(require("./signing"));
+const color_1 = tslib_1.__importDefault(require("./color"));
+const post_1 = tslib_1.__importDefault(require("./post"));
+const userinfo_1 = tslib_1.__importDefault(require("./userinfo"));
+const OAuth_1 = tslib_1.__importDefault(require("./OAuth"));
+const router = express_1.Router();
+router.use('/', signing_1.default);
+router.use('/color', color_1.default);
+router.use('/post', post_1.default);
+router.use('/userinfo', userinfo_1.default);
+router.use('/', OAuth_1.default);
+exports.default = router;

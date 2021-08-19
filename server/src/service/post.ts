@@ -33,6 +33,19 @@ const postpost = (payload : IPost) => {
   return createdPost
 }
 
+const postresult = (payload : string, pathParameter: string) => {
+  const updatedPost = Post.update({
+    location : payload
+  },
+  {
+    where : {
+      id : pathParameter
+    }
+  })
+
+  return updatedPost
+}
+
 const postlike = async (postid : string, userid : string)=> {
   const likeRecord = await tb_like.findOne({
     where : {
@@ -86,6 +99,7 @@ export default {
   getpost,
   getposts,
   postpost,
+  postresult,
   postlike,
   deletepost
 };

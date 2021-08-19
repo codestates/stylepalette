@@ -1,10 +1,12 @@
 import React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
 import { logIn } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
+import Text from '../components/Text/Text';
+import { getMessage } from '../redux/selectors';
 
 const LoginWrapper = styled.div`
   width: 400px;
@@ -38,6 +40,10 @@ const Label = styled.label`
   padding-right: 5px;
 `;
 
+const MessageWrapper = styled.div`
+  color: red;
+`;
+
 const SocialButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -54,7 +60,10 @@ const LoginFooter = styled.div`
 export default function Login() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const disabled = username === '' || password === '';
   const dispatch = useDispatch();
+
+  const loginMsg = useSelector(getMessage);
 
   const handleChangeUsername = (event: React.FormEvent<HTMLInputElement>) => {
     const str = event.currentTarget && event.currentTarget.value;
@@ -93,10 +102,18 @@ export default function Login() {
         </InputWrapper>
         <InputWrapper>
           <Label>비밀번호</Label>
-          <input type="password" value={password} onChange={handleChangePassword}></input>
+          <input
+            type="password"
+            value={password}
+            placeholder="비밀번호"
+            onChange={handleChangePassword}
+          ></input>
         </InputWrapper>
+        <MessageWrapper>
+          <Text size="small">{loginMsg}</Text>
+        </MessageWrapper>
         <SocialButtonContainer>
-          <Button primary onClick={requestSignin}>
+          <Button primary onClick={requestSignin} disabled={disabled}>
             로그인
           </Button>
           <Button>카카오로그인</Button>
