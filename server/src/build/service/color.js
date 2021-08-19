@@ -4,7 +4,7 @@ const tslib_1 = require("tslib");
 const IColor_1 = require("../interfaces/IColor");
 const roulette = (colorcode) => {
     let demiColor = IColor_1.demical(colorcode);
-    let rouletteColor = IColor_1.tonOnton(demiColor, 7);
+    let rouletteColor = IColor_1.tonOnton(demiColor, 6.667);
     let hexRouletteColor = rouletteColor.map((el) => IColor_1.hexademical(el));
     return hexRouletteColor;
 };
