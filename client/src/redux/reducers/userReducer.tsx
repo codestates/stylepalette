@@ -1,14 +1,19 @@
 import {
   LOGIN_SUCCESS,
+  LOGIN_FAILURE,
   LOGOUT_SUCCESS,
   PROFILE_EDIT,
   PASSWORD_CHECK,
+  PASSWORDCHECK_SUCCESS,
+  PASSWORDCHECK_FAILURE,
   SIGNUP_SUCCESS,
+  SIGNUP_FAILURE,
+  GETUSERINFO_SUCCESS,
+  GETUSERINFO_FAILURE,
 } from '../actions/action';
 import { initialState, UserState } from './initialState';
 
 const userReducer = (
-  // state: UserState = dummyState.user,
   state: UserState = initialState.user,
   action: { type: string; payload: any },
 ) => {
@@ -34,14 +39,43 @@ const userReducer = (
       return newState;
     }
 
-    case SIGNUP_SUCCESS: {
+    case LOGIN_FAILURE: {
+      console.log('userREDUCER login failure');
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
-        apiMessages: message,
+        apiMessage: message,
       });
       return newUserState;
     }
 
+    case SIGNUP_SUCCESS: {
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessage: message,
+      });
+      return newUserState;
+    }
+
+    case SIGNUP_FAILURE: {
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessage: message,
+      });
+      return newUserState;
+    }
+
+    case GETUSERINFO_SUCCESS: {
+      const { id, realname, username, email, userimage, post } = action.payload;
+      const loggedInUserState = Object.assign({}, state, {
+        userid: id,
+        realname,
+        username,
+        email,
+        userimage,
+        post,
+      });
+      return loggedInUserState;
+    }
     case PROFILE_EDIT:
       const { realname, username, email, password } = action.payload;
       const newProfileState = Object.assign({}, state, {
@@ -51,6 +85,14 @@ const userReducer = (
         password,
       });
       return newProfileState;
+
+    case PASSWORDCHECK_FAILURE: {
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessage: message,
+      });
+      return newUserState;
+    }
 
     // case PASSWORD_CHECK:
     //   const { password } = action.payload;

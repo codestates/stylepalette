@@ -15,6 +15,8 @@ export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const RECOMMEND_COLOR = 'RECOMMEND_COLOR';
 export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
 export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
+export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
+export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
 
 interface LoginProps {
   username: string;
@@ -49,6 +51,36 @@ interface RecommendColor {
 }
 
 // actions creator functions
+export const getUserSuccess = (data: any) => {
+  return {
+    type: GETUSERINFO_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getUserFailure = (data: any) => {
+  return {
+    type: GETUSERINFO_FAILURE,
+    payload: data,
+  };
+};
+
+export const getUserInfo = () => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .get(`${serverUrl}/userinfo`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log('getuser success: ', response);
+        dispatch(getUserSuccess(response.data[0]));
+      })
+      .catch((response) => {
+        console.log('getuser FAILURE: ', response);
+      });
+  };
+};
+
 export const loginSuccess = (data: any) => {
   return {
     type: LOGIN_SUCCESS,
@@ -80,14 +112,22 @@ export const logIn = (data: LoginProps) => {
       .then((response) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.headers);
         dispatch(handleModal({ isOpen: false }));
-        console.log('token', response.data.payload);
-
         localStorage.setItem('token', response.data.payload);
         dispatch(loginSuccess(response.data.payload));
       })
-      .catch((response) => {
-        console.log('LOGIN RESPONSE in FAILURE: ', response);
-        dispatch(loginFailure(response));
+      .catch((error) => {
+        console.log('LOGIN RESPONSE in FAILURE: ', error.response.data.message);
+        let errorMsg;
+        if (error.response) {
+          errorMsg = error.response.data.message;
+        }
+        const noUsernameMsg = '일치하는 아이디가 없습니다.';
+        const wrongPasswordMsg = '비밀번호가 일치하지 않습니다.';
+        if (errorMsg === 'There is no such a username') {
+          dispatch(loginFailure(noUsernameMsg));
+        } else {
+          dispatch(loginFailure(wrongPasswordMsg));
+        }
       });
   };
 };
@@ -147,13 +187,18 @@ export const signup = (data: SignUpProps) => {
       .then((response) => {
         console.log('SIGNUP RESPONSE in SUCCESS: ', response);
         // @ts-ignore
-        const message = response.message || '';
-        dispatch(signupSuccess(message));
-        dispatch(handleModal({ isOpen: true, type: 'login' }));
+        const message = '회원가입이 성공적으로 완료됐습니다.';
+        if (response.status === 201) {
+          dispatch(signupSuccess(message));
+          dispatch(handleModal({ isOpen: true, type: 'login' }));
+        }
       })
       .catch((response) => {
         console.log('SIGNUP RESPONSE in FAILURE: ', response);
-        dispatch(signupFailure(response));
+        const message = '이미 존재하는 아이디입니다.';
+        if (response.status === 400) {
+          dispatch(signupFailure(message));
+        }
       });
   };
 };
@@ -184,7 +229,7 @@ export const passwordCheck = (data: PasswordCheckProps) => {
     const { username, password } = data;
     axios
       .post(
-        `${serverUrl}/checkuser`,
+        `${serverUrl}/userinfo/checkuser`,
         {
           username: username,
           password: password,
@@ -197,9 +242,16 @@ export const passwordCheck = (data: PasswordCheckProps) => {
         console.log('CHECKUSER RESPONSE in SUCCESS: ', response);
         dispatch(handleModal({ isOpen: true, type: 'profileEdit' }));
       })
-      .catch((response) => {
-        console.log('CHECKUSER RESPONSE in FAILURE: ', response);
-        dispatch(passwordCheckFailure(response));
+      .catch((error) => {
+        console.log('CHECKUSER RESPONSE in FAILURE: ');
+        // let errorMsg;
+        // if (error.response) {
+        //   errorMsg = error.response.data.message;
+        // }
+        const wrongPasswordMsg = '비밀번호가 일치하지 않습니다.';
+        if (error.response.status === 400) {
+          dispatch(passwordCheckFailure(wrongPasswordMsg));
+        }
       });
   };
 };
