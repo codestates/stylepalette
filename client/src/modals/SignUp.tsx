@@ -1,11 +1,13 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-
+import { useDispatch, useSelector } from 'react-redux';
 import Button from '../components/Button/Button';
 import { signup } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
+import { getMessage } from '../redux/selectors';
+import { validId, validPassword, validEmail } from '../utils/validator';
+import Text from '../components/Text/Text';
 
 const SignUpWrapper = styled.div`
   width: 400px;
@@ -20,7 +22,7 @@ const SignUpContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid palevioletred;
+  border: 1px solid black;
   padding: 15px;
   margin: 15px;
 `;
@@ -28,6 +30,7 @@ const SignUpContainer = styled.div`
 const SignUpHeader = styled.div`
   display: flex;
   justify-content: center;
+  padding: 1em;
 `;
 
 const InputWrapper = styled.div`
@@ -59,6 +62,10 @@ const SignUpInput = styled.input`
   }
 `;
 
+const MessageWrapper = styled.div`
+  color: red;
+`;
+
 const ButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
@@ -70,45 +77,90 @@ function SignUp() {
   const [email, setEmail] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [realnameMsg, setRealnameMsg] = useState<string>('');
+  const [usernameMsg, setUsernameMsg] = useState<string>('');
+  const [emailMsg, setEmailMsg] = useState<string>('');
+  const [passwordCheck, setPasswordCheck] = useState<string>('');
+  const [passwordMsg, setPasswordMsg] = useState<string>('');
+  const [passwordStrengthMsg, setPasswordStrengthMsg] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
   const dispatch = useDispatch();
 
   useEffect(() => {
     enAble();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [realname, email, username, password]);
+  }, [realname, email, username, password, passwordCheck]);
 
   function enAble() {
-    if (email === '' || realname === '' || username === '' || password === '') {
+    if (
+      email === '' ||
+      realname === '' ||
+      username === '' ||
+      password === '' ||
+      passwordCheck === ''
+    ) {
       setDisabled(false);
     } else {
       setDisabled(true);
     }
   }
 
+  const signupMsg = useSelector(getMessage);
+
   function handleChangeName(e: React.FormEvent<HTMLInputElement>) {
     setRealname(e.currentTarget.value);
+    if (e.currentTarget.value.length > 0) {
+      setRealnameMsg('');
+    } else {
+      setRealnameMsg('이름을 입력해주세요.');
+    }
   }
 
   function handleChangeEmail(e: React.FormEvent<HTMLInputElement>) {
     setEmail(e.currentTarget.value);
+    if (validEmail(e.currentTarget.value) || e.currentTarget.value === '') {
+      setEmailMsg('');
+    } else {
+      setEmailMsg('@을 포함한 이메일을 입력해주세요.');
+    }
   }
 
   function handleChangeUsername(e: React.FormEvent<HTMLInputElement>) {
     setUsername(e.currentTarget.value);
+    if (validId(e.currentTarget.value) || e.currentTarget.value === '') {
+      setUsernameMsg('');
+    } else {
+      setUsernameMsg('알파벳 혹은 숫자만 가능합니다.');
+    }
   }
 
   function handleChangePassword(e: React.FormEvent<HTMLInputElement>) {
     setPassword(e.currentTarget.value);
+    if (validPassword(e.currentTarget.value) || e.currentTarget.value === '') {
+      setPasswordStrengthMsg('');
+    } else if (e.currentTarget.value.length < 8 || e.currentTarget.value.length > 15) {
+      setPasswordStrengthMsg('길이가 8자 이상 15자 이하여야 합니다.');
+    } else {
+      setPasswordStrengthMsg('알파벳, 숫자, 특수문자 조합이어야 합니다.');
+    }
   }
 
-  const requestSignup = async () => {
+  function handleChangePasswordCheck(e: React.FormEvent<HTMLInputElement>) {
+    const passwordCheckInput = e.currentTarget.value;
+    setPasswordCheck(passwordCheckInput);
+    if (password === passwordCheckInput) {
+      setPasswordMsg('');
+    } else {
+      setPasswordMsg('비밀번호가 일치하지 않습니다.');
+    }
+  }
+
+  const requestSignup = () => {
     const userInput = {
       realname,
       email,
       username,
       password,
-      userimage: '',
     };
 
     dispatch(signup(userInput));
@@ -117,6 +169,7 @@ function SignUp() {
   const handleClickLogIn = () => {
     dispatch(handleModal({ isOpen: true, type: 'login' }));
   };
+
   return (
     <SignUpWrapper>
       <SignUpHeader>회원 가입</SignUpHeader>
@@ -131,6 +184,9 @@ function SignUp() {
             onChange={handleChangeName}
           />
         </InputWrapper>
+        <MessageWrapper>
+          <Text size="small">{realnameMsg}</Text>
+        </MessageWrapper>
         <InputWrapper>
           <SignUpInput
             type="text"
@@ -141,6 +197,9 @@ function SignUp() {
             onChange={handleChangeEmail}
           />
         </InputWrapper>
+        <MessageWrapper>
+          <Text size="small">{emailMsg}</Text>
+        </MessageWrapper>
         <InputWrapper>
           <SignUpInput
             type="text"
@@ -151,6 +210,9 @@ function SignUp() {
             onChange={handleChangeUsername}
           />
         </InputWrapper>
+        <MessageWrapper>
+          <Text size="small">{usernameMsg}</Text>
+        </MessageWrapper>
         <InputWrapper>
           <SignUpInput
             type="password"
@@ -161,6 +223,22 @@ function SignUp() {
             onChange={handleChangePassword}
           />
         </InputWrapper>
+        <MessageWrapper>
+          <Text size="small">{passwordStrengthMsg}</Text>
+        </MessageWrapper>
+        <InputWrapper>
+          <SignUpInput
+            type="password"
+            name="비밀번호 확인"
+            placeholder="비밀번호 확인"
+            autoComplete="off"
+            value={passwordCheck}
+            onChange={handleChangePasswordCheck}
+          />
+        </InputWrapper>
+        <MessageWrapper>
+          <Text size="small">{passwordMsg}</Text>
+        </MessageWrapper>
         <ButtonContainer>
           {disabled ? (
             <Button primary onClick={requestSignup}>
@@ -172,6 +250,7 @@ function SignUp() {
             </Button>
           )}
         </ButtonContainer>
+        <MessageWrapper>{signupMsg}</MessageWrapper>
       </SignUpContainer>
       <SignUpFooter>
         <span>계정이 있으신가요?</span>

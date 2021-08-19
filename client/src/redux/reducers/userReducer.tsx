@@ -1,15 +1,19 @@
 import {
   LOGIN_SUCCESS,
+  LOGIN_FAILURE,
   LOGOUT_SUCCESS,
   PROFILE_EDIT,
-  PASSWORD_CHANGE,
+  PASSWORD_CHECK,
+  PASSWORDCHECK_SUCCESS,
+  PASSWORDCHECK_FAILURE,
   SIGNUP_SUCCESS,
+  SIGNUP_FAILURE,
+  GETUSERINFO_SUCCESS,
+  GETUSERINFO_FAILURE,
 } from '../actions/action';
 import { initialState, UserState } from './initialState';
-import { dummyState } from './dummyState';
 
 const userReducer = (
-  // state: UserState = dummyState.user,
   state: UserState = initialState.user,
   action: { type: string; payload: any },
 ) => {
@@ -20,48 +24,82 @@ const userReducer = (
         username: '',
         email: '',
         userimage: '',
+        token: '',
       });
+      localStorage.setItem('token', '');
       return newState;
     }
 
     case LOGIN_SUCCESS: {
-      const { realname, username, email } = action.payload;
+      const token = action.payload;
+      const newState = Object.assign({}, state, {
+        token: token,
+      });
 
-      const newUserInfo = {
-        realname,
-        username,
-        email,
-      };
+      return newState;
+    }
 
-      return newUserInfo;
+    case LOGIN_FAILURE: {
+      console.log('userREDUCER login failure');
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessage: message,
+      });
+      return newUserState;
     }
 
     case SIGNUP_SUCCESS: {
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
-        apiMessages: message,
+        apiMessage: message,
       });
       return newUserState;
     }
 
-    case PROFILE_EDIT: {
-      const { realname, username, email } = action.payload;
+    case SIGNUP_FAILURE: {
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessage: message,
+      });
+      return newUserState;
+    }
+
+    case GETUSERINFO_SUCCESS: {
+      const { id, realname, username, email, userimage, post } = action.payload;
+      const loggedInUserState = Object.assign({}, state, {
+        userid: id,
+        realname,
+        username,
+        email,
+        userimage,
+        post,
+      });
+      return loggedInUserState;
+    }
+    case PROFILE_EDIT:
+      const { realname, username, email, password } = action.payload;
       const newProfileState = Object.assign({}, state, {
         realname,
         username,
         email,
-      });
-      return newProfileState;
-    }
-
-    case PASSWORD_CHANGE: {
-      const { password } = action.payload;
-      const newPasswordState = Object.assign({}, state, {
         password,
       });
-      return newPasswordState;
+      return newProfileState;
+
+    case PASSWORDCHECK_FAILURE: {
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessage: message,
+      });
+      return newUserState;
     }
 
+    // case PASSWORD_CHECK:
+    //   const { password } = action.payload;
+    //   const newPasswordState = Object.assign({}, state, {
+    //     password,
+    //   });
+    //   return newPasswordState;
     default:
       return state;
   }
