@@ -19,6 +19,9 @@ export const initialState = {
     tonOnton: [],
     monoton: [],
   },
+  roulettecolor: {
+    palette: [],
+  },
 };
 
 export interface UserState {
@@ -40,9 +43,14 @@ export interface RecommendColor {
   monoton: string[];
 }
 
+export interface RouletteColor {
+  palette: string[];
+}
+
 export interface RootState {
   user: UserState;
   posts: [];
   modal: ModalState;
   recommendcolor: RecommendColor;
+  roulettecolor: RouletteColor;
 }

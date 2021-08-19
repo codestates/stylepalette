@@ -13,6 +13,8 @@ export const LOGIN_FAILURE = 'LOGIN_FAILURE';
 export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
 export const SIGNUP_FAILURE = 'SIGNUP_FAILURE';
 export const RECOMMEND_COLOR = 'RECOMMEND_COLOR';
+master
+export const ROULETTE_COLOR = 'ROULETTE_COLOR';
 export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
 export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
 export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
@@ -48,6 +50,10 @@ interface PasswordCheckProps {
 
 interface RecommendColor {
   selectedcolor: string;
+}
+
+interface RouletteColor {
+  maincolor: string;
 }
 
 // actions creator functions
@@ -279,6 +285,36 @@ export const recommendColor = (data: RecommendColor) => {
       .then((res) => {
         const data = res.data;
         dispatch(successRecommendColor(data));
+      })
+      .catch((res) => {
+        return res;
+      });
+  };
+};
+
+export const successRouletteColor = (data: any) => {
+  return {
+    type: ROULETTE_COLOR,
+    payload: data,
+  };
+};
+
+export const rouletteColor = (data: RouletteColor) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    const { maincolor } = data;
+    axios
+      .post(
+        `${serverUrl}/color/roulette`,
+        {
+          maincolor,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((res) => {
+        const data = res.data;
+        dispatch(successRouletteColor(data));
       })
       .catch((res) => {
         return res;

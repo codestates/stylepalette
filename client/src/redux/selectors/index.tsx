@@ -25,3 +25,7 @@ export const getModalType = (state: any) => {
 export const getRecommendColor = (state: any) => {
   return state.recommendcolorState;
 };
+
+export const getRouletteColor = (state: any) => {
+  return state.roulettecolorState;
+};
