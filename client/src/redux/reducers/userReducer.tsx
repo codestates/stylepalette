@@ -3,6 +3,7 @@ import {
   LOGIN_FAILURE,
   LOGOUT_SUCCESS,
   PROFILE_EDIT,
+  PROFILE_EDIT_SUCCESS,
   PASSWORD_CHECK,
   PASSWORDCHECK_SUCCESS,
   PASSWORDCHECK_FAILURE,
@@ -10,6 +11,7 @@ import {
   SIGNUP_FAILURE,
   GETUSERINFO_SUCCESS,
   GETUSERINFO_FAILURE,
+  PROFILEIMAGE_EDIT_SUCCESS,
 } from '../actions/action';
 import { initialState, UserState } from './initialState';
 
@@ -76,15 +78,22 @@ const userReducer = (
       });
       return loggedInUserState;
     }
-    case PROFILE_EDIT:
-      const { realname, username, email, password } = action.payload;
+    case PROFILE_EDIT_SUCCESS:
+      const { realname, email, password } = action.payload;
       const newProfileState = Object.assign({}, state, {
         realname,
-        username,
         email,
         password,
       });
       return newProfileState;
+
+    case PASSWORDCHECK_SUCCESS: {
+      const message = action.payload;
+      const newUserState = Object.assign({}, state, {
+        apiMessage: message,
+      });
+      return newUserState;
+    }
 
     case PASSWORDCHECK_FAILURE: {
       const message = action.payload;
@@ -94,6 +103,13 @@ const userReducer = (
       return newUserState;
     }
 
+    case PROFILEIMAGE_EDIT_SUCCESS: {
+      const profileImageUrl = action.payload;
+      const newProfileState = Object.assign({}, state, {
+        userimage: profileImageUrl,
+      });
+      return newProfileState;
+    }
     // case PASSWORD_CHECK:
     //   const { password } = action.payload;
     //   const newPasswordState = Object.assign({}, state, {

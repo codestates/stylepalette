@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { serverUrl } from '../../utils/constants';
+import FormData from 'form-data';
+
 // action types
 export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
@@ -7,6 +9,8 @@ export const LOGOUT_SUCCESS = 'LOG_OUT';
 export const HANDLE_MODAL = 'HANDLE_MODAL';
 export const SIGN_UP = 'SIGN_UP';
 export const PROFILE_EDIT = 'PROFILE_EDIT';
+export const PROFILE_EDIT_SUCCESS = 'PROFILE_EDIT_SUCCESS';
+export const PROFILE_EDIT_FAILURE = 'PROFILE_EDIT_FAILURE';
 export const PASSWORD_CHECK = 'PASSWORD_CHECK';
 export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
 export const LOGIN_FAILURE = 'LOGIN_FAILURE';
@@ -18,6 +22,9 @@ export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
 export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
 export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
 export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
+export const PROFILEIMAGE_EDIT = 'PROFILEIMAGE_EDIT';
+export const PROFILEIMAGE_EDIT_SUCCESS = 'PROFILEIMAGE_EDIT_SUCCESS';
+export const PROFILEIMAGE_EDIT_FAILURE = 'PROFILEIMAGE_EDIT_FAILURE';
 
 interface LoginProps {
   username: string;
@@ -37,14 +44,20 @@ interface SignUpProps {
 }
 
 interface ProfileEditProps {
-  realname: string;
-  username: string;
-  email: string;
+  userid: number | null;
+  realname?: string;
+  email?: string;
+  password?: string;
 }
 
 interface PasswordCheckProps {
   username: string;
   password: string;
+}
+
+interface ProfileImageEditProps {
+  userid: number | null;
+  file?: File;
 }
 
 interface RecommendColor {
@@ -208,10 +221,43 @@ export const signup = (data: SignUpProps) => {
   };
 };
 
-export const profileEdit = (data: ProfileEditProps) => {
+export const profileEditSuccess = (data: any) => {
   return {
-    type: PROFILE_EDIT,
+    type: PROFILE_EDIT_SUCCESS,
     payload: data,
+  };
+};
+
+export const profileEditFailure = (data: string) => {
+  return {
+    type: PROFILE_EDIT_FAILURE,
+    payload: data,
+  };
+};
+
+export const profileEdit = (data: ProfileEditProps) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    const { userid, realname, email, password } = data;
+    axios
+      .patch(
+        `${serverUrl}/userinfo/${userid}/info`,
+        { realname, email, password },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        console.log('PROFILE EDIT RESPONSE in SUCCESS: ', response.data);
+        //TODO: once response includes user credentials pass them into "profileEditSuccess()"
+        // dispatch(profileEditSucess())
+      })
+      .catch((error) => {
+        console.log('ROFILE EDIT  RESPONSE in FAILURE: ');
+        // let errorMsg;
+        // if (error.response) {
+        //   errorMsg = error.response.data.message;
+        // }
+      });
   };
 };
 
@@ -244,11 +290,12 @@ export const passwordCheck = (data: PasswordCheckProps) => {
         },
       )
       .then((response) => {
-        console.log('CHECKUSER RESPONSE in SUCCESS: ', response);
+        const message = '';
         dispatch(handleModal({ isOpen: true, type: 'profileEdit' }));
+        dispatch(passwordCheckSuccess(message));
       })
       .catch((error) => {
-        console.log('CHECKUSER RESPONSE in FAILURE: ');
+        // console.log('CHECKUSER RESPONSE in FAILURE: ');
         // let errorMsg;
         // if (error.response) {
         //   errorMsg = error.response.data.message;
@@ -257,6 +304,45 @@ export const passwordCheck = (data: PasswordCheckProps) => {
         if (error.response.status === 400) {
           dispatch(passwordCheckFailure(wrongPasswordMsg));
         }
+      });
+  };
+};
+
+export const profileImageChangeSucess = (data: ProfileImageEditProps) => {
+  return {
+    type: PROFILEIMAGE_EDIT_SUCCESS,
+    payload: data,
+  };
+};
+
+export const profileImageChangeFailure = (message: string) => {
+  return {
+    type: PROFILEIMAGE_EDIT_FAILURE,
+    payload: message,
+  };
+};
+
+export const profileImageChange = (data: ProfileImageEditProps) => {
+  const { userid, file } = data;
+  let formData = new FormData();
+  formData.append('profile', file, file?.name);
+
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .patch(`${serverUrl}/userinfo/${userid}/profile`, formData, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log('PROFILEIMAGE RESPONSE in SUCCESS: ', response.data);
+        //TODO: Once image url is included in response,  put it in success action to update state
+        // dispatch(profileImageChangeSucess())
+      })
+      .catch((error) => {
+        console.log('PROFILEIMAGE RESPONSE in FAILURE: ');
+        // let errorMsg;
+        // if (error.response) {
+        //   errorMsg = error.response.data.message;
+        // }
       });
   };
 };

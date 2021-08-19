@@ -115,6 +115,8 @@ function App() {
           </Route>
         </Switch>
         {/* <ProfileEdit /> */}
+        {/* <GenderSelect /> */}
+        {/* <Result /> */}
         <Footer />
       </BrowserRouter>
     </Wrapper>
