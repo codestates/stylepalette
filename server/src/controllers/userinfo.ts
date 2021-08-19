@@ -22,23 +22,30 @@ const getUserinfo = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 //사진업로드부분과 본문내용에 관한 요청을 분리
+const patchProfile = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.file && req.params) {
+    const pathParameter : string = req.params.userid
+    const location = req.file?.location
+    const result = await userinfo.imageUpload(location, pathParameter)
+
+    if (result) {
+      res.status(200).send({ message : "Successed changing your Profile" })
+    } else {
+      res.status(400).send({ message : "Failed changing your Profile" })
+    }
+  } else {
+    res.status(400).send({ message : "There is no Profile to change" })
+  }
+   
+}
 const patchUserinfo = async (req: Request, res: Response, next: NextFunction) => {
   
-  if (req.file || req.body) {
-    const payload : IPatchUserInfo = req.body
-    const location = req.file?.location
+  if (req.params && req.body) {
     const pathParameter : string = req.params.userid
-    let resultArray = []
-    if (location) {
-      const result = await userinfo.imageUpload(location, pathParameter)
-      resultArray.push(result)
-    }
-    if (payload) {
-      const result = await userinfo.patchuserinfo(payload, pathParameter)
-      resultArray.push(result)
-    }
-    
-    if (resultArray.length > 0) {
+    const payload : IPatchUserInfo = req.body
+    const result = await userinfo.patchuserinfo(payload, pathParameter)
+     
+    if (result) {
       res.status(200).send({ message : "Successed changing your information" })
     } else {
       res.status(400).send({ message : "Failed changing your information" })
@@ -65,5 +72,6 @@ const postCheckUser = async (req: Request, res: Response, next: NextFunction) =>
 export default {
   getUserinfo,
   patchUserinfo,
+  patchProfile,
   postCheckUser
 }

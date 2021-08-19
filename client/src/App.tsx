@@ -12,6 +12,8 @@ import GenderSelect from './pages/GenderSelect';
 import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
+import axios from 'axios';
+import { serverUrl } from "./utils/constants"
 // import Result from './pages/Result';
 // import ProfileEdit from './modals/ProfileEdit';
 
@@ -42,7 +44,30 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   const [gender, setGender] = useState<string>('');
   const dispatch = useDispatch();
+
+  const url = new URL(window.location.href);
+ 
+  const authorizationCode = url.searchParams.get("code");
+  const scope = url.searchParams.get("scope")
+ 
+
   useEffect(() => {
+    // social login cehck
+    if (authorizationCode && scope) {
+      axios.post(`${serverUrl}/google`, {
+        code : authorizationCode
+      },{
+        withCredentials : true
+      })
+      .then(res => console.log(res))
+    } else if (authorizationCode && !scope){
+      axios.post(`${serverUrl}/kakao`, {
+        code : authorizationCode
+      },{
+        withCredentials : true
+      })
+      .then(res => console.log(res))
+    }
     // check if user has logged in
     const token = localStorage.getItem('token');
     if (token) {
@@ -52,6 +77,9 @@ function App() {
   }, []);
 
   const isModalOpen = useSelector(getIsModalOpen);
+
+
+
 
   return (
     <Wrapper isModalOpen={isModalOpen}>
