@@ -10,7 +10,7 @@ const getUserinfo = async (req: Request, res: Response, next: NextFunction) => {
     const accessSecret = process.env.ACCESS_SECRET ? process.env.ACCESS_SECRET : undefined
 
     if (accessSecret) {
-      const tokenInfo = verify(req.cookies.jwt, accessSecret)
+      const tokenInfo = verify(req.cookies.jwt, accessSecret, {ignoreExpiration: true})
       const userInfo = await userinfo.getuserinfo(tokenInfo as ITokenInfo)
       res.status(200).send(userInfo)
     } else {
@@ -29,7 +29,7 @@ const patchProfile = async (req: Request, res: Response, next: NextFunction) => 
     const result = await userinfo.imageUpload(location, pathParameter)
 
     if (result) {
-      res.status(200).send({ message : "Successed changing your Profile" })
+      res.status(200).send({ message : "Successed changing your Profile" , location : location })
     } else {
       res.status(400).send({ message : "Failed changing your Profile" })
     }
@@ -38,6 +38,22 @@ const patchProfile = async (req: Request, res: Response, next: NextFunction) => 
   }
    
 }
+const patchPassword = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.params && req.body) {
+    const pathParameter : string = req.params.userid
+    const payload : IPatchUserInfo = req.body
+    const result = await userinfo.patchPassword(payload, pathParameter)
+     
+    if (result) {
+      res.status(200).send({ message : "Successed changing your password" })
+    } else {
+      res.status(400).send({ message : "Failed changing your password" })
+    }
+  } else {
+    res.status(400).send({ message : "There is no information to change" })
+  }
+}
+
 const patchUserinfo = async (req: Request, res: Response, next: NextFunction) => {
   
   if (req.params && req.body) {
@@ -72,6 +88,7 @@ const postCheckUser = async (req: Request, res: Response, next: NextFunction) =>
 export default {
   getUserinfo,
   patchUserinfo,
+  patchPassword,
   patchProfile,
   postCheckUser
 }

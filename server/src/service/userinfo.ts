@@ -26,11 +26,7 @@ const getuserinfo = (tokenInfo : ITokenInfo) => {
 } 
 
 const patchuserinfo = async (payload : IPatchUserInfo, pathParameter : string) => {
-  if (payload.password) {
-    const newPasswordAndSalt : IHashedPasswordSalt = await createHashedPassword(payload.password)
-    payload.password = newPasswordAndSalt.password
-    payload.salt = newPasswordAndSalt.salt
-  }
+  
   const updatedUserInfo = User.update(payload, {
     where : {
       id : pathParameter
@@ -39,6 +35,21 @@ const patchuserinfo = async (payload : IPatchUserInfo, pathParameter : string) =
 
   return updatedUserInfo
 }
+const patchPassword = async (payload : IPatchUserInfo, pathParameter : string) => {
+  if (payload.password) {
+    const newPasswordAndSalt : IHashedPasswordSalt = await createHashedPassword(payload.password)
+    payload.password = newPasswordAndSalt.password
+    payload.salt = newPasswordAndSalt.salt
+  }
+  const updatedPassword = User.update(payload, {
+    where : {
+      id : pathParameter
+    }
+  })
+
+  return updatedPassword
+}
+
 const imageUpload = (location : string, pathParameter : string) => {
   const updateUserImage = User.update({
     userimage : location
@@ -75,6 +86,7 @@ const checkUser = async (payload : ICheckUser) => {
 export default {
   getuserinfo,
   patchuserinfo,
+  patchPassword,
   imageUpload,
   checkUser
 };
