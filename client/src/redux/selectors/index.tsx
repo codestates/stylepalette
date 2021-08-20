@@ -29,3 +29,11 @@ export const getRecommendColor = (state: any) => {
 export const getRouletteColor = (state: any) => {
   return state.roulettecolorState;
 };
+
+export const getUserPickColor = (state: any) => {
+  return state.userpickcolorState;
+};
+
+export const getMainResultImage = (state: any) => {
+  return state.mainresultimageState;
+};

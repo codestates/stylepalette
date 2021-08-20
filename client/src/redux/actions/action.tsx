@@ -18,6 +18,8 @@ export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
 export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
 export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
 export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
+export const USER_PICKCOLOR = 'USER_PICKCOLOR';
+export const MAIN_RESULTIMAGE = 'MAIN_RESULTIMAGE';
 
 interface LoginProps {
   username: string;
@@ -53,6 +55,15 @@ interface RecommendColor {
 
 interface RouletteColor {
   maincolor: string;
+}
+
+interface UserPickColorProps {
+  topcolor: string;
+  bottomcolor: string;
+}
+
+interface MainResultImageProps {
+  imageblob: Blob;
 }
 
 // actions creator functions
@@ -318,5 +329,19 @@ export const rouletteColor = (data: RouletteColor) => {
       .catch((res) => {
         return res;
       });
+  };
+};
+
+export const setUserPickColor = (data: UserPickColorProps) => {
+  return {
+    type: USER_PICKCOLOR,
+    payload: data,
+  };
+};
+
+export const setMainResultImage = (data: MainResultImageProps) => {
+  return {
+    type: MAIN_RESULTIMAGE,
+    payload: data,
   };
 };

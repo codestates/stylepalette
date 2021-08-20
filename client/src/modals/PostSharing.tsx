@@ -1,9 +1,14 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { serverUrl } from '../utils/constants';
 import Button from '../components/Button/Button';
 import axios from 'axios';
+import { serverUrl } from '../utils/constants';
+
+import { getUserPickColor, getMainResultImage, getUser } from '../redux/selectors';
+import { UserPickColor, MainResultImage } from '../redux/reducers/initialState';
+import { getUserInfo } from '../redux/actions/action';
 
 const PostWrapper = styled.div`
   width: 400px;
@@ -18,7 +23,7 @@ const PostContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid palevioletred;
+  border: 1px solid black;
   padding: 15px;
   margin: 15px;
 `;
@@ -64,21 +69,64 @@ const PostInput = styled.input`
 `;
 
 function PostSharing() {
+  useEffect(() => {
+    // get user info
+    dispatch(getUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const dispatch = useDispatch();
+  const user = useSelector(getUser);
+  const userPickColor: UserPickColor = useSelector(getUserPickColor);
+  const mainResultImage: MainResultImage = useSelector(getMainResultImage);
+  const imgSrc = URL.createObjectURL(mainResultImage.imageblob);
   const [postTitle, setPostTitle] = useState<string>('');
-  const [img, setImg] = useState<string>(
-    'https://www.contentviewspro.com/wp-content/uploads/2017/07/default_image.png',
-  );
 
   function handleChangePostName(e: React.FormEvent<HTMLInputElement>) {
     setPostTitle(e.currentTarget.value);
   }
 
+  // URL.revokeObjectURL(imgSrc);
+
   const requestSignup = async (isPublic: boolean) => {
-    const result = await axios.post(`${serverUrl}/post`, {
+    const newPost = {
       isPublic,
       title: postTitle,
-      image: img,
-    });
+      userId: user.userid,
+      topcolor: userPickColor.topcolor,
+      bottomcolor: userPickColor.bottomcolor,
+    };
+
+    const postId = await axios
+      .post(`${serverUrl}/post`, newPost, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        const data = res.data;
+        return data;
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
+
+    let formData = new FormData();
+    formData.append('result', mainResultImage.imageblob, `${postId.postid}.png`);
+
+    console.log('postId:', postId.postid);
+
+    await axios
+      .post(`${serverUrl}/post/${postId.postid}/result`, formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+      })
+      .catch((res) => {
+        console.log(res.data);
+      });
   };
 
   return (
@@ -96,7 +144,7 @@ function PostSharing() {
           ></PostInput>
         </InputWrapper>
         <InputWrapper>
-          <PostImage src={img} />
+          <PostImage src={imgSrc} />
         </InputWrapper>
       </PostContainer>
       <PostFooter>
