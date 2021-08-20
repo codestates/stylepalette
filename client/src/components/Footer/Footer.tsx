@@ -9,7 +9,7 @@ const FooterContainer = styled.div`
   align-items: center;
   border-top: solid 1px #dbdbdb;
   width: 100%;
-  height: 5rem;
+  height: 6rem;
   bottom: 0;
 `;
 
