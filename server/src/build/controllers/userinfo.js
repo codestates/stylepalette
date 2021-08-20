@@ -21,22 +21,29 @@ const getUserinfo = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0
         res.status(404).send({ message: "No token" });
     }
 });
-const patchUserinfo = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+const patchProfile = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     var _a;
-    if (req.file || req.body) {
-        const payload = req.body;
-        const location = (_a = req.file) === null || _a === void 0 ? void 0 : _a.location;
+    if (req.file && req.params) {
         const pathParameter = req.params.userid;
-        let resultArray = [];
-        if (location) {
-            const result = yield service_1.userinfo.imageUpload(location, pathParameter);
-            resultArray.push(result);
+        const location = (_a = req.file) === null || _a === void 0 ? void 0 : _a.location;
+        const result = yield service_1.userinfo.imageUpload(location, pathParameter);
+        if (result) {
+            res.status(200).send({ message: "Successed changing your Profile" });
         }
-        if (payload) {
-            const result = yield service_1.userinfo.patchuserinfo(payload, pathParameter);
-            resultArray.push(result);
+        else {
+            res.status(400).send({ message: "Failed changing your Profile" });
         }
-        if (resultArray.length > 0) {
+    }
+    else {
+        res.status(400).send({ message: "There is no Profile to change" });
+    }
+});
+const patchUserinfo = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    if (req.params && req.body) {
+        const pathParameter = req.params.userid;
+        const payload = req.body;
+        const result = yield service_1.userinfo.patchuserinfo(payload, pathParameter);
+        if (result) {
             res.status(200).send({ message: "Successed changing your information" });
         }
         else {
@@ -62,5 +69,6 @@ const postCheckUser = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void
 exports.default = {
     getUserinfo,
     patchUserinfo,
+    patchProfile,
     postCheckUser
 };

@@ -2,7 +2,7 @@ import {rgbvalue, monotone, tonInton, tonOnton, hexademical, demical } from "../
 
 const roulette = (colorcode : string) => {
   let demiColor = demical(colorcode)
-  let rouletteColor = tonOnton(demiColor, 7)
+  let rouletteColor = tonOnton(demiColor, 6.667)
   let hexRouletteColor = rouletteColor.map((el:rgbvalue) => hexademical(el))
   return hexRouletteColor
 }
