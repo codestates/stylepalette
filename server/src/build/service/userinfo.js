@@ -25,17 +25,25 @@ const getuserinfo = (tokenInfo) => {
     return info;
 };
 const patchuserinfo = (payload, pathParameter) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    if (payload.password) {
-        const newPasswordAndSalt = yield IUser_1.createHashedPassword(payload.password);
-        payload.password = newPasswordAndSalt.password;
-        payload.salt = newPasswordAndSalt.salt;
-    }
     const updatedUserInfo = user_1.User.update(payload, {
         where: {
             id: pathParameter
         }
     });
     return updatedUserInfo;
+});
+const patchPassword = (payload, pathParameter) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    if (payload.password) {
+        const newPasswordAndSalt = yield IUser_1.createHashedPassword(payload.password);
+        payload.password = newPasswordAndSalt.password;
+        payload.salt = newPasswordAndSalt.salt;
+    }
+    const updatedPassword = user_1.User.update(payload, {
+        where: {
+            id: pathParameter
+        }
+    });
+    return updatedPassword;
 });
 const imageUpload = (location, pathParameter) => {
     const updateUserImage = user_1.User.update({
@@ -70,6 +78,7 @@ const checkUser = (payload) => tslib_1.__awaiter(void 0, void 0, void 0, functio
 exports.default = {
     getuserinfo,
     patchuserinfo,
+    patchPassword,
     imageUpload,
     checkUser
 };

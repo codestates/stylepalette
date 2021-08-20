@@ -5,6 +5,7 @@ const axios_1 = tslib_1.__importDefault(require("axios"));
 const dotenv_1 = tslib_1.__importDefault(require("dotenv"));
 dotenv_1.default.config();
 const google = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    console.log(process.env.GOOGLE_CLIENT_ID);
     yield axios_1.default.post("https://oauth2.googleapis.com/token", {
         client_id: process.env.GOOGLE_CLIENT_ID,
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
@@ -25,6 +26,7 @@ const google = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, fun
         .catch(e => res.status(404).send({ meassage: e }));
 });
 const kakao = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    console.log(process.env.KAKAO_CLIENT_ID);
     yield axios_1.default.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&code=${req.body.code}`, {
         headers: {
             'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'

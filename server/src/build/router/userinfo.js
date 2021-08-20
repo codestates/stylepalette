@@ -7,5 +7,6 @@ const router = express_1.Router();
 router.get('/', controllers_1.userinfo.getUserinfo);
 router.post('/checkuser', controllers_1.userinfo.postCheckUser);
 router.patch('/:userid/profile', awsS3_1.profileUpload.single("profile"), controllers_1.userinfo.patchProfile);
+router.patch('/:userid/password', controllers_1.userinfo.patchPassword);
 router.patch('/:userid/info', controllers_1.userinfo.patchUserinfo);
 exports.default = router;
