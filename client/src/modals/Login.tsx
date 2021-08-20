@@ -1,10 +1,15 @@
 import React from 'react';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
 import { logIn } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
+import Text from '../components/Text/Text';
+import { getMessage } from '../redux/selectors';
+import { serverUrl } from "../utils/constants"
+import dotenv from "dotenv"
+dotenv.config()
 
 const LoginWrapper = styled.div`
   width: 400px;
@@ -25,7 +30,7 @@ const LoginContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid palevioletred;
+  border: 1px solid black;
   padding: 15px;
   margin: 15px;
 `;
@@ -36,6 +41,10 @@ const InputWrapper = styled.div`
 
 const Label = styled.label`
   padding-right: 5px;
+`;
+
+const MessageWrapper = styled.div`
+  color: red;
 `;
 
 const SocialButtonContainer = styled.div`
@@ -54,7 +63,10 @@ const LoginFooter = styled.div`
 export default function Login() {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const disabled = username === '' || password === '';
   const dispatch = useDispatch();
+
+  const loginMsg = useSelector(getMessage);
 
   const handleChangeUsername = (event: React.FormEvent<HTMLInputElement>) => {
     const str = event.currentTarget && event.currentTarget.value;
@@ -74,17 +86,27 @@ export default function Login() {
     dispatch(logIn(userCredentials));
   };
 
-  // const requestSignin = async () => {
-  //     const result = await axios.post(`${serverUrl}/signin`, {
-  //         username: username,
-  //         password: password,
-  //     });
-  //     console.log(result);
-  // };
-
   const handleClickSignUp = () => {
     dispatch(handleModal({ isOpen: true, type: 'signup' }));
   };
+
+  const googleLogin = () => {
+    const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
+    console.log(GOOGLE_CLIENT_ID)
+    const GOOGLE_LOGIN_URL = 
+    `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https://stylepalette.net&client_id=${GOOGLE_CLIENT_ID}`
+    window.location.assign(GOOGLE_LOGIN_URL);
+  
+  }
+  const kakaoLogin = () => {
+    const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID
+    console.log(KAKAO_CLIENT_ID)
+    const KAKAO_LOGIN_URL = 
+    `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&response_type=code&state`
+    window.location.assign(KAKAO_LOGIN_URL);
+  
+  }
+ 
 
   return (
     <LoginWrapper>
@@ -92,18 +114,31 @@ export default function Login() {
       <LoginContainer>
         <InputWrapper>
           <Label>유저네임</Label>
-          <input type="text" value={username} onChange={handleChangeUsername}></input>
+          <input
+            type="text"
+            value={username}
+            placeholder="아이디"
+            onChange={handleChangeUsername}
+          ></input>
         </InputWrapper>
         <InputWrapper>
           <Label>비밀번호</Label>
-          <input type="password" value={password} onChange={handleChangePassword}></input>
+          <input
+            type="password"
+            value={password}
+            placeholder="비밀번호"
+            onChange={handleChangePassword}
+          ></input>
         </InputWrapper>
+        <MessageWrapper>
+          <Text size="small">{loginMsg}</Text>
+        </MessageWrapper>
         <SocialButtonContainer>
-          <Button primary onClick={requestSignin}>
+          <Button primary onClick={requestSignin} disabled={disabled}>
             로그인
           </Button>
-          <Button>카카오로그인</Button>
-          <Button>구글로그인</Button>
+          <Button primary onClick={kakaoLogin}>카카오로그인</Button>
+          <Button primary onClick={googleLogin}>구글로그인</Button>
         </SocialButtonContainer>
       </LoginContainer>
       <LoginFooter>

@@ -10,11 +10,22 @@ import axios from 'axios';
 
 import Photo from '../dummyData/dummyPhoto';
 
-const Color = ['인기순', '빨강', '주황', '노랑', '파랑', '남색', '보라', '하양', '검정'];
+const Color = [
+  '최신순',
+  '인기순',
+  '빨강',
+  '주황',
+  '노랑',
+  '초록',
+  '파랑',
+  '남색',
+  '보라',
+  '하양',
+  '검정',
+];
 
 const GalleryWrapper = styled.div`
   width: 100vw;
-  height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
@@ -28,8 +39,7 @@ const FillterContainer = styled.div`
   text-align: left;
 `;
 
-const ListContainer = styled.ul`
-  list-style: none;
+const ListContainer = styled.div`
   display: inline-block;
   max-width: 601px;
   margin: 80px 0 40px;
@@ -38,15 +48,16 @@ const ListContainer = styled.ul`
   border-left: 1px solid rgb(147, 112, 98);
 `;
 
-const ColorList = styled.li`
-  list-style: none;
+const ColorList = styled.button`
   text-align: center;
   display: inline-block;
   width: 100px;
   padding: 12px 8px;
+  border: none;
   border-right: 1px solid rgb(147, 112, 98);
   border-bottom: 1px solid rgb(147, 112, 98);
   cursor: pointer;
+  background-color: white;
 
   &:hover {
     opacity: 80%;
@@ -89,8 +100,8 @@ const PostPhoto = styled.img`
   border-style: solid;
   border-width: 2px;
   border-color: #c79a00;
-  width: 300px;
-  height: 300px;
+  width: 295px;
+  height: 295px;
 
   &:hover {
     opacity: 80%;

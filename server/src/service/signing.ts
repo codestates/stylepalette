@@ -6,17 +6,25 @@ dotenv.config()
 
 const createUser = async (data: IUserInputDTO) => {
   console.log(data)
-    const user = await User.findOne({
+    const userUsername = await User.findOne({
       where : {
-        username : data.username,
-        email :  data.email
+        username : data.username
+      },
+      attributes : {
+        exclude : ["createdAt", "updatedAt"]
+      }
+    })
+
+    const userEmail = await User.findOne({
+      where : {
+        email : data.email
       },
       attributes : {
         exclude : ["createdAt", "updatedAt"]
       }
     })
     
-    if (!user) {
+    if (!userUsername && !userEmail) {
       const passwordAndSalt : IHashedPasswordSalt = await createHashedPassword(data.password)
 
       await User.create({
@@ -29,7 +37,8 @@ const createUser = async (data: IUserInputDTO) => {
       })
       .then(res => console.log(res))
     }
-    return user
+
+    return { username : userUsername, email : userEmail }
 }
 
 export const checkUser = async function (data : IUserCheck) {
@@ -42,9 +51,20 @@ export const checkUser = async function (data : IUserCheck) {
     }
   })
 
-  return user
+  const salt =  user?.salt
+  if (salt) {
+    const checkecdPassword = await checkHashedPassword(data.password, salt)
+    if (user?.password === checkecdPassword.password) {
+      return user
+    } else {
+      const message : string = "Wrong password"
+      return message
+    }
+  } else {
+    return user
+  }
+  
 }
-
 
 export const getToken = function (data : User) {
   let accessSecret = process.env.ACCESS_SECRET ? process.env.ACCESS_SECRET : undefined

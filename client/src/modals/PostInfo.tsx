@@ -2,9 +2,6 @@ import React from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
-import axios from 'axios';
-import { serverUrl } from '../utils/constants';
-import Modal from './Modal';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPosts, getUser } from '../redux/selectors';
 

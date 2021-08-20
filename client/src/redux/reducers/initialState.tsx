@@ -5,12 +5,22 @@ export const initialState = {
     username: '',
     email: '',
     userimage: '',
-    apiMessages: '',
+    apiMessage: '',
+    token: '',
+    post: [],
   },
   posts: [],
   modal: {
     isOpen: false,
     type: '',
+  },
+  recommendcolor: {
+    tonInton: [],
+    tonOnton: [],
+    monoton: [],
+  },
+  roulettecolor: {
+    palette: [],
   },
 };
 
@@ -27,8 +37,20 @@ export interface ModalState {
   type: string;
 }
 
+export interface RecommendColor {
+  tonInton: string[];
+  tonOnton: string[];
+  monoton: string[];
+}
+
+export interface RouletteColor {
+  palette: string[];
+}
+
 export interface RootState {
   user: UserState;
   posts: [];
   modal: ModalState;
+  recommendcolor: RecommendColor;
+  roulettecolor: RouletteColor;
 }

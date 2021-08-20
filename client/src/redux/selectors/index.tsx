@@ -7,7 +7,11 @@ export const getUser = (state: any) => {
 };
 
 export const getIsLoggedIn = (state: any): boolean => {
-  return state.userState.userid !== null;
+  return state.userState.token !== '';
+};
+
+export const getMessage = (state: any): string => {
+  return state.userState.apiMessage;
 };
 
 export const getIsModalOpen = (state: any): boolean => {
@@ -16,4 +20,12 @@ export const getIsModalOpen = (state: any): boolean => {
 
 export const getModalType = (state: any) => {
   return state.modalState.type;
+};
+
+export const getRecommendColor = (state: any) => {
+  return state.recommendcolorState;
+};
+
+export const getRouletteColor = (state: any) => {
+  return state.roulettecolorState;
 };

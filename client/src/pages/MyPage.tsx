@@ -1,19 +1,18 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { handleModal } from '../redux/actions/action';
-import ProfilePhoto from '../images/TestPhoto.jpg';
+import { handleModal, getUserInfo } from '../redux/actions/action';
+// import ProfilePhoto from '../images/TestPhoto.jpg';
 import { PrimaryButton } from '../components/Button/Button.styled';
-import Photo from '../dummyData/dummyPhoto';
+// import Photo from '../dummyData/dummyPhoto';
+import { getUser } from '../redux/selectors';
 
 const MyPageWrapper = styled.div`
-  width: 100%;
-  /* height: 100vw; */
+  width: 100vw;
+  height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
-  left: 0;
-  top: 0;
 `;
 
 const MyPageContainer = styled.div`
@@ -42,7 +41,10 @@ const UserInfoContainer = styled.div`
 `;
 
 const UserPhotoWrapper = styled.div`
-  padding: 50px;
+  width: 250px;
+  height: 250px;
+  text-align: center;
+  padding: 50px 10px 10px 50px;
 
   @media (max-width: 768px) {
     padding: 50px 50px 50px 115px;
@@ -99,7 +101,7 @@ const PostPhoto = styled.img`
 const UserPhoto = styled.img`
   width: 175px;
   height: 175px;
-  border-radius: 90px;
+  border-radius: 50%;
 `;
 
 const UserInfoContent = styled.span`
@@ -112,38 +114,45 @@ const UserInfoContent = styled.span`
 `;
 
 const UserEditButton = styled(PrimaryButton)`
-  width: 150px;
-  height: 50px;
-  padding: 10px;
+  width: 175px;
+  height: 75px;
 `;
 
 function MyPage() {
+  useEffect(() => {
+    // get user info
+    dispatch(getUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const dispatch = useDispatch();
+  const user = useSelector(getUser);
 
   const handleClickPostInfo = (event: React.MouseEvent) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
   };
 
   const handleClickProfileEditButton = () => {
-    dispatch(handleModal({ isOpen: true, type: 'profileEdit' }));
+    dispatch(handleModal({ isOpen: true, type: 'passwordCheck' }));
   };
+
   return (
     <MyPageWrapper>
       <MyPageContainer>
         <UserInfoContainer>
           <UserPhotoWrapper>
-            <UserPhoto src={ProfilePhoto} />
+            <UserPhoto src={user.userimage} />
           </UserPhotoWrapper>
           <UserInfoWrapper>
-            <UserInfoContent>전지호</UserInfoContent> <br />
+            <UserInfoContent>{user.username}</UserInfoContent> <br />
             <UserEditButton onClick={handleClickProfileEditButton}>정보 수정</UserEditButton>
           </UserInfoWrapper>
         </UserInfoContainer>
         <UserPostWrapper>
-          {Photo.map((el, idx) => {
+          {user.post.map((el: any, idx: React.Key | null | undefined) => {
             return (
-              <NavIcon onClick={handleClickPostInfo}>
-                <PostPhoto src={el} />
+              <NavIcon key={idx} onClick={handleClickPostInfo}>
+                <PostPhoto src={el.image} />
               </NavIcon>
             );
           })}

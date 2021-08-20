@@ -1,21 +1,21 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import {sequelize} from "./models"
+import cookieparser from "cookie-parser"
 import * as fs from "fs"
 import https from "https"
-
+import dotenv from "dotenv";
 dotenv.config()
- 
 import router from "./router";
 
 const app = express()
 
 app.use(cors({
-  origin: ['https://stylepalette.net', 'https://localhost:3000'],
+  origin: ['https://www.stylepalette.net', 'https://stylepalette.net', 'https://localhost:3000'],
   credentials: true,
   methods: ["GET", "POST", "OPTIONS", "PUT", "PATCH", "DELETE"],
 }))
+app.use(cookieparser())
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
 

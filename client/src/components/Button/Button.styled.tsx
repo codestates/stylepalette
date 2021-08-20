@@ -2,11 +2,12 @@ import styled from 'styled-components';
 
 export const DefaultButton = styled.button`
   background: transparent;
-  color: palevioletred;
+  color: black;
   border-radius: 3px;
-  border: 2px solid palevioletred;
+  border: 1px solid black;
   margin: 0.5em 1em;
   padding: 0.25em 1em;
+  transition: all 0.2s linear;
 
   &:disabled {
     // change opacity
@@ -17,11 +18,13 @@ export const DefaultButton = styled.button`
     /* color: #dbdbdb; */
     cursor: pointer;
     opacity: 90%;
+    transform: translatey(3px);
+    animation: ani9 0.4s ease-in-out infinite alternate;
   }
 `;
 
 export const PrimaryButton = styled(DefaultButton)`
-  background: palevioletred;
+  background: black;
   color: white;
 
   &:hover {

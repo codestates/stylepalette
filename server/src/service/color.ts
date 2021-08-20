@@ -2,7 +2,7 @@ import {rgbvalue, monotone, tonInton, tonOnton, hexademical, demical } from "../
 
 const roulette = (colorcode : string) => {
   let demiColor = demical(colorcode)
-  let rouletteColor = tonOnton(demiColor)
+  let rouletteColor = tonOnton(demiColor, 6.667)
   let hexRouletteColor = rouletteColor.map((el:rgbvalue) => hexademical(el))
   return hexRouletteColor
 }
@@ -10,7 +10,7 @@ const roulette = (colorcode : string) => {
 const recommend = async (colorcode : string) => {
   let demiColor = demical(colorcode)
   let titColor = tonInton(demiColor)
-  let totColor = tonOnton(demiColor)
+  let totColor = tonOnton(demiColor, 5)
   let monoColor = monotone(demiColor, 25)
 
   let recommendColors  = {
