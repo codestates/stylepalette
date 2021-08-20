@@ -35,7 +35,7 @@ const postpost = (payload : IPost) => {
 
 const postresult = (payload : string, pathParameter: string) => {
   const updatedPost = Post.update({
-    location : payload
+    image : payload
   },
   {
     where : {
