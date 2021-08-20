@@ -30,7 +30,7 @@ const postpost = (payload) => {
 };
 const postresult = (payload, pathParameter) => {
     const updatedPost = post_1.Post.update({
-        location: payload
+        image: payload
     }, {
         where: {
             id: pathParameter
