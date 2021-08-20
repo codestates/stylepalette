@@ -144,15 +144,15 @@ function MyPage() {
             <UserPhoto src={user.userimage} />
           </UserPhotoWrapper>
           <UserInfoWrapper>
-            <UserInfoContent>{user.realname}</UserInfoContent> <br />
+            <UserInfoContent>{user.username}</UserInfoContent> <br />
             <UserEditButton onClick={handleClickProfileEditButton}>정보 수정</UserEditButton>
           </UserInfoWrapper>
         </UserInfoContainer>
         <UserPostWrapper>
-          {user.post.map((el: string | undefined, idx: React.Key | null | undefined) => {
+          {user.post.map((el: any, idx: React.Key | null | undefined) => {
             return (
               <NavIcon key={idx} onClick={handleClickPostInfo}>
-                <PostPhoto src={el} />
+                <PostPhoto src={el.image} />
               </NavIcon>
             );
           })}
