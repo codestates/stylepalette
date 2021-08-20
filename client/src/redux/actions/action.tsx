@@ -47,6 +47,10 @@ interface ProfileEditProps {
   userid: number | null;
   realname?: string;
   email?: string;
+}
+
+interface ProfileEditProps {
+  userid: number | null;
   password?: string;
 }
 
@@ -237,22 +241,41 @@ export const profileEditFailure = (data: string) => {
 
 export const profileEdit = (data: ProfileEditProps) => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    const { userid, realname, email, password } = data;
+    const { userid, realname, email } = data;
     axios
       .patch(
         `${serverUrl}/userinfo/${userid}/info`,
-        { realname, email, password },
+        { realname, email },
         {
           withCredentials: true,
         },
       )
       .then((response) => {
-        console.log('PROFILE EDIT RESPONSE in SUCCESS: ', response.data);
-        //TODO: once response includes user credentials pass them into "profileEditSuccess()"
-        // dispatch(profileEditSucess())
+        dispatch(profileEditSuccess(data));
       })
       .catch((error) => {
-        console.log('ROFILE EDIT  RESPONSE in FAILURE: ');
+        // console.log('PROFILE EDIT  RESPONSE in FAILURE: ');
+      });
+  };
+};
+
+export const passwordChange = (data: ProfileEditProps) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    const { userid, password } = data;
+    axios
+      .patch(
+        `${serverUrl}/userinfo/${userid}/password`,
+        { password },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        console.log('PASSWORD CHANGE RESPONSE in SUCCESS: ', response.data);
+        dispatch(handleModal({ isOpen: false }));
+      })
+      .catch((error) => {
+        console.log('PASSWORD CHANGE RESPONSE in FAILURE: ');
         // let errorMsg;
         // if (error.response) {
         //   errorMsg = error.response.data.message;
@@ -334,8 +357,7 @@ export const profileImageChange = (data: ProfileImageEditProps) => {
       })
       .then((response) => {
         console.log('PROFILEIMAGE RESPONSE in SUCCESS: ', response.data);
-        //TODO: Once image url is included in response,  put it in success action to update state
-        // dispatch(profileImageChangeSucess())
+        dispatch(profileImageChangeSucess(response.data.location));
       })
       .catch((error) => {
         console.log('PROFILEIMAGE RESPONSE in FAILURE: ');

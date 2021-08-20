@@ -6,7 +6,7 @@ import Button from '../components/Button/Button';
 import { getUser } from '../redux/selectors';
 import { handleModal, profileEdit, profileImageChange } from '../redux/actions/action';
 import { UserState } from '../redux/reducers/initialState';
-import { validPassword, validEmail } from '../utils/validator';
+import { validEmail } from '../utils/validator';
 import Text from '../components/Text/Text';
 
 const ProfileEditWrapper = styled.div`
@@ -82,7 +82,6 @@ const MessageWrapper = styled.div`
 
 const SubmitButtonWrapper = styled.div`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 0 0 10px;
@@ -94,35 +93,30 @@ export default function ProfileEdit() {
   const { realname, email, userimage, userid } = user;
   const [newRealName, setNewRealName] = useState<string>(realname);
   const [newEmail, setNewEmail] = useState<string>(email);
-  const [newPassword, setNewPassword] = useState<string>('');
-  const [newPasswordConfirm, setNewPasswordConfirm] = useState<string>('');
   const [newUserImage, setNewUserImage] = useState<string>(userimage);
   const [uploadedImage, setUploadedImage] = useState<File>();
   const [realnameMsg, setRealnameMsg] = useState<string>('');
   const [emailMsg, setEmailMsg] = useState<string>('');
-  const [passwordMsg, setPasswordMsg] = useState<string>('');
-  const [passwordStrengthMsg, setPasswordStrengthMsg] = useState<string>('');
   const disabled =
     newRealName === '' ||
     newEmail === '' ||
     //  newPassword === '' ||
     // newPasswordConfirm === '' ||
     realnameMsg !== '' ||
-    emailMsg !== '' ||
-    passwordMsg !== '' ||
-    passwordStrengthMsg !== '' ||
-    (newPassword !== '' && newPasswordConfirm === '') ||
-    (newPassword === '' && newPasswordConfirm !== '');
+    emailMsg !== '';
+  // passwordMsg !== '' ||
+  // passwordStrengthMsg !== '' ||
+  // (newPassword !== '' && newPasswordConfirm === '') ||
+  // (newPassword === '' && newPasswordConfirm !== '');
 
   const submitNewUserCredentials = () => {
     const userCredentials = {
       userid: userid,
       realname: newRealName,
       email: newEmail,
-      password: newPassword,
     };
     dispatch(profileEdit(userCredentials));
-    dispatch(handleModal({ isOpen: false }));
+    // dispatch(handleModal({ isOpen: false }));
   };
 
   const handleRealNameChange = (e: React.FormEvent<HTMLInputElement>) => {
@@ -145,26 +139,30 @@ export default function ProfileEdit() {
     }
   };
 
-  const handleChangeNewPassword = (event: React.FormEvent<HTMLInputElement>) => {
-    const str = event.currentTarget && event.currentTarget.value;
-    setNewPassword(str);
-    if (validPassword(event.currentTarget.value) || event.currentTarget.value === '') {
-      setPasswordStrengthMsg('');
-    } else if (event.currentTarget.value.length < 8 || event.currentTarget.value.length > 15) {
-      setPasswordStrengthMsg('길이가 8자 이상 15자 이하여야 합니다.');
-    } else {
-      setPasswordStrengthMsg('알파벳, 숫자, 특수문자 조합이어야 합니다.');
-    }
-  };
+  // const handleChangeNewPassword = (event: React.FormEvent<HTMLInputElement>) => {
+  //   const str = event.currentTarget && event.currentTarget.value;
+  //   setNewPassword(str);
+  //   if (validPassword(event.currentTarget.value) || event.currentTarget.value === '') {
+  //     setPasswordStrengthMsg('');
+  //   } else if (event.currentTarget.value.length < 8 || event.currentTarget.value.length > 15) {
+  //     setPasswordStrengthMsg('길이가 8자 이상 15자 이하여야 합니다.');
+  //   } else {
+  //     setPasswordStrengthMsg('알파벳, 숫자, 특수문자 조합이어야 합니다.');
+  //   }
+  // };
 
-  const handleChangeNewPasswordConfirm = (event: React.FormEvent<HTMLInputElement>) => {
-    const str = event.currentTarget && event.currentTarget.value;
-    setNewPasswordConfirm(str);
-    if (newPassword === event.currentTarget.value) {
-      setPasswordMsg('');
-    } else {
-      setPasswordMsg('비밀번호가 일치하지 않습니다.');
-    }
+  // const handleChangeNewPasswordConfirm = (event: React.FormEvent<HTMLInputElement>) => {
+  //   const str = event.currentTarget && event.currentTarget.value;
+  //   setNewPasswordConfirm(str);
+  //   if (newPassword === event.currentTarget.value) {
+  //     setPasswordMsg('');
+  //   } else {
+  //     setPasswordMsg('비밀번호가 일치하지 않습니다.');
+  //   }
+  // };
+
+  const handleClickPasswordChange = () => {
+    dispatch(handleModal({ isOpen: true, type: 'passwordChange' }));
   };
 
   //프로필 사진 업로드
@@ -209,8 +207,6 @@ export default function ProfileEdit() {
           <LabelContainer>
             <Label>이름</Label>
             <Label>이메일</Label>
-            <Label>새 비밀번호</Label>
-            <Label>새 비밀번호 확인</Label>
           </LabelContainer>
           <InputWrapper>
             <Input type="text" value={newRealName} onChange={handleRealNameChange}></Input>
@@ -221,14 +217,14 @@ export default function ProfileEdit() {
             <MessageWrapper>
               <Text size="small">{emailMsg}</Text>
             </MessageWrapper>
-            <Input type="password" onChange={handleChangeNewPassword}></Input>
+            {/* <Input type="password" onChange={handleChangeNewPassword}></Input>
             <MessageWrapper>
               <Text size="small">{passwordStrengthMsg}</Text>
             </MessageWrapper>
             <Input type="password" onChange={handleChangeNewPasswordConfirm}></Input>
             <MessageWrapper>
               <Text size="small">{passwordMsg}</Text>
-            </MessageWrapper>
+            </MessageWrapper> */}
           </InputWrapper>
         </InputMiddleWrapper>
       </InputOuterWrapper>
@@ -236,6 +232,7 @@ export default function ProfileEdit() {
         <Button primary onClick={submitNewUserCredentials} disabled={disabled}>
           정보 수정 완료
         </Button>
+        <Button onClick={handleClickPasswordChange}>비밀 번호 수정</Button>
       </SubmitButtonWrapper>
     </ProfileEditWrapper>
   );
