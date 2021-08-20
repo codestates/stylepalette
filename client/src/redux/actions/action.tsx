@@ -128,7 +128,7 @@ export const logIn = (data: LoginProps) => {
         },
       )
       .then((response) => {
-        console.log('LOGIN RESPONSE in SUCCESS: ', response.headers);
+        console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         dispatch(handleModal({ isOpen: false }));
         localStorage.setItem('token', response.data.payload);
         dispatch(loginSuccess(response.data.payload));

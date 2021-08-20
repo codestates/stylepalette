@@ -105,12 +105,14 @@ export default function ProfileEdit() {
   const disabled =
     newRealName === '' ||
     newEmail === '' ||
-    // newPassword === '' ||
+    //  newPassword === '' ||
     // newPasswordConfirm === '' ||
     realnameMsg !== '' ||
     emailMsg !== '' ||
     passwordMsg !== '' ||
-    passwordStrengthMsg !== '';
+    passwordStrengthMsg !== '' ||
+    (newPassword !== '' && newPasswordConfirm === '') ||
+    (newPassword === '' && newPasswordConfirm !== '');
 
   const submitNewUserCredentials = () => {
     const userCredentials = {
