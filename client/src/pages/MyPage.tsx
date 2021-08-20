@@ -8,13 +8,11 @@ import { PrimaryButton } from '../components/Button/Button.styled';
 import { getUser } from '../redux/selectors';
 
 const MyPageWrapper = styled.div`
-  width: 100%;
-  /* height: 100vw; */
+  width: 100vw;
+  height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
-  left: 0;
-  top: 0;
 `;
 
 const MyPageContainer = styled.div`
@@ -43,7 +41,10 @@ const UserInfoContainer = styled.div`
 `;
 
 const UserPhotoWrapper = styled.div`
-  padding: 50px;
+  width: 250px;
+  height: 250px;
+  text-align: center;
+  padding: 50px 10px 10px 50px;
 
   @media (max-width: 768px) {
     padding: 50px 50px 50px 115px;
@@ -100,7 +101,7 @@ const PostPhoto = styled.img`
 const UserPhoto = styled.img`
   width: 175px;
   height: 175px;
-  border-radius: 90px;
+  border-radius: 50%;
 `;
 
 const UserInfoContent = styled.span`
@@ -113,9 +114,8 @@ const UserInfoContent = styled.span`
 `;
 
 const UserEditButton = styled(PrimaryButton)`
-  width: 150px;
-  height: 50px;
-  padding: 10px;
+  width: 175px;
+  height: 75px;
 `;
 
 function MyPage() {

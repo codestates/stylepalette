@@ -4,11 +4,19 @@ import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
 import Text from '../components/Text/Text';
-import Man from '../images/TestMan/Man1.svg';
+import Man from '../images/Man/Man-default.svg';
 import { handleModal } from '../redux/actions/action';
+
+interface ResultProps {
+  imageBlob: Blob;
+}
 
 const ResultContainer = styled.div`
   display: flex;
+  width: 100vw;
+  height: 100vh;
+  left: 0;
+  top: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -16,7 +24,7 @@ const ResultContainer = styled.div`
 `;
 
 const ResultImage = styled.img`
-  width: 100px;
+  width: 500px;
   margin: 10px 0;
 `;
 
@@ -25,8 +33,9 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-export default function Result() {
+export default function Result(props: ResultProps) {
   const dispatch = useDispatch();
+  const imgSrc = URL.createObjectURL(props.imageBlob);
 
   const handleClickPostSharing = () => {
     dispatch(handleModal({ isOpen: true, type: 'postSharing' }));
@@ -37,21 +46,21 @@ export default function Result() {
   return (
     <>
       <ResultContainer>
-        <ResultImage src={Man}></ResultImage>
+        <ResultImage src={imgSrc}></ResultImage>
         <Text>최종결과: 멋진 코디네요!</Text>
+        <ButtonContainer>
+          <Link to="/genderselect">
+            <Button primary>처음으로</Button>
+          </Link>
+          <Button primary>저장하기</Button>
+          <Button primary onClick={handleClickPostSharing}>
+            공유하기
+          </Button>
+          <Link to="/gallery">
+            <Button primary>다른 작품 구경하기</Button>
+          </Link>
+        </ButtonContainer>
       </ResultContainer>
-      <ButtonContainer>
-        <Button primary>
-          <Link to="/genderselect">처음으로</Link>
-        </Button>
-        <Button primary>저장하기</Button>
-        <Button primary onClick={handleClickPostSharing}>
-          공유하기
-        </Button>
-        <Button primary>
-          <Link to="/gallery">다른 작품 구경하기</Link>
-        </Button>
-      </ButtonContainer>
     </>
   );
 }

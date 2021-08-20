@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { ArrowLongRight } from '@styled-icons/entypo/ArrowLongRight';
+import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
 
 import MalePNG from '../images/male.png';
 import femalePNG from '../images/female.png';
@@ -13,8 +13,8 @@ interface GenderSelectProps {
 }
 
 const GenderWrapper = styled.div`
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
@@ -49,13 +49,6 @@ const PhotoContent = styled.h2`
   font-size: 2.5rem;
 `;
 
-const GenderFooter = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 0;
-`;
-
 const PhotoContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -73,8 +66,8 @@ const PhotoWrapper = styled.div`
 `;
 
 const GenderPhoto = styled.img`
-  width: 350px;
-  height: 350px;
+  width: 330px;
+  height: 330px;
   margin: 10px 0 30px;
 
   @media (max-width: 768px) {
@@ -106,11 +99,12 @@ const PhotoButton = styled.button`
 `;
 
 const NextButtonWrapper = styled.div`
-  display: flex;
-  justify-content: flex-end;
-  width: 100vw;
-  height: 100px;
+  position: absolute;
+  width: 150px;
+  height: 150px;
   align-items: center;
+  left: 90%;
+  top: 85%;
 
   @media (max-width: 768px) {
     justify-content: center;
@@ -119,12 +113,13 @@ const NextButtonWrapper = styled.div`
 `;
 
 const NextButton = styled.button`
-  width: 150px;
-  height: 100px;
+  width: 110px;
+  height: 110px;
   border: none;
+  border-radius: 50%;
   text-align: center;
-  margin: 10px 80px 10px 80px;
-  background-color: white;
+  margin: 10px;
+  background-color: black;
   animation: moveArrow 0.5s infinite linear alternate;
 
   &:disabled {
@@ -133,14 +128,13 @@ const NextButton = styled.button`
   }
 
   &:hover {
-    background-color: #efefef;
-    border-radius: 45px;
+    opacity: 50%;
     animation-play-state: paused;
   }
 
   @keyframes moveArrow {
     100% {
-      margin-right: 60px;
+      transform: translate(10px);
     }
   }
 
@@ -149,8 +143,8 @@ const NextButton = styled.button`
   }
 `;
 
-const NextIcons = styled(ArrowLongRight)`
-  color: #222222;
+const NextIcons = styled(NavigateNext)`
+  color: #ffffff;
 
   @media (max-width: 768px) {
     display: none;
@@ -237,12 +231,12 @@ function GenderSelect(props: GenderSelectProps) {
           {disabled ? (
             <Link to="/mainpage">
               <NextButton>
-                <NextIcons size="100"></NextIcons>
+                <NextIcons size="90"></NextIcons>
               </NextButton>
             </Link>
           ) : (
             <NextButton disabled>
-              <NextIcons size="100"></NextIcons>
+              <NextIcons size="90"></NextIcons>
             </NextButton>
           )}
           {disabled ? (
@@ -252,7 +246,6 @@ function GenderSelect(props: GenderSelectProps) {
           )}
         </NextButtonWrapper>
       </GenderContainer>
-      <GenderFooter></GenderFooter>
     </GenderWrapper>
   );
 }
