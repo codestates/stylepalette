@@ -83,8 +83,8 @@ const PostPhoto = styled.img`
   border-style: solid;
   border-width: 2px;
   border-color: #c79a00;
-  width: 300px;
-  height: 300px;
+  width: 290px;
+  height: 290px;
 
   &:hover {
     opacity: 80%;

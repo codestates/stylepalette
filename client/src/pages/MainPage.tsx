@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import html2canvas from 'html2canvas';
 
 import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
 import { RestartAlt } from '@styled-icons/material-twotone/RestartAlt';
@@ -10,6 +12,7 @@ import { ReactComponent as Woman } from '../images/Woman/Woman-default.svg';
 import { recommendColor, rouletteColor } from '../redux/actions/action';
 import { RecommendColor, RouletteColor } from '../redux/reducers/initialState';
 import { getRecommendColor, getRouletteColor } from '../redux/selectors';
+import { AnyStyledComponent } from 'styled-components';
 
 const Color = [
   '#FF0000',
@@ -22,9 +25,9 @@ const Color = [
   '#FFFFFF',
   '#000000',
 ];
-
+const SkinColor = ['#FEE6D8', '#FFCDB1', '#633F1E'];
 const SelectList = ['피부톤', '상의', '하의', '준비중'];
-const recommendTab = ['톤인톤', '톤온톤', '모노'];
+const recommendTab = ['톤인톤', '톤온톤', '모노톤'];
 const ClothList: any = {
   피부톤: [],
   상의: ['맨투맨', '라운드티', '셔츠'],
@@ -34,11 +37,13 @@ const ClothList: any = {
 
 interface MainProps {
   gender?: string;
+  setImageBlob?: any;
 }
 
 interface imgProps {
   picktopcolor?: string;
   pickbottomcolor?: string;
+  pickskincolor?: string;
 }
 
 interface recommandProps {
@@ -58,6 +63,10 @@ interface rouletteProps {
   degree?: number;
 }
 
+interface colorProps {
+  color?: string;
+}
+
 const MainWrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -66,28 +75,62 @@ const MainWrapper = styled.div`
   top: 0;
 `;
 
-const PalletteContainer = styled.ul`
-  list-style: none;
+const PalletteContainer = styled.div`
   display: inline;
-  float: right;
+  position: absolute;
+  left: 84%;
+  top: 7%;
   text-align: center;
   max-width: 270px;
   max-height: 280px;
   margin: 15px;
-  width: 100%;
-  height: 100%;
   border-radius: 45px;
   border: 2px solid rgba(0, 0, 0);
   background-color: white;
 `;
 
-const Pallette = styled.button`
+const Pallette = styled.button<colorProps>`
   display: inline-block;
   border: 2px solid rgba(0, 0, 0);
   width: 60px;
   height: 60px;
   margin: 15px 10px;
   border-radius: 90px;
+  cursor: pointer;
+  background-color: ${(props) => props.color || 'white'};
+
+  &:hover {
+    animation: hoverColor 0.1s forwards linear alternate;
+  }
+
+  &:focus {
+    transform: scale(1.2, 1.2);
+  }
+
+  @keyframes hoverColor {
+    100% {
+      transform: scale(1.2, 1.2);
+    }
+  }
+`;
+
+const SkinSelectWrapper = styled.div`
+  position: absolute;
+  left: 7%;
+  top: 15%;
+  border: 2px solid rgba(0, 0, 0);
+  border-radius: 15px;
+  width: 275px;
+  height: 100px;
+  text-align: center;
+`;
+
+const SkinSelectButton = styled.button<colorProps>`
+  border: 2px solid rgba(0, 0, 0);
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin: 15px 10px;
   cursor: pointer;
   background-color: ${(props) => props.color || 'white'};
 
@@ -135,21 +178,27 @@ const SelectorList = styled.button`
 `;
 
 const ImageContainer = styled.div`
+  display: inline;
   position: absolute;
   top: 50%;
   left: 50%;
   margin: -250px 0 0 -250px;
+  padding: 50px 0;
   text-align: center;
-  width: 500px;
-  height: 500px;
+  width: 600px;
+  height: 600px;
 `;
 
 const ImageMan = styled(Man)<imgProps>`
   width: 175px;
-  height: 500px;
+  height: 490px;
 
   ${(props) => {
     return `
+      #Skin {
+        fill: ${props.pickskincolor};
+      }  
+
       #Sweater {
         fill: ${props.picktopcolor};
       }  
@@ -163,10 +212,14 @@ const ImageMan = styled(Man)<imgProps>`
 
 const ImageWoMan = styled(Woman)<imgProps>`
   width: 175px;
-  height: 500px;
+  height: 490px;
 
   ${(props) => {
     return `
+      #Skin {
+        fill: ${props.pickskincolor};
+      }   
+
       #T-shirt {
         fill: ${props.picktopcolor};
       }  
@@ -236,7 +289,7 @@ const NextButtonWrapper = styled.div`
   width: 205px;
   height: 100px;
 
-  left: 89%;
+  left: 87%;
   top: 88%;
 `;
 
@@ -379,7 +432,7 @@ const RecommendContentContainer = styled.div<currRecommandProps>`
       return `
       width: 1480px;
     `;
-    } else if (props.currrecommandtap === '모노') {
+    } else if (props.currrecommandtap === '모노톤') {
       return `
         width: 850px;
       `;
@@ -462,7 +515,6 @@ function MainPage(props: MainProps) {
   let recommendColors: RecommendColor = useSelector(getRecommendColor);
   let rouletteColors: RouletteColor = useSelector(getRouletteColor);
 
-  const [roulettePalettes, setRoulettePalettes] = useState<string[]>([]);
   const [currSelectTap, setCurrSelectTap] = useState<string>('');
   const [pickSubSelect, setPickSubSelect] = useState<boolean>(false);
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
@@ -470,6 +522,7 @@ function MainPage(props: MainProps) {
   const [currRecommendTap, setCurrRecommendTap] = useState<string>('');
   const [pickTopColor, setPickTopColor] = useState<string>('#FFFFFF');
   const [pickBottomColor, setPickBottomColor] = useState<string>('#FFFFFF');
+  const [pickSkinColor, setPickSkinColor] = useState<string>('#FFCDB1');
 
   //? 이미지 스크롤
   const [isDrag, setIsDrag] = useState<boolean>(false);
@@ -489,26 +542,16 @@ function MainPage(props: MainProps) {
   //? Roulette 컬러
   const { palette } = rouletteColors;
 
-  useEffect(() => {
-    const temp = palette.filter((el, idx) => {
-      return idx < 14;
-    });
-
-    temp.push('#ffffff');
-
-    setRoulettePalettes(temp);
-  }, [palette]);
-
   //! 리셋
   function handleReset(event: React.MouseEvent<HTMLButtonElement>) {
-    setRoulettePalettes([]);
     setCurrSelectTap('');
     setPickSubSelect(false);
     setIsRoulette(false);
     setIsRecommend(false);
     setCurrRecommendTap('');
-    setPickTopColor('#ffffff');
-    setPickBottomColor('#ffffff');
+    setPickTopColor('#FFFFFF');
+    setPickBottomColor('#FFFFFF');
+    setPickSkinColor('#FFCDB1');
   }
 
   //! 상의, 하의 선택 탭
@@ -539,11 +582,24 @@ function MainPage(props: MainProps) {
       setPickTopColor(value);
     } else if (currSelectTap === '하의') {
       setPickBottomColor(value);
+    } else if (currSelectTap === '피부톤') {
+      setPickSkinColor(value);
+    }
+  }
+
+  //! Recommend Color 선택시 색상 추천이 계속 안되게 만듬
+  function handleSelectRecommendColor(value: string) {
+    if (currSelectTap === '상의') {
+      setPickTopColor(value);
+    } else if (currSelectTap === '하의') {
+      setPickBottomColor(value);
+    } else if (currSelectTap === '피부톤') {
+      setPickSkinColor(value);
     }
   }
 
   function handlePickSelect(value: string) {
-    if (value === '상의' || value === '하의') {
+    if (value === '상의' || value === '하의' || value === '피부톤') {
       setPickSubSelect(true);
     }
   }
@@ -627,6 +683,23 @@ function MainPage(props: MainProps) {
   const onThrottleDragMove = throttle(onDragMove, delay);
   const onThrottleRotateMove = throttle(onRotateMove, 15);
 
+  //! 이미지 저장
+  function handleResultImage(event: React.MouseEvent<HTMLButtonElement>) {
+    const resultImage = document.getElementById('result_Image') as HTMLDivElement;
+
+    html2canvas(resultImage).then((canvas) => {
+      const imgBase64 = canvas.toDataURL('image/png', 'image/octet-stream');
+      const decoding = atob(imgBase64.split(',')[1]);
+
+      let arr = [];
+      for (let i = 0; i < decoding.length; i++) {
+        arr.push(decoding.charCodeAt(i));
+      }
+
+      props.setImageBlob(new Blob([new Uint8Array(arr)], { type: 'image/png' }));
+    });
+  }
+
   return (
     <>
       <MainWrapper>
@@ -654,7 +727,7 @@ function MainPage(props: MainProps) {
             onMouseLeave={onRotateEnd}
             degree={degree}
           >
-            {roulettePalettes.map((el, idx) => {
+            {palette.map((el, idx) => {
               return (
                 <Roulette
                   onClick={() => handleSelectColor(el)}
@@ -702,7 +775,7 @@ function MainPage(props: MainProps) {
                         <RecommendContent
                           key={idx}
                           color={el}
-                          onClick={() => handleSelectColor(el)}
+                          onClick={() => handleSelectRecommendColor(el)}
                         ></RecommendContent>
                       );
                     })
@@ -711,18 +784,18 @@ function MainPage(props: MainProps) {
                   ? tonOnton.map((el, idx) => {
                       return (
                         <RecommendContent
-                          onClick={() => handleSelectColor(el)}
+                          onClick={() => handleSelectRecommendColor(el)}
                           color={el}
                           key={idx}
                         ></RecommendContent>
                       );
                     })
                   : null}
-                {currRecommendTap === '모노'
+                {currRecommendTap === '모노톤'
                   ? monoton.map((el, idx) => {
                       return (
                         <RecommendContent
-                          onClick={() => handleSelectColor(el)}
+                          onClick={() => handleSelectRecommendColor(el)}
                           color={el}
                           key={idx}
                         ></RecommendContent>
@@ -735,30 +808,53 @@ function MainPage(props: MainProps) {
         ) : null}
         {pickSubSelect ? (
           <ClothContainer>
-            {ClothList[currSelectTap].map((el: string) => {
-              return <ClothButton>{el}</ClothButton>;
+            {ClothList[currSelectTap].map((el: string, idx: number) => {
+              return <ClothButton key={idx}>{el}</ClothButton>;
             })}
           </ClothContainer>
+        ) : null}
+        {currSelectTap === '피부톤' ? (
+          <SkinSelectWrapper>
+            {SkinColor.map((el, idx) => {
+              return (
+                <SkinSelectButton
+                  key={idx}
+                  color={el}
+                  onClick={() => handleOriginColor(el)}
+                ></SkinSelectButton>
+              );
+            })}
+          </SkinSelectWrapper>
         ) : null}
         <PalletteContainer>
           {Color.map((el, idx) => {
             return <Pallette key={idx} onClick={() => handleOriginColor(el)} color={el}></Pallette>;
           })}
         </PalletteContainer>
-        <ImageContainer>
+        <ImageContainer id="result_Image">
           {props.gender === '남성' ? (
-            <ImageMan picktopcolor={pickTopColor} pickbottomcolor={pickBottomColor} />
+            <ImageMan
+              picktopcolor={pickTopColor}
+              pickbottomcolor={pickBottomColor}
+              pickskincolor={pickSkinColor}
+            />
           ) : (
-            <ImageWoMan picktopcolor={pickTopColor} pickbottomcolor={pickBottomColor} />
+            <ImageWoMan
+              picktopcolor={pickTopColor}
+              pickbottomcolor={pickBottomColor}
+              pickskincolor={pickSkinColor}
+            />
           )}
         </ImageContainer>
         <NextButtonWrapper>
-          <ResetButton onClick={handleReset}>
+          <ResetButton title="초기화" onClick={handleReset}>
             <ResetIcons />
           </ResetButton>
-          <NextButton>
-            <NextIcons />
-          </NextButton>
+          <Link to="/result">
+            <NextButton title="다음" onClick={handleResultImage}>
+              <NextIcons />
+            </NextButton>
+          </Link>
         </NextButtonWrapper>
       </MainWrapper>
     </>

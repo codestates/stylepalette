@@ -14,7 +14,8 @@ import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
 import axios from 'axios';
 import { serverUrl } from "./utils/constants"
-// import Result from './pages/Result';
+import Result from './pages/Result';
+
 // import ProfileEdit from './modals/ProfileEdit';
 
 interface WrapperProps {
@@ -37,12 +38,14 @@ const GlobalStyle = createGlobalStyle`
   padding: 0;
   @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
   font-family: 'Noto Sans KR', sans-serif;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 `;
 
 function App() {
   const [gender, setGender] = useState<string>('');
+  const [imageBlob, setImageBlob] = useState<Blob>(new Blob());
   const dispatch = useDispatch();
 
   const url = new URL(window.location.href);
@@ -86,7 +89,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        {/* <MainPage gender={gender} /> */}
+        {/* <MainPage gender={gender} setImageBlob={setImageBlob} /> */}
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}
@@ -96,7 +99,7 @@ function App() {
             <GenderSelect setGender={setGender} />
           </Route>
           <Route exact path="/mainpage">
-            <MainPage gender={gender} />
+            <MainPage gender={gender} setImageBlob={setImageBlob} />
           </Route>
           <Route exact path="/mypage">
             <MyPage />
@@ -107,13 +110,13 @@ function App() {
           <Route exact path="/otheruserpage">
             <OtherUserPage />
           </Route>
+          <Route exact path="/result">
+            <Result imageBlob={imageBlob} />
+          </Route>
         </Switch>
-        {/* <GenderSelect /> */}
-        {/* <Result /> */}
         {/* <ProfileEdit /> */}
         <Footer />
       </BrowserRouter>
-      {/* <MainPage /> */}
     </Wrapper>
   );
 }
