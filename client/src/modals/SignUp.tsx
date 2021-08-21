@@ -97,7 +97,12 @@ function SignUp() {
       realname === '' ||
       username === '' ||
       password === '' ||
-      passwordCheck === ''
+      passwordCheck === '' ||
+      realnameMsg !== '' ||
+      usernameMsg !== '' ||
+      emailMsg !== '' ||
+      passwordMsg !== '' ||
+      passwordStrengthMsg !== ''
     ) {
       setDisabled(false);
     } else {
