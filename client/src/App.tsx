@@ -13,9 +13,8 @@ import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
 import axios from 'axios';
-import { serverUrl } from "./utils/constants"
+import { serverUrl } from './utils/constants';
 import Result from './pages/Result';
-
 
 // import ProfileEdit from './modals/ProfileEdit';
 
@@ -33,11 +32,11 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
   * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
   font-family: 'Noto Sans KR', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;

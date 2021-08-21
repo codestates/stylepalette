@@ -29,6 +29,9 @@ export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
 export const PROFILEIMAGE_EDIT = 'PROFILEIMAGE_EDIT';
 export const PROFILEIMAGE_EDIT_SUCCESS = 'PROFILEIMAGE_EDIT_SUCCESS';
 export const PROFILEIMAGE_EDIT_FAILURE = 'PROFILEIMAGE_EDIT_FAILURE';
+export const GET_POST = 'GET_POST';
+export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
+export const GET_POST_FAILURE = 'GET_POST_FAILURE';
 
 interface LoginProps {
   username: string;
@@ -369,6 +372,36 @@ export const profileImageChange = (data: ProfileImageEditProps) => {
         // if (error.response) {
         //   errorMsg = error.response.data.message;
         // }
+      });
+  };
+};
+
+export const getPostSuccess = (data: any) => {
+  return {
+    type: GET_POST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getPostFailure = (data: any) => {
+  return {
+    type: GET_POST_FAILURE,
+    payload: data,
+  };
+};
+
+export const getPost = () => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .get(`${serverUrl}/post/:postid`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log('getpost success: ', response);
+        // dispatch(getPostSuccess());
+      })
+      .catch((response) => {
+        console.log('getpost FAILURE: ', response);
       });
   };
 };
