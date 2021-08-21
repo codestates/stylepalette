@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const tslib_1 = require("tslib");
 const post_1 = require("../models/post");
 const tb_like_1 = require("../models/tb_like");
+const user_1 = require("../models/user");
 const getpost = (pathParameter) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     const post = post_1.Post.findOne({
         where: {
@@ -14,6 +15,13 @@ const getpost = (pathParameter) => tslib_1.__awaiter(void 0, void 0, void 0, fun
                 as: 'like',
                 attributes: {
                     exclude: ["id", "postId", "createdAt", "updatedAt"]
+                }
+            },
+            {
+                model: user_1.User,
+                as: 'user',
+                attributes: {
+                    exclude: ["id", "realname", "email", "password", "salt", "createdAt", "updatedAt"]
                 }
             }
         ]

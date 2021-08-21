@@ -21,6 +21,17 @@ const getUserinfo = async (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
+const getOtherUserinfo = async (req: Request, res: Response, next: NextFunction) => {
+  const pathParameter : ITokenInfo = { id : Number(req.params.userid) }
+  const userInfo = await userinfo.getuserinfo(pathParameter)
+  if (userInfo) {
+    res.status(200).send(userInfo)
+  } else {
+    res.status(400).send({ message : "Bad Request"})
+  }
+  
+};
+
 //사진업로드부분과 본문내용에 관한 요청을 분리
 const patchProfile = async (req: Request, res: Response, next: NextFunction) => {
   if (req.file && req.params) {
@@ -87,6 +98,7 @@ const postCheckUser = async (req: Request, res: Response, next: NextFunction) =>
 }
 export default {
   getUserinfo,
+  getOtherUserinfo,
   patchUserinfo,
   patchPassword,
   patchProfile,

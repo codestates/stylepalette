@@ -21,6 +21,16 @@ const getUserinfo = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0
         res.status(404).send({ message: "No token" });
     }
 });
+const getOtherUserinfo = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    const pathParameter = { id: Number(req.params.userid) };
+    const userInfo = yield service_1.userinfo.getuserinfo(pathParameter);
+    if (userInfo) {
+        res.status(200).send(userInfo);
+    }
+    else {
+        res.status(400).send({ message: "Bad Request" });
+    }
+});
 const patchProfile = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     var _a;
     if (req.file && req.params) {
@@ -84,6 +94,7 @@ const postCheckUser = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void
 });
 exports.default = {
     getUserinfo,
+    getOtherUserinfo,
     patchUserinfo,
     patchPassword,
     patchProfile,

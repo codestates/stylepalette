@@ -1,5 +1,7 @@
 import axios from 'axios';
 import { serverUrl } from '../../utils/constants';
+import dotenv from "dotenv"
+dotenv.config()
 // action types
 export const LOG_IN = 'LOG_IN';
 export const LOG_OUT = 'LOG_OUT';
@@ -320,3 +322,36 @@ export const rouletteColor = (data: RouletteColor) => {
       });
   };
 };
+
+
+export const googleLogin = (authorizationCode : string) => {
+  return  (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios.post(`${serverUrl}/google`, {
+        code : authorizationCode
+      },{
+        withCredentials : true
+      }).then(response => {
+        console.log(response)
+        localStorage.setItem('token', response.data.id_token);
+        dispatch(loginSuccess(response.data.id_token));
+    })
+  }
+}
+
+export const kakaoLogin = async () => {
+  const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID
+    const KAKAO_LOGIN_URL = 
+    `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://localhost:3000&response_type=code&state`
+    window.location.assign(KAKAO_LOGIN_URL);
+
+    const url = new URL(window.location.href);
+    const authorizationCode = url.searchParams.get("code");
+    const scope = url.searchParams.get("scope")
+
+    await axios.post(`${serverUrl}/kakao`, {
+      code : authorizationCode
+    },{
+      withCredentials : true
+    })
+    .then(response => console.log(response))
+}

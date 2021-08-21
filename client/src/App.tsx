@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../src/redux/actions/action';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import { getIsModalOpen } from './redux/selectors/index';
+import { getIsModalOpen, getIsLoggedIn } from './redux/selectors/index';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import MainPage from './pages/MainPage';
@@ -15,6 +15,7 @@ import Gallery from './pages/Gallery';
 import axios from 'axios';
 import { serverUrl } from "./utils/constants"
 import Result from './pages/Result';
+
 
 // import ProfileEdit from './modals/ProfileEdit';
 
@@ -48,29 +49,7 @@ function App() {
   const [imageBlob, setImageBlob] = useState<Blob>(new Blob());
   const dispatch = useDispatch();
 
-  const url = new URL(window.location.href);
- 
-  const authorizationCode = url.searchParams.get("code");
-  const scope = url.searchParams.get("scope")
- 
-
   useEffect(() => {
-    // social login cehck
-    if (authorizationCode && scope) {
-      axios.post(`${serverUrl}/google`, {
-        code : authorizationCode
-      },{
-        withCredentials : true
-      })
-      .then(res => console.log(res))
-    } else if (authorizationCode && !scope){
-      axios.post(`${serverUrl}/kakao`, {
-        code : authorizationCode
-      },{
-        withCredentials : true
-      })
-      .then(res => console.log(res))
-    }
     // check if user has logged in
     const token = localStorage.getItem('token');
     if (token) {
@@ -80,9 +59,6 @@ function App() {
   }, []);
 
   const isModalOpen = useSelector(getIsModalOpen);
-
-
-
 
   return (
     <Wrapper isModalOpen={isModalOpen}>
