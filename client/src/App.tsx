@@ -15,6 +15,7 @@ import Gallery from './pages/Gallery';
 import axios from 'axios';
 import { serverUrl } from './utils/constants';
 import Result from './pages/Result';
+import { kakaoLogin, googleLogin } from './redux/actions/action';
 
 // import ProfileEdit from './modals/ProfileEdit';
 
@@ -49,6 +50,14 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    const url = new URL(window.location.href);
+    const authorizationCode = url.searchParams.get('code');
+    const scope = url.searchParams.get('scope');
+    if (authorizationCode && scope) {
+      dispatch(googleLogin({ authorizationCode, scope }));
+    } else if (authorizationCode && !scope) {
+      dispatch(kakaoLogin({ authorizationCode, scope }));
+    }
     // check if user has logged in
     const token = localStorage.getItem('token');
     if (token) {
