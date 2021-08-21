@@ -1,6 +1,7 @@
 import { IPost } from "../interfaces/IPost";
 import { Post } from "../models/post";
 import { tb_like } from "../models/tb_like";
+import { User } from "../models/user"
 
 const getpost = async (pathParameter : string) => {
   const post = Post.findOne({
@@ -13,6 +14,13 @@ const getpost = async (pathParameter : string) => {
         as : 'like',
         attributes : {
           exclude : ["id", "postId", "createdAt", "updatedAt"]
+        }
+      },
+      {
+        model : User,
+        as : 'user',
+        attributes : {
+          exclude : ["id", "realname", "email", "password", "salt", "createdAt", "updatedAt"]
         }
       }
     ]
@@ -35,7 +43,7 @@ const postpost = (payload : IPost) => {
 
 const postresult = (payload : string, pathParameter: string) => {
   const updatedPost = Post.update({
-    location : payload
+    image : payload
   },
   {
     where : {
