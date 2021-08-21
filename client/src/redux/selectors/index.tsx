@@ -6,6 +6,10 @@ export const getUser = (state: any) => {
   return state.userState;
 };
 
+export const getOtherUser = (state: any) => {
+  return state.otherUserState;
+};
+
 export const getIsLoggedIn = (state: any): boolean => {
   return state.userState.token !== '';
 };

@@ -1,10 +1,8 @@
+import FormData from 'form-data';
 import axios from 'axios';
 import { serverUrl } from '../../utils/constants';
-import dotenv from "dotenv"
-dotenv.config()
-
-import FormData from 'form-data';
-
+import dotenv from 'dotenv';
+dotenv.config();
 
 // action types
 export const LOG_IN = 'LOG_IN';
@@ -32,6 +30,9 @@ export const GETPOSTS_SUCCESS = 'GETPOSTS_SUCCESS';
 export const PROFILEIMAGE_EDIT = 'PROFILEIMAGE_EDIT';
 export const PROFILEIMAGE_EDIT_SUCCESS = 'PROFILEIMAGE_EDIT_SUCCESS';
 export const PROFILEIMAGE_EDIT_FAILURE = 'PROFILEIMAGE_EDIT_FAILURE';
+export const GET_POST = 'GET_POST';
+export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
+export const GET_POST_FAILURE = 'GET_POST_FAILURE';
 
 interface LoginProps {
   username: string;
@@ -41,7 +42,7 @@ interface LoginProps {
 interface HandleModalProps {
   isOpen?: boolean;
   type?: string;
-  data?: number
+  data?: number;
 }
 
 interface SignUpProps {
@@ -90,19 +91,19 @@ interface MainResultImageProps {
 }
 
 export interface Post {
-  id: number
-  title: string
-  image: string
-  topcolor: string
-  bottomcolor: string
-  userid: number,
-  likeCount: number,
-  isPublic: boolean,
-  createdAt: string
+  id: number;
+  title: string;
+  image: string;
+  topcolor: string;
+  bottomcolor: string;
+  userid: number;
+  likeCount: number;
+  isPublic: boolean;
+  createdAt: string;
 }
 
 interface Posts {
-  data : Array<Post>
+  data: Array<Post>;
 }
 
 // actions creator functions
@@ -402,6 +403,36 @@ export const profileImageChange = (data: ProfileImageEditProps) => {
   };
 };
 
+export const getPostSuccess = (data: any) => {
+  return {
+    type: GET_POST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getPostFailure = (data: any) => {
+  return {
+    type: GET_POST_FAILURE,
+    payload: data,
+  };
+};
+
+export const getPost = () => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .get(`${serverUrl}/post/:postid`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log('getpost success: ', response);
+        // dispatch(getPostSuccess());
+      })
+      .catch((response) => {
+        console.log('getpost FAILURE: ', response);
+      });
+  };
+};
+
 export const successRecommendColor = (data: any) => {
   return {
     type: RECOMMEND_COLOR,
@@ -476,37 +507,47 @@ export const setMainResultImage = (data: MainResultImageProps) => {
   };
 };
 
-export const googleLogin = (authorizationCode : string) => {
-  return  (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    axios.post(`${serverUrl}/google`, {
-        code : authorizationCode
-      },{
-        withCredentials : true
-      }).then(response => {
-        console.log(response)
+export const googleLogin = (authorizationCode: string) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .post(
+        `${serverUrl}/google`,
+        {
+          code: authorizationCode,
+        },
+        {
+          withCredentials: true,
+        },
+      )
+      .then((response) => {
+        console.log(response);
         localStorage.setItem('token', response.data.id_token);
         dispatch(loginSuccess(response.data.id_token));
-    })
-  }
-}
+      });
+  };
+};
 
 export const kakaoLogin = async () => {
-  const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID
-    const KAKAO_LOGIN_URL = 
-    `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://localhost:3000&response_type=code&state`
-    window.location.assign(KAKAO_LOGIN_URL);
+  const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
+  const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://localhost:3000&response_type=code&state`;
+  window.location.assign(KAKAO_LOGIN_URL);
 
-    const url = new URL(window.location.href);
-    const authorizationCode = url.searchParams.get("code");
-    const scope = url.searchParams.get("scope")
+  const url = new URL(window.location.href);
+  const authorizationCode = url.searchParams.get('code');
+  const scope = url.searchParams.get('scope');
 
-    await axios.post(`${serverUrl}/kakao`, {
-      code : authorizationCode
-    },{
-      withCredentials : true
-    })
-    .then(response => console.log(response))
-}
+  await axios
+    .post(
+      `${serverUrl}/kakao`,
+      {
+        code: authorizationCode,
+      },
+      {
+        withCredentials: true,
+      },
+    )
+    .then((response) => console.log(response));
+};
 
 export const successGetposts = (data: any) => {
   return {
@@ -515,8 +556,8 @@ export const successGetposts = (data: any) => {
   };
 };
 
-export const getAllPosts = (data : Posts) => {
+export const getAllPosts = (data: Posts) => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    dispatch(successGetposts(data))
-  }
-}
+    dispatch(successGetposts(data));
+  };
+};
