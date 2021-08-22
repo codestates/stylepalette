@@ -15,6 +15,7 @@ export const dummyState = {
       topcolor: '0,0,0',
       bottomcolor: '250,250,250',
       userid: 1,
+      likeCount: 14,
       isPublic: true,
       createdAt: '2021-06-23T16:17:47.000Z',
     },

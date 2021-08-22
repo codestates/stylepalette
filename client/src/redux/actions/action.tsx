@@ -20,6 +20,7 @@ export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
 export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
 export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
 export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
+export const GETPOSTS_SUCCESS = 'GETPOSTS_SUCCESS';
 
 interface LoginProps {
   username: string;
@@ -29,6 +30,7 @@ interface LoginProps {
 interface HandleModalProps {
   isOpen?: boolean;
   type?: string;
+  data?: number
 }
 
 interface SignUpProps {
@@ -55,6 +57,22 @@ interface RecommendColor {
 
 interface RouletteColor {
   maincolor: string;
+}
+
+export interface Post {
+  id: number
+  title: string
+  image: string
+  topcolor: string
+  bottomcolor: string
+  userid: number,
+  likeCount: number,
+  isPublic: boolean,
+  createdAt: string
+}
+
+interface Posts {
+  data : Array<Post>
 }
 
 // actions creator functions
@@ -354,4 +372,17 @@ export const kakaoLogin = async () => {
       withCredentials : true
     })
     .then(response => console.log(response))
+}
+
+export const successGetposts = (data: any) => {
+  return {
+    type: GETPOSTS_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getAllPosts = (data : Posts) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    dispatch(successGetposts(data))
+  }
 }

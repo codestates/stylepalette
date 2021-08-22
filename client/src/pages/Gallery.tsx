@@ -1,9 +1,10 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-
-import { handleModal } from '../redux/actions/action';
+import { useSelector } from 'react-redux';
+import { getPosts } from '../redux/selectors';
+import { handleModal, getAllPosts, Post } from '../redux/actions/action';
 
 import { serverUrl } from '../utils/constants';
 import axios from 'axios';
@@ -117,9 +118,20 @@ const PostPhoto = styled.img`
 function Gallery() {
   const dispatch = useDispatch();
   const [colorData, setColorData] = useState<string>('');
+  const posts = useSelector(getPosts);
+  console.log(posts)
 
-  const handleClickPostInfo = (event: React.MouseEvent) => {
-    dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
+  useEffect(()=> {
+    
+    axios.get(`${serverUrl}/post/posts/all`, {
+      withCredentials : true
+    })
+    .then(response => dispatch(getAllPosts(response.data)))
+
+  }, [])
+
+  const handleClickPostInfo = (postid : number) => {
+    dispatch(handleModal({ isOpen: true, type: 'postInfo' ,data: postid }));
   };
 
   const handleGetCategory = (value?: string) => {
@@ -182,10 +194,10 @@ function Gallery() {
         </FillterContainer>
         <GalleryContainer>
           <PhotoWrapper>
-            {Photo.map((el) => {
+            {posts.map((el : Post) => {
               return (
-                <NavIcon onClick={handleClickPostInfo}>
-                  <PostPhoto src={el} />
+                <NavIcon onClick={() => handleClickPostInfo(el.id)}>
+                  <PostPhoto src={el.image} />
                 </NavIcon>
               );
             })}

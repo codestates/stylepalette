@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPosts, getUser } from '../redux/selectors';
+import { Post } from '../redux/actions/action';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
@@ -55,26 +56,34 @@ const LikeCount = styled.span`
   font-weight: bold;
 `;
 
-export default function PostInfo() {
+export default function PostInfo(modalData : any) {
   // TODO: Create a selector to retrieve only one post based on id
   const posts = useSelector(getPosts);
-  const post = posts[0];
+  const post = posts.filter((el : Post) => {
+    if (el.id === modalData.modalData) {
+      return el
+    }
+  });
   const user = useSelector(getUser);
-  console.log('user: ', user);
+  console.log('modalData: ', modalData);
   console.log('posts: ', posts);
+  console.log('post: ', post);
+
+  
+
   return (
     <PostInfoWrapper>
-      <PostImage src={post.image} alt="post-img" />
+      <PostImage src={post[0].image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
           <HeartIcon />
         </LikeIconWrapper>
-        <LikeCount>32 likes</LikeCount>
+        <LikeCount>{post[0].likeCount} likes</LikeCount>
       </LikeContainer>
       <PostContentContainer>
         <PostOwnerProfileImage src={user.userimage} alt="user-profile-pic" />
         <PostOwerUserName>{user.username}</PostOwerUserName>
-        <PostTitle>{post.title}</PostTitle>
+        <PostTitle>{post[0].title}</PostTitle>
       </PostContentContainer>
     </PostInfoWrapper>
   );
