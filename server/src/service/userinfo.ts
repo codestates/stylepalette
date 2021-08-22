@@ -98,3 +98,10 @@ export default {
 //   "email" : "ggh163700@gmail.com",
 //   "userimage" : "image"
 // }
+// {
+//   "isPublic" :  "true",
+//   "title" : "post title",
+//   "userId" : 20,
+//   "topcolor" : "#aa5500",
+//   "bottolecolor" : "#0f9dd9"
+// }

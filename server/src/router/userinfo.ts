@@ -5,6 +5,7 @@ import { profileUpload } from '../interfaces/awsS3'
 const router = Router();
 
 router.get('/', userinfo.getUserinfo);
+router.get('/:userid', userinfo.getOtherUserinfo)
 router.post('/checkuser', userinfo.postCheckUser)
 router.patch('/:userid/profile', profileUpload.single("profile"), userinfo.patchProfile);
 router.patch('/:userid/password', userinfo.patchPassword)

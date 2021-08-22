@@ -10,7 +10,7 @@ const google = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, fun
         client_secret: process.env.GOOGLE_CLIENT_SECRET,
         code: req.body.code,
         grant_type: 'authorization_code',
-        redirect_uri: "https://stylepalette.net"
+        redirect_uri: "https://localhost:3000"
     })
         .then(response => {
         let params = new URLSearchParams(response.data);
@@ -19,13 +19,18 @@ const google = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, fun
         axios_1.default.get(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${accessToken}`, {
             withCredentials: true
         }).then(response => {
-            res.status(200).send({ username: response.data.id, id_token: id_token });
+            const username = response.data.id;
+            const nickname = response.data.id;
+            const email = response.data.email;
+            const userimage = response.data.picture;
+            console.log(response);
+            res.status(200).send({ username: username, realname: nickname, email: email, userimage: userimage, id_token: id_token });
         }).catch(e => res.status(400).send({ message: e }));
     })
         .catch(e => res.status(404).send({ meassage: e }));
 });
 const kakao = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    yield axios_1.default.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&code=${req.body.code}`, {
+    yield axios_1.default.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=https://localhost:3000&code=${req.body.code}`, {
         headers: {
             'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
@@ -40,8 +45,11 @@ const kakao = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, func
         })
             .then((response) => {
             console.log(response);
-            let name = response.data.id;
-            res.status(200).send({ username: name, id_token: access_token });
+            const username = response.data.id;
+            const nickname = response.data.properties.nickname;
+            const email = response.data.kakao_account.email;
+            const userimage = response.data.properties.profile_image;
+            res.status(200).send({ username: username, realname: nickname, email: email, userimage: userimage, id_token: access_token });
         }).catch(e => res.status(400).send({ message: e }));
     }).catch(e => res.status(404).send({ meassage: e }));
 });

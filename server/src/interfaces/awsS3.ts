@@ -10,7 +10,7 @@ const bucket = "stylepalette-s3"
 const s3 = new AWS.S3({
   accessKeyId: process.env.ACCESS_KEY_ID,
   secretAccessKey: process.env.ACCESS_KEY_PASSWORD,
-  region: process.env.AWS_REGION
+  region: process.env.REGION
 });
 
 

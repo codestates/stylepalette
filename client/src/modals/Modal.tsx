@@ -5,12 +5,13 @@ import Button from '../components/Button/Button';
 import { handleModal } from '../redux/actions/action';
 import Login from './Login';
 import SignUp from './SignUp';
-import { getModalType } from '../redux/selectors';
+import { getModalType, getModalData } from '../redux/selectors';
 import PostInfo from './PostInfo';
 import Menu from './Menu';
 import ProfileEdit from './ProfileEdit';
 import PostSharing from './PostSharing';
 import PasswordCheck from './PasswordCheck';
+import PasswordChange from './PasswordChange';
 
 const ModalContainer = styled.div`
   width: 100vw;
@@ -32,6 +33,7 @@ const ModalContent = styled.div``;
 export default function Modal() {
   const dispatch = useDispatch();
   const modalType = useSelector(getModalType);
+  const modalData = useSelector(getModalData);
 
   const handleModalClose = () => {
     dispatch(handleModal({ isOpen: false }));
@@ -43,11 +45,13 @@ export default function Modal() {
     } else if (modalType === 'signup') {
       return <SignUp />;
     } else if (modalType === 'postInfo') {
-      return <PostInfo />;
+      return <PostInfo modalData={modalData}/>;
     } else if (modalType === 'menu') {
       return <Menu />;
     } else if (modalType === `profileEdit`) {
       return <ProfileEdit />;
+    } else if (modalType === `passwordChange`) {
+      return <PasswordChange />;
     } else if (modalType === `passwordCheck`) {
       return <PasswordCheck />;
     } else if (modalType === `postSharing`) {

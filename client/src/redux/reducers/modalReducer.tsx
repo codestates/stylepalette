@@ -8,6 +8,7 @@ const modalReducer = (state = dummyState.modal, action: { type?: string; payload
       const newState = Object.assign({}, state, {
         isOpen: action.payload.isOpen,
         type: action.payload.type,
+        data: action.payload.data
       });
       return newState;
     default:

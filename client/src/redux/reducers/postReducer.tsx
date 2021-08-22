@@ -1,11 +1,13 @@
-// import { initialState } from './initialState';
-import { initialState, PostState } from './initialState';
+import { initialState } from './initialState';
+import { dummyState } from './dummyState';
+import { GETPOSTS_SUCCESS } from '../actions/action';
 
-const postReducer = (
-  state: PostState = initialState.posts,
-  action: { type: string; payload: any },
-) => {
+const postReducer = (state = initialState.posts, action: { type: string; payload: any }) => {
   switch (action.type) {
+    case GETPOSTS_SUCCESS: {
+      const newState = action.payload;
+      return newState;
+    }
     default:
       return state;
   }

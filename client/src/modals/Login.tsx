@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
-import { logIn } from '../redux/actions/action';
+import { logIn, googleLogin, kakaoLogin } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
 import { getMessage } from '../redux/selectors';
@@ -100,6 +100,19 @@ export default function Login() {
     console.log(KAKAO_CLIENT_ID);
     const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&response_type=code&state`;
     window.location.assign(KAKAO_LOGIN_URL);
+  };
+
+  const social = () => {
+    const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https://localhost:3000&client_id=${GOOGLE_CLIENT_ID}`;
+    window.location.assign(GOOGLE_LOGIN_URL);
+    const url = new URL(window.location.href);
+    const authorizationCode = url.searchParams.get('code');
+    const scope = url.searchParams.get('scope');
+
+    if (authorizationCode) {
+      dispatch(googleLogin());
+    }
   };
 
   return (

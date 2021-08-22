@@ -80,6 +80,18 @@ export default function Result() {
           </Link>
         </ButtonContainer>
       </ResultContainer>
+      <ButtonContainer>
+        <Button primary>
+          <Link to="/genderselect">처음으로</Link>
+        </Button>
+        <Button primary onClick={handleClickPostSharing}>
+          저장하기
+        </Button>
+        <Button primary>공유하기</Button>
+        <Button primary>
+          <Link to="/gallery">다른 작품 구경하기</Link>
+        </Button>
+      </ButtonContainer>
     </>
   );
 }

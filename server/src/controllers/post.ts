@@ -47,7 +47,7 @@ const postResult = async (req: Request, res: Response, next: NextFunction) => {
     const payload : string = req.file.location
     const result = await post.postresult(payload, pathPatameter)
     if (result) {
-      res.status(201).send({ message : "Successed saving result image" })
+      res.status(201).send({ message : "Successed saving result image", location : payload })
     } else {
       res.status(404).send({ message : "Failed saving result image" })
     }

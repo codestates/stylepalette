@@ -9,15 +9,19 @@ export const initialState = {
     token: '',
     post: [],
   },
-  posts: {
-    postid: null,
-    title: '',
-    image: '',
-    topcolor: '',
-    bottomcolor: '',
-    isPublic: false,
-    userId: null,
-  },
+  posts: [
+    {
+      id: null,
+      title: '',
+      image: '',
+      topcolor: '',
+      bottomcolor: '',
+      userid: null,
+      likeCount: 0,
+      isPublic: true,
+      createdAt: '',
+    },
+  ],
   modal: {
     isOpen: false,
     type: '',
