@@ -42,7 +42,7 @@ const postResult = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0,
         const payload = req.file.location;
         const result = yield service_1.post.postresult(payload, pathPatameter);
         if (result) {
-            res.status(201).send({ message: "Successed saving result image" });
+            res.status(201).send({ message: "Successed saving result image", location: payload });
         }
         else {
             res.status(404).send({ message: "Failed saving result image" });

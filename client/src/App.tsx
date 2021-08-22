@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../src/redux/actions/action';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import { getIsModalOpen } from './redux/selectors/index';
+import { getIsModalOpen, getIsLoggedIn } from './redux/selectors/index';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import MainPage from './pages/MainPage';
@@ -13,8 +13,9 @@ import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
 import axios from 'axios';
-import { serverUrl } from "./utils/constants"
+import { serverUrl } from './utils/constants';
 import Result from './pages/Result';
+import { kakaoLogin, googleLogin } from './redux/actions/action';
 
 // import ProfileEdit from './modals/ProfileEdit';
 
@@ -32,11 +33,11 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
   * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
   font-family: 'Noto Sans KR', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
@@ -48,28 +49,14 @@ function App() {
   const [imageBlob, setImageBlob] = useState<Blob>(new Blob());
   const dispatch = useDispatch();
 
-  const url = new URL(window.location.href);
- 
-  const authorizationCode = url.searchParams.get("code");
-  const scope = url.searchParams.get("scope")
- 
-
   useEffect(() => {
-    // social login cehck
+    const url = new URL(window.location.href);
+    const authorizationCode = url.searchParams.get('code');
+    const scope = url.searchParams.get('scope');
     if (authorizationCode && scope) {
-      axios.post(`${serverUrl}/google`, {
-        code : authorizationCode
-      },{
-        withCredentials : true
-      })
-      .then(res => console.log(res))
-    } else if (authorizationCode && !scope){
-      axios.post(`${serverUrl}/kakao`, {
-        code : authorizationCode
-      },{
-        withCredentials : true
-      })
-      .then(res => console.log(res))
+      dispatch(googleLogin({ authorizationCode, scope }));
+    } else if (authorizationCode && !scope) {
+      dispatch(kakaoLogin({ authorizationCode, scope }));
     }
     // check if user has logged in
     const token = localStorage.getItem('token');
@@ -80,9 +67,6 @@ function App() {
   }, []);
 
   const isModalOpen = useSelector(getIsModalOpen);
-
-
-
 
   return (
     <Wrapper isModalOpen={isModalOpen}>

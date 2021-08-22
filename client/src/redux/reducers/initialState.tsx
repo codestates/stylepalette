@@ -9,6 +9,14 @@ export const initialState = {
     token: '',
     post: [],
   },
+  otheruser: {
+    userid: null,
+    realname: '',
+    username: '',
+    email: '',
+    userimage: '',
+    post: [],
+  },
   posts: [],
   modal: {
     isOpen: false,

@@ -3,13 +3,12 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
-import { logIn } from '../redux/actions/action';
+import { logIn, googleLogin, kakaoLogin } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
 import { getMessage } from '../redux/selectors';
-import { serverUrl } from "../utils/constants"
-import dotenv from "dotenv"
-dotenv.config()
+import dotenv from 'dotenv';
+dotenv.config();
 
 const LoginWrapper = styled.div`
   width: 400px;
@@ -90,23 +89,18 @@ export default function Login() {
     dispatch(handleModal({ isOpen: true, type: 'signup' }));
   };
 
-  const googleLogin = () => {
-    const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID
-    console.log(GOOGLE_CLIENT_ID)
-    const GOOGLE_LOGIN_URL = 
-    `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https://stylepalette.net&client_id=${GOOGLE_CLIENT_ID}`
+  const handleClickGoogleLogin = () => {
+    const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
+    console.log('LOGIN GOOGLLE ID', GOOGLE_CLIENT_ID);
+    const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=https://stylepalette.net&client_id=${GOOGLE_CLIENT_ID}`;
     window.location.assign(GOOGLE_LOGIN_URL);
-  
-  }
-  const kakaoLogin = () => {
-    const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID
-    console.log(KAKAO_CLIENT_ID)
-    const KAKAO_LOGIN_URL = 
-    `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&response_type=code&state`
+  };
+  const handleClickKakaoLogin = () => {
+    const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
+    console.log('KAKAO CLIENT ID', KAKAO_CLIENT_ID);
+    const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&response_type=code&state`;
     window.location.assign(KAKAO_LOGIN_URL);
-  
-  }
- 
+  };
 
   return (
     <LoginWrapper>
@@ -137,8 +131,12 @@ export default function Login() {
           <Button primary onClick={requestSignin} disabled={disabled}>
             로그인
           </Button>
-          <Button primary onClick={kakaoLogin}>카카오로그인</Button>
-          <Button primary onClick={googleLogin}>구글로그인</Button>
+          <Button primary onClick={handleClickKakaoLogin}>
+            카카오로그인
+          </Button>
+          <Button primary onClick={handleClickGoogleLogin}>
+            구글로그인
+          </Button>
         </SocialButtonContainer>
       </LoginContainer>
       <LoginFooter>
