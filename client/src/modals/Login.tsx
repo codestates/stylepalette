@@ -99,8 +99,6 @@ export default function Login() {
     if (authorizationCode) {
       dispatch(googleLogin(authorizationCode))
     }
-  
-    
   }
 
   return (

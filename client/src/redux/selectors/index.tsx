@@ -22,6 +22,10 @@ export const getModalType = (state: any) => {
   return state.modalState.type;
 };
 
+export const getModalData = (state: any) => {
+  return state.modalState.data;
+};
+
 export const getRecommendColor = (state: any) => {
   return state.recommendcolorState;
 };
