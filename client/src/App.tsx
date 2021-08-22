@@ -15,6 +15,7 @@ import Gallery from './pages/Gallery';
 import axios from 'axios';
 import { serverUrl } from './utils/constants';
 import Result from './pages/Result';
+import { kakaoLogin, googleLogin } from './redux/actions/action';
 
 // import ProfileEdit from './modals/ProfileEdit';
 
@@ -32,11 +33,11 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const GlobalStyle = createGlobalStyle`
+  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
   * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
   font-family: 'Noto Sans KR', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
@@ -48,6 +49,16 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('TESTING SOCIAL LOGIN');
+    console.log('TESTING SOCIAL LOGIN 2');
+    const url = new URL(window.location.href);
+    const authorizationCode = url.searchParams.get('code');
+    const scope = url.searchParams.get('scope');
+    if (authorizationCode && scope) {
+      dispatch(googleLogin({ authorizationCode, scope }));
+    } else if (authorizationCode && !scope) {
+      dispatch(kakaoLogin({ authorizationCode, scope }));
+    }
     // check if user has logged in
     const token = localStorage.getItem('token');
     if (token) {
