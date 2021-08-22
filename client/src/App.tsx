@@ -49,6 +49,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('TESTING SOCIAL LOGIN');
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
     const scope = url.searchParams.get('scope');
