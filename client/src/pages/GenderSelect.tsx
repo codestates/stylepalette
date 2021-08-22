@@ -8,10 +8,6 @@ import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
 import MalePNG from '../images/male.png';
 import femalePNG from '../images/female.png';
 
-interface GenderSelectProps {
-  setGender?: any;
-}
-
 const GenderWrapper = styled.div`
   width: 100vw;
   height: 100vh;
@@ -184,13 +180,12 @@ const SelectButton = styled.button`
   }
 `;
 
-function GenderSelect(props: GenderSelectProps) {
+function GenderSelect() {
   const [gender, setGender] = useState<string>('');
   const [disabled, setDisabled] = useState<boolean>(false);
 
   useEffect(() => {
     enAble();
-    props.setGender(gender);
   }, [gender]);
 
   function enAble() {
@@ -203,11 +198,11 @@ function GenderSelect(props: GenderSelectProps) {
 
   function handleChangeGender(e: React.MouseEvent<HTMLButtonElement>) {
     setGender(e.currentTarget.value);
+    localStorage.setItem('gender', e.currentTarget.value);
   }
 
   return (
     <GenderWrapper>
-      {/* <Header /> */}
       <GenderContainer>
         <ContentWrapper>
           <GenderContent>안녕하세요</GenderContent>

@@ -9,18 +9,19 @@ export const initialState = {
     token: '',
     post: [],
   },
-  posts: [{
-    id: null,
-    title: '',
-    image:
-      '',
-    topcolor: '',
-    bottomcolor: '',
-    userid: null,
-    likeCount: 0,
-    isPublic: true,
-    createdAt: '',
-  }],
+  posts: [
+    {
+      id: null,
+      title: '',
+      image: '',
+      topcolor: '',
+      bottomcolor: '',
+      userid: null,
+      likeCount: 0,
+      isPublic: true,
+      createdAt: '',
+    },
+  ],
   modal: {
     isOpen: false,
     type: '',
@@ -33,6 +34,13 @@ export const initialState = {
   roulettecolor: {
     palette: [],
   },
+  userpickcolor: {
+    topcolor: '',
+    bottomcolor: '',
+  },
+  mainresultimage: {
+    imageblob: new Blob(),
+  },
 };
 
 export interface UserState {
@@ -41,6 +49,16 @@ export interface UserState {
   username: string;
   email: string;
   userimage: string;
+}
+
+export interface PostState {
+  postid: number | null;
+  title: string;
+  image: string;
+  topcolor: string;
+  bottomcolor: string;
+  isPublic: boolean;
+  userId: number | null;
 }
 
 export interface ModalState {
@@ -58,10 +76,21 @@ export interface RouletteColor {
   palette: string[];
 }
 
+export interface UserPickColor {
+  topcolor: string;
+  bottomcolor: string;
+}
+
+export interface MainResultImage {
+  imageblob: Blob;
+}
+
 export interface RootState {
   user: UserState;
-  posts: [];
+  posts: PostState;
   modal: ModalState;
   recommendcolor: RecommendColor;
   roulettecolor: RouletteColor;
+  userpickcolor: UserPickColor;
+  mainresultimage: MainResultImage;
 }

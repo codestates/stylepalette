@@ -26,12 +26,12 @@ const signIn = async (req: Request, res: Response, next: NextFunction) => {
     if (accessToken) {
       res.cookie("jwt", accessToken, {
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        domain: ".stylepalette.net",
+        // domain: ".stylepalette.net",
         path: "/",
         secure: true,
         httpOnly: true,
         sameSite: 'none'
-      }).status(200).send({ message : "Successed Sign in", payload : accessToken})
+      }).status(200).send({ message : "Successed Sign in", payload : {accessToken : accessToken, user : foundUser}})
     } else {
       res.status(400).send({ message : "Failed Sign in, No Token"})
     }
