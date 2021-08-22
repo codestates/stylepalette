@@ -167,7 +167,7 @@ export const kakaoLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
   return (dispatch: (arg0: { type: string; payload: any }) => void) => {
     axios
       .post(
-        `${serverUrl}/kakao`,
+        `/kakao`,
         {
           code: authorizationCode,
         },
@@ -186,7 +186,7 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios
       .post(
-        `${serverUrl}/google`,
+        `/google`,
         {
           code: authorizationCode,
         },
