@@ -22,6 +22,14 @@ export const initialState = {
       createdAt: '',
     },
   ],
+  otheruser: {
+    userid: null,
+    realname: '',
+    username: '',
+    email: '',
+    userimage: '',
+    post: [],
+  },
   modal: {
     isOpen: false,
     type: '',

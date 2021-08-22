@@ -1,11 +1,9 @@
 import React from 'react';
-import { useState, useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-
-import ProfilePhoto from '../images/TestPhoto.jpg';
-import { handleModal } from '../redux/actions/action';
-import Photo from '../dummyData/dummyPhoto';
+import { handleModal, getUserInfo, getPost } from '../redux/actions/action';
+import { getOtherUser } from '../redux/selectors';
 
 const OtherUserPageWrapper = styled.div`
   width: 100%;
@@ -113,10 +111,18 @@ const OtherUserInfoContent = styled.span`
 `;
 
 function OtherUserPage() {
+  useEffect(() => {
+    // get user info
+    dispatch(getUserInfo());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const dispatch = useDispatch();
+  const user = useSelector(getOtherUser);
 
   const handleClickPostInfo = (event: React.MouseEvent) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
+    dispatch(getPost());
   };
 
   return (
@@ -124,17 +130,17 @@ function OtherUserPage() {
       <OtherUserPageContainer>
         <OtherUserInfoContainer>
           <OtherUserPhotoWrapper>
-            <UserPhoto src={ProfilePhoto} />
+            <UserPhoto src={user.userimage} />
           </OtherUserPhotoWrapper>
           <OtherUserInfoWrapper>
-            <OtherUserInfoContent>전지호</OtherUserInfoContent> <br />
+            <OtherUserInfoContent>{user.username}</OtherUserInfoContent> <br />
           </OtherUserInfoWrapper>
         </OtherUserInfoContainer>
         <OtherUserPostWrapper>
-          {Photo.map((el, idx) => {
+          {user.map((el: any, idx: React.Key | null | undefined) => {
             return (
-              <NavIcon onClick={handleClickPostInfo}>
-                <PostPhoto src={el} />
+              <NavIcon key={idx} onClick={handleClickPostInfo}>
+                <PostPhoto src={el.image} />
               </NavIcon>
             );
           })}
