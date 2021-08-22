@@ -51,6 +51,7 @@ function App() {
 
   useEffect(() => {
     console.log('TESTING SOCIAL LOGIN');
+    console.log('TESTING SOCIAL LOGIN 2');
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
     const scope = url.searchParams.get('scope');
