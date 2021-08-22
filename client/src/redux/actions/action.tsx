@@ -26,11 +26,12 @@ export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
 export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
 export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
 export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
+export const USER_PICKCOLOR = 'USER_PICKCOLOR';
+export const MAIN_RESULTIMAGE = 'MAIN_RESULTIMAGE';
 export const GETPOSTS_SUCCESS = 'GETPOSTS_SUCCESS';
 export const PROFILEIMAGE_EDIT = 'PROFILEIMAGE_EDIT';
 export const PROFILEIMAGE_EDIT_SUCCESS = 'PROFILEIMAGE_EDIT_SUCCESS';
 export const PROFILEIMAGE_EDIT_FAILURE = 'PROFILEIMAGE_EDIT_FAILURE';
-
 
 interface LoginProps {
   username: string;
@@ -77,6 +78,15 @@ interface RecommendColor {
 
 interface RouletteColor {
   maincolor: string;
+}
+
+interface UserPickColorProps {
+  topcolor: string;
+  bottomcolor: string;
+}
+
+interface MainResultImageProps {
+  imageblob: Blob;
 }
 
 export interface Post {
@@ -452,6 +462,19 @@ export const rouletteColor = (data: RouletteColor) => {
   };
 };
 
+export const setUserPickColor = (data: UserPickColorProps) => {
+  return {
+    type: USER_PICKCOLOR,
+    payload: data,
+  };
+};
+
+export const setMainResultImage = (data: MainResultImageProps) => {
+  return {
+    type: MAIN_RESULTIMAGE,
+    payload: data,
+  };
+};
 
 export const googleLogin = (authorizationCode : string) => {
   return  (dispatch: (arg0: { type: string; payload?: any }) => void) => {

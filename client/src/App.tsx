@@ -2,7 +2,7 @@ import { useState } from 'react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../src/redux/actions/action';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { getIsModalOpen, getIsLoggedIn } from './redux/selectors/index';
 import Header from './components/Header/Header';
@@ -13,9 +13,8 @@ import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
 import axios from 'axios';
-import { serverUrl } from "./utils/constants"
+import { serverUrl } from './utils/constants';
 import Result from './pages/Result';
-
 
 // import ProfileEdit from './modals/ProfileEdit';
 
@@ -46,7 +45,6 @@ const GlobalStyle = createGlobalStyle`
 
 function App() {
   const [gender, setGender] = useState<string>('');
-  const [imageBlob, setImageBlob] = useState<Blob>(new Blob());
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -65,17 +63,17 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        {/* <MainPage gender={gender} setImageBlob={setImageBlob} /> */}
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}
             Landing Page
+            <Link to="/genderselect">성별 선택 페이지</Link>
           </Route>
           <Route exact path="/genderselect">
-            <GenderSelect setGender={setGender} />
+            <GenderSelect />
           </Route>
           <Route exact path="/mainpage">
-            <MainPage gender={gender} setImageBlob={setImageBlob} />
+            <MainPage />
           </Route>
           <Route exact path="/mypage">
             <MyPage />
@@ -87,7 +85,7 @@ function App() {
             <OtherUserPage />
           </Route>
           <Route exact path="/result">
-            <Result imageBlob={imageBlob} />
+            <Result />
           </Route>
         </Switch>
         {/* <ProfileEdit /> */}

@@ -1,15 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
+import { PrimaryButton } from '../components/Button/Button.styled';
 import Text from '../components/Text/Text';
-import Man from '../images/Man/Man-default.svg';
-import { handleModal } from '../redux/actions/action';
 
-interface ResultProps {
-  imageBlob: Blob;
-}
+import { handleModal } from '../redux/actions/action';
+import { MainResultImage } from '../redux/reducers/initialState';
+import { getIsLoggedIn, getMainResultImage } from '../redux/selectors';
 
 const ResultContainer = styled.div`
   display: flex;
@@ -24,8 +23,19 @@ const ResultContainer = styled.div`
 `;
 
 const ResultImage = styled.img`
-  width: 500px;
+  width: 550px;
   margin: 10px 0;
+`;
+
+const ResultText = styled(Text)`
+  font-size: 24px;
+  font-style: bold;
+  padding: 0 0 10px 0;
+`;
+
+const ResultButton = styled(PrimaryButton)`
+  width: 140px;
+  height: 50px;
 `;
 
 const ButtonContainer = styled.div`
@@ -33,31 +43,40 @@ const ButtonContainer = styled.div`
   justify-content: center;
 `;
 
-export default function Result(props: ResultProps) {
+export default function Result() {
   const dispatch = useDispatch();
-  const imgSrc = URL.createObjectURL(props.imageBlob);
+  const imgSrc = localStorage.getItem('imageSrc');
+  const isLoggedIn = useSelector(getIsLoggedIn);
 
   const handleClickPostSharing = () => {
     dispatch(handleModal({ isOpen: true, type: 'postSharing' }));
   };
 
+  const handleClickLogin = () => {
+    dispatch(handleModal({ isOpen: true, type: 'login' }));
+  };
+
   //TODO: 저장하기 눌렀을때 로그인이 안되어있으면 로그인 모달, 로그인이 되어있으면 자동으로 마이페이지에 저장
+  //? 1. 저장하기 눌렀을때 post 로 필요한 데이터, isPublic 에 해당하는 boolean, 사진 데이터
+  //? 2. 현재 메인 페이지에서 받아와야하는, 탑, 바텀 컬러
 
   return (
     <>
       <ResultContainer>
         <ResultImage src={imgSrc}></ResultImage>
-        <Text>최종결과: 멋진 코디네요!</Text>
+        <ResultText>최종결과: 멋진 코디네요!</ResultText>
         <ButtonContainer>
           <Link to="/genderselect">
-            <Button primary>처음으로</Button>
+            <ResultButton>처음으로</ResultButton>
           </Link>
-          <Button primary>저장하기</Button>
-          <Button primary onClick={handleClickPostSharing}>
-            공유하기
-          </Button>
+          {isLoggedIn ? (
+            <ResultButton onClick={handleClickPostSharing}>저장하기</ResultButton>
+          ) : (
+            <ResultButton onClick={handleClickLogin}>저장하기</ResultButton>
+          )}
+
           <Link to="/gallery">
-            <Button primary>다른 작품 구경하기</Button>
+            <ResultButton>다른 작품 구경하기</ResultButton>
           </Link>
         </ButtonContainer>
       </ResultContainer>

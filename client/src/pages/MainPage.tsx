@@ -9,10 +9,14 @@ import { RestartAlt } from '@styled-icons/material-twotone/RestartAlt';
 import { ReactComponent as Man } from '../images/Man/Man-default.svg';
 import { ReactComponent as Woman } from '../images/Woman/Woman-default.svg';
 
-import { recommendColor, rouletteColor } from '../redux/actions/action';
+import {
+  recommendColor,
+  rouletteColor,
+  setUserPickColor,
+  setMainResultImage,
+} from '../redux/actions/action';
 import { RecommendColor, RouletteColor } from '../redux/reducers/initialState';
 import { getRecommendColor, getRouletteColor } from '../redux/selectors';
-import { AnyStyledComponent } from 'styled-components';
 
 const Color = [
   '#FF0000',
@@ -34,11 +38,6 @@ const ClothList: any = {
   하의: ['청바지', '반바지'],
   준비중: [],
 };
-
-interface MainProps {
-  gender?: string;
-  setImageBlob?: any;
-}
 
 interface imgProps {
   picktopcolor?: string;
@@ -510,7 +509,7 @@ const Roulette = styled.button<rouletteProps>`
   }}
 `;
 
-function MainPage(props: MainProps) {
+function MainPage() {
   const dispatch = useDispatch();
   let recommendColors: RecommendColor = useSelector(getRecommendColor);
   let rouletteColors: RouletteColor = useSelector(getRouletteColor);
@@ -541,6 +540,9 @@ function MainPage(props: MainProps) {
 
   //? Roulette 컬러
   const { palette } = rouletteColors;
+
+  //? 성별
+  const gender = localStorage.getItem('gender');
 
   //! 리셋
   function handleReset(event: React.MouseEvent<HTMLButtonElement>) {
@@ -684,10 +686,18 @@ function MainPage(props: MainProps) {
   const onThrottleRotateMove = throttle(onRotateMove, 15);
 
   //! 이미지 저장
-  function handleResultImage(event: React.MouseEvent<HTMLButtonElement>) {
+  async function handleResultImage(event: React.MouseEvent<HTMLButtonElement>) {
     const resultImage = document.getElementById('result_Image') as HTMLDivElement;
 
-    html2canvas(resultImage).then((canvas) => {
+    //! 유저가 선택한 탑, 바텀 컬러
+    dispatch(
+      setUserPickColor({
+        topcolor: pickTopColor,
+        bottomcolor: pickBottomColor,
+      }),
+    );
+
+    await html2canvas(resultImage).then((canvas) => {
       const imgBase64 = canvas.toDataURL('image/png', 'image/octet-stream');
       const decoding = atob(imgBase64.split(',')[1]);
 
@@ -696,7 +706,16 @@ function MainPage(props: MainProps) {
         arr.push(decoding.charCodeAt(i));
       }
 
-      props.setImageBlob(new Blob([new Uint8Array(arr)], { type: 'image/png' }));
+      const imageBlob = new Blob([new Uint8Array(arr)], { type: 'image/png' });
+
+      const imgSrc = URL.createObjectURL(imageBlob);
+      localStorage.setItem('imageSrc', imgSrc);
+
+      dispatch(
+        setMainResultImage({
+          imageblob: imageBlob,
+        }),
+      );
     });
   }
 
@@ -832,7 +851,7 @@ function MainPage(props: MainProps) {
           })}
         </PalletteContainer>
         <ImageContainer id="result_Image">
-          {props.gender === '남성' ? (
+          {gender === '남성' ? (
             <ImageMan
               picktopcolor={pickTopColor}
               pickbottomcolor={pickBottomColor}
