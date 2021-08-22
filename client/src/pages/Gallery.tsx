@@ -3,13 +3,10 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { getPosts } from '../redux/selectors';
-import { handleModal, getAllPosts, Post } from '../redux/actions/action';
 
-import { serverUrl } from '../utils/constants';
-import axios from 'axios';
-
-import Photo from '../dummyData/dummyPhoto';
+import { PostsState, RouletteColor } from '../redux/reducers/initialState';
+import { handleModal, getAllPosts, rouletteColor } from '../redux/actions/action';
+import { getPosts, getRouletteColor } from '../redux/selectors';
 
 const Color = [
   '최신순',
@@ -116,64 +113,106 @@ const PostPhoto = styled.img`
 `;
 
 function Gallery() {
+  // TODO: 룰렛과 같은 형식으로 근사값으로 색을 필터링 하다보니 검, 흰이 들어가면 무조건 같이 나옴
   const dispatch = useDispatch();
-  const [colorData, setColorData] = useState<string>('');
-  const posts = useSelector(getPosts);
-  console.log(posts)
+  let posts: PostsState[] = useSelector(getPosts);
+  let colorDatas: RouletteColor = useSelector(getRouletteColor);
 
-  useEffect(()=> {
-    
-    axios.get(`${serverUrl}/post/posts/all`, {
-      withCredentials : true
-    })
-    .then(response => dispatch(getAllPosts(response.data)))
+  const [filterPost, setFilterPost] = useState<PostsState[]>(posts);
+  const { palette } = colorDatas;
 
-  }, [])
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
 
-  const handleClickPostInfo = (postid : number) => {
-    dispatch(handleModal({ isOpen: true, type: 'postInfo' ,data: postid }));
+  const handleClickPostInfo = (postid: number | null) => {
+    dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
   };
 
-  const handleGetCategory = (value?: string) => {
+  const filteredFunc = (value: string) => {
+    const colorData = {
+      maincolor: value,
+    };
+
+    dispatch(rouletteColor(colorData));
+    return posts.filter((el) => {
+      for (let i = 0; i < palette.length; i++) {
+        if (el.topcolor === palette[i]) {
+          return el;
+        } else if (el.bottomcolor === palette[i]) {
+          return el;
+        }
+      }
+    });
+  };
+
+  const handleGetCategory = (value: string) => {
     switch (value) {
+      case '최신순': {
+        setFilterPost(posts);
+        break;
+      }
       case '인기순': {
-        setColorData(value);
+        setFilterPost(
+          posts.sort((a, b) => {
+            return b.likeCount - a.likeCount;
+          }),
+        );
+
         break;
       }
       case '빨강': {
-        setColorData('#FF0000');
+        const filterCategory = filteredFunc('#FF0000');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '주황': {
-        setColorData('#FFA500');
+        const filterCategory = filteredFunc('#FFA500');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '노랑': {
-        setColorData('#FFFF00');
+        const filterCategory = filteredFunc('#FFFF00');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '초록': {
-        setColorData('#008000	');
+        const filterCategory = filteredFunc('#008000');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '파랑': {
-        setColorData('#0000FF');
+        const filterCategory = filteredFunc('#0000FF');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '남색': {
-        setColorData('#00008B');
+        const filterCategory = filteredFunc('#00008B');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '보라': {
-        setColorData('#800080');
+        const filterCategory = filteredFunc('#800080');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '하양': {
-        setColorData('#FFFFFF');
+        const filterCategory = filteredFunc('#FFFFFF');
+        setFilterPost(filterCategory);
+
         break;
       }
       case '검정': {
-        setColorData('#000000');
+        const filterCategory = filteredFunc('#000000');
+        setFilterPost(filterCategory);
+
         break;
       }
 
@@ -187,17 +226,21 @@ function Gallery() {
       <GalleryWrapper>
         <FillterContainer>
           <ListContainer>
-            {Color.map((el) => {
-              return <ColorList onClick={() => handleGetCategory(el)}>{el}</ColorList>;
+            {Color.map((el, idx) => {
+              return (
+                <ColorList key={idx} onClick={() => handleGetCategory(el)}>
+                  {el}
+                </ColorList>
+              );
             })}
           </ListContainer>
         </FillterContainer>
         <GalleryContainer>
           <PhotoWrapper>
-            {posts.map((el : Post) => {
+            {filterPost.map((el, idx) => {
               return (
-                <NavIcon onClick={() => handleClickPostInfo(el.id)}>
-                  <PostPhoto src={el.image} />
+                <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                  <PostPhoto key={idx} src={el.image} />
                 </NavIcon>
               );
             })}

@@ -45,7 +45,6 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 function App() {
-  const [gender, setGender] = useState<string>('');
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -74,6 +73,7 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
+        <Gallery />
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}

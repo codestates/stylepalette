@@ -9,6 +9,23 @@ export const initialState = {
     token: '',
     post: [],
   },
+  post: {
+    id: null,
+    title: '',
+    image: '',
+    topcolor: '',
+    bottomcolor: '',
+    likeCount: 0,
+    like: [],
+    userid: null,
+    user: {
+      username: '',
+      userimage: '',
+    },
+    isPublic: true,
+    createdAt: '',
+    updatedAt: '',
+  },
   posts: [
     {
       id: null,
@@ -60,13 +77,33 @@ export interface UserState {
 }
 
 export interface PostState {
-  postid: number | null;
+  id: number | null;
   title: string;
   image: string;
   topcolor: string;
   bottomcolor: string;
+  likeCount: number;
+  like: number[];
+  userid: number | null;
+  user: {
+    username: string;
+    userimage: string;
+  };
   isPublic: boolean;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface PostsState {
+  id: number | null;
+  title: string;
+  image: string;
+  topcolor: string;
+  bottomcolor: string;
+  likeCount: number;
   userId: number | null;
+  isPublic: boolean;
+  createdAt: number;
 }
 
 export interface ModalState {
@@ -95,7 +132,8 @@ export interface MainResultImage {
 
 export interface RootState {
   user: UserState;
-  posts: PostState;
+  post: PostState;
+  posts: PostsState;
   modal: ModalState;
   recommendcolor: RecommendColor;
   roulettecolor: RouletteColor;
