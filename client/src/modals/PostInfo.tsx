@@ -1,14 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
-import { PrimaryButton } from '../components/Button/Button.styled';
-import { getPost, pressLike } from '../redux/actions/action';
+import Button from '../components/Button/Button';
+import { getPost, pressLike, deletePost } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
-import { getPostState, getUser } from '../redux/selectors';
+import { getPostState, getUser, getLikeState } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
+import { NumberValueToken } from 'html2canvas/dist/types/css/syntax/tokenizer';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
@@ -41,8 +42,6 @@ const PostOwerUserName = styled.div`
   padding-right: 5px;
 `;
 
-const PostDeleteButton = styled(PrimaryButton)``;
-
 const LikeContainer = styled.div`
   padding: 0.5em 1em 0 1em;
   display: flex;
@@ -68,14 +67,21 @@ export default function PostInfo(modalData: any) {
   // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
   const dispatch = useDispatch();
   const [isDelete, setIsDelete] = useState<boolean>(false);
-
   let post: PostState = useSelector(getPostState);
   let currentUser: UserState = useSelector(getUser);
+  let isLiked: boolean = useSelector(getLikeState);
 
   useEffect(() => {
-    dispatch(getPost(modalData.modalData));
+    console.log('modalData:', modalData);
+
+    dispatch(
+      getPost({
+        postId: modalData.modalData,
+      }),
+    );
     handleIsDelete();
-  }, []);
+    console.log(post);
+  }, [isLiked]);
 
   function handleIsDelete() {
     if (currentUser.userid === post.userId) {
@@ -85,31 +91,43 @@ export default function PostInfo(modalData: any) {
     }
   }
 
-  function handleHeartIcon() {
-    console.log('currentUser:', currentUser);
-    console.log('post:', post);
+  function handleClickPostDelete() {
+    dispatch(deletePost(modalData.modalData));
+  }
 
-    const data = {
-      postid: post.id,
-      userid: post.userId,
-    };
-
+  function handleLike(data: { postid: number | null; userid: number | null }) {
     dispatch(pressLike(data));
   }
 
   return (
     <PostInfoWrapper>
-      {isDelete ? <PostDeleteButton>삭제</PostDeleteButton> : null}
+      {currentUser.userid === post.userId ? (
+        <Button primary onClick={handleClickPostDelete}>
+          삭제
+        </Button>
+      ) : null}
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <HeartIcon onClick={handleHeartIcon}></HeartIcon>
+          {isLiked ? (
+            <HeartIcon
+              fill="red"
+              onClick={() => handleLike({ postid: post.id, userid: currentUser.userid })}
+            />
+          ) : (
+            <HeartIcon
+              fill=""
+              onClick={() => handleLike({ postid: post.id, userid: currentUser.userid })}
+            />
+          )}
         </LikeIconWrapper>
         <LikeCount>{post.likeCount} likes</LikeCount>
       </LikeContainer>
       <PostContentContainer>
-        <PostOwnerProfileImage src={post.user.userimage} />
-        <PostOwerUserName>{post.user.username}</PostOwerUserName>
+        <Link to={`/${post.userId}`}>
+          <PostOwnerProfileImage src={post.user.userimage} />
+          <PostOwerUserName>{post.user.username}</PostOwerUserName>
+        </Link>
         <PostTitle>{post.title}</PostTitle>
       </PostContentContainer>
     </PostInfoWrapper>

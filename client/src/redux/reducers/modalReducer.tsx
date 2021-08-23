@@ -3,12 +3,14 @@ import { dummyState } from './dummyState';
 import { HANDLE_MODAL } from '../actions/action';
 
 const modalReducer = (state = dummyState.modal, action: { type?: string; payload?: any }) => {
+  console.log('action:', action.payload);
+
   switch (action.type) {
     case HANDLE_MODAL:
       const newState = Object.assign({}, state, {
         isOpen: action.payload.isOpen,
         type: action.payload.type,
-        data: action.payload.data
+        data: action.payload.data,
       });
       return newState;
     default:
