@@ -1,11 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { PrimaryButton } from '../components/Button/Button.styled';
-import { getPost, pressLike} from '../redux/actions/action';
+import { getPost, pressLike } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPostState, getUser } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
@@ -21,7 +22,7 @@ const PostInfoWrapper = styled.div`
 const PostTitle = styled.div``;
 
 const PostImage = styled.img`
-  width: 100%;
+  width: 200px;
 `;
 
 const PostContentContainer = styled.div`
@@ -41,7 +42,7 @@ const PostOwerUserName = styled.div`
   padding-right: 5px;
 `;
 
-const PostDeleteButton = styled(PrimaryButton)``;
+const PostDeleteButton = styled.button``;
 
 const LikeContainer = styled.div`
   padding: 0.5em 1em 0 1em;
@@ -69,7 +70,6 @@ export default function PostInfo(modalData: any) {
   const dispatch = useDispatch();
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
-
   let post: PostState = useSelector(getPostState);
   let currentUser: UserState = useSelector(getUser);
 
@@ -79,28 +79,31 @@ export default function PostInfo(modalData: any) {
   }, []);
 
   function handleIsDelete() {
-    if (currentUser.userid === post.userid) {
+    if (currentUser.userid === post.userId) {
       setIsDelete(true);
     } else {
       setIsDelete(false);
     }
   }
 
+  console.log('POST', post);
   return (
     <PostInfoWrapper>
       {isDelete ? <PostDeleteButton>삭제</PostDeleteButton> : null}
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <button onClick={()=>pressLike({ postid : post[0].id, userid : user.userid})}>
+          <button onClick={() => pressLike({ postid: post.id, userid: currentUser.userid })}>
             좋아요
           </button>
         </LikeIconWrapper>
         <LikeCount>{post.likeCount} likes</LikeCount>
       </LikeContainer>
       <PostContentContainer>
-        <PostOwnerProfileImage src={post.user.userimage} />
-        <PostOwerUserName>{post.user.username}</PostOwerUserName>
+        <Link to={`/${post.userId}`}>
+          <PostOwnerProfileImage src={post.user.userimage} />
+          <PostOwerUserName>{post.user.username}</PostOwerUserName>
+        </Link>
         <PostTitle>{post.title}</PostTitle>
       </PostContentContainer>
     </PostInfoWrapper>

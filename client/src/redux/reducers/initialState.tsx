@@ -17,7 +17,7 @@ export const initialState = {
     bottomcolor: '',
     likeCount: 0,
     like: [],
-    userid: null,
+    userId: null,
     user: {
       username: '',
       userimage: '',
@@ -84,7 +84,7 @@ export interface PostState {
   bottomcolor: string;
   likeCount: number;
   like: number[];
-  userid: number | null;
+  userId: number | null;
   user: {
     username: string;
     userimage: string;

@@ -24,6 +24,8 @@ export const PASSWORDCHECK_SUCCESS = 'PASSWORDCHECK_SUCCESS';
 export const PASSWORDCHECK_FAILURE = 'PASSWORDCHECK_FAILURE';
 export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
 export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
+export const GET_OTHERUSER_INFO_SUCCESS = 'GET_OTHERUSER_INFO_SUCCESS';
+export const GET_OTHERUSER_INFO_FAILURE = 'GET_OTHERUSER_INFO_FAILURE';
 export const USER_PICKCOLOR = 'USER_PICKCOLOR';
 export const MAIN_RESULTIMAGE = 'MAIN_RESULTIMAGE';
 export const PROFILEIMAGE_EDIT = 'PROFILEIMAGE_EDIT';
@@ -79,6 +81,10 @@ interface ProfileImageEditProps {
   file?: File;
 }
 
+interface UserInfoProps {
+  userid: number | null;
+}
+
 interface RecommendColor {
   selectedcolor: string;
 }
@@ -115,10 +121,11 @@ export const getUserFailure = (data: any) => {
   };
 };
 
-export const getUserInfo = () => {
+export const getUserInfo = (data: UserInfoProps) => {
+  const { userid } = data;
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios
-      .get(`${serverUrl}/userinfo`, {
+      .get(`${serverUrl}/userinfo/${userid}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -127,6 +134,37 @@ export const getUserInfo = () => {
       })
       .catch((response) => {
         console.log('getuser FAILURE: ', response);
+      });
+  };
+};
+
+export const getOtherUserSuccess = (data: any) => {
+  return {
+    type: GET_OTHERUSER_INFO_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getOtherUserFailure = (data: any) => {
+  return {
+    type: GET_OTHERUSER_INFO_FAILURE,
+    payload: data,
+  };
+};
+
+export const getOtherUserInfo = (data: UserInfoProps) => {
+  const { userid } = data;
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .get(`${serverUrl}/userinfo/${userid}`, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log('get otheruser success: ', response);
+        dispatch(getOtherUserSuccess(response.data[0]));
+      })
+      .catch((response) => {
+        console.log('get otheruser FAILURE: ', response);
       });
   };
 };
@@ -163,6 +201,7 @@ export const logIn = (data: LoginProps) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         dispatch(handleModal({ isOpen: false }));
         localStorage.setItem('token', response.data.payload.accessToken);
+        localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
           loginSuccess({
             token: response.data.payload.accessToken,
@@ -201,11 +240,12 @@ export const kakaoLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
       )
       .then((response) => {
         console.log('KAKAO LOGIN SUCCESS', response);
-        localStorage.setItem('token', response.data.id_token);
+        localStorage.setItem('token', response.data.payload.accessToken);
+        localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
           loginSuccess({
-            token: response.data.id_token,
-            user: response.data,
+            token: response.data.payload.accessToken,
+            user: response.data.payload.user,
           }),
         );
       })
@@ -229,11 +269,12 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
       )
       .then((response) => {
         console.log('GOOGLE LOGIN SUCCESS', response);
-        localStorage.setItem('token', response.data.id_token);
+        localStorage.setItem('token', response.data.payload.accessToken);
+        localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
           loginSuccess({
-            token: response.data.id_token,
-            user: response.data,
+            token: response.data.payload.accessToken,
+            user: response.data.payload.user,
           }),
         );
       })
@@ -253,6 +294,7 @@ export const logOut = () => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios.get(`${serverUrl}/signout`, { withCredentials: true }).then((response) => {
       localStorage.setItem('token', '');
+      localStorage.setItem('user', '');
       dispatch(logOutSuccess());
     });
   };
@@ -583,12 +625,11 @@ export const setMainResultImage = (data: MainResultImageProps) => {
   };
 };
 
-export const pressLike = (data: {postid : number, userid : number}) => {
-  console.log(data)
-  axios.post(`${serverUrl}/post/${data.postid}/like`,{
-    userid : data.userid
-  })
-  .then(response => console.log(response))
- 
+export const pressLike = (data: { postid: number | null; userid: number | null }) => {
+  console.log(data);
+  axios
+    .post(`${serverUrl}/post/${data.postid}/like`, {
+      userid: data.userid,
+    })
+    .then((response) => console.log(response));
 };
-

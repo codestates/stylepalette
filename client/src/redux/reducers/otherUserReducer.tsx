@@ -1,4 +1,4 @@
-import { GETUSERINFO_SUCCESS, GETUSERINFO_FAILURE } from '../actions/action';
+import { GET_OTHERUSER_INFO_SUCCESS, GET_OTHERUSER_INFO_FAILURE } from '../actions/action';
 import { initialState, UserState } from './initialState';
 
 const otherUserReducer = (
@@ -6,7 +6,7 @@ const otherUserReducer = (
   action: { type: string; payload: any },
 ) => {
   switch (action.type) {
-    case GETUSERINFO_SUCCESS: {
+    case GET_OTHERUSER_INFO_SUCCESS: {
       const { id, realname, username, email, userimage, post } = action.payload;
       const otherUserState = Object.assign({}, state, {
         userid: id,

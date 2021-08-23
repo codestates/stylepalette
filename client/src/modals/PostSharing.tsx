@@ -69,14 +69,15 @@ const PostInput = styled.input`
 `;
 
 function PostSharing() {
+  const user = useSelector(getUser);
+  const dispatch = useDispatch();
+
   useEffect(() => {
     // get user info
-    dispatch(getUserInfo());
+    dispatch(getUserInfo({ userid: user.userid }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const dispatch = useDispatch();
-  const user = useSelector(getUser);
   const userPickColor: UserPickColor = useSelector(getUserPickColor);
   const mainResultImage: MainResultImage = useSelector(getMainResultImage);
   const imgSrc = URL.createObjectURL(mainResultImage.imageblob);
