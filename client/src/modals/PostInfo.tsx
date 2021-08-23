@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
-import { getPost, pressLike, deletePost } from '../redux/actions/action';
+import { getPost, updateLikeList, deletePost } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPostState, getUser, getLikeState } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
@@ -67,21 +67,19 @@ export default function PostInfo(modalData: any) {
   // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
   const dispatch = useDispatch();
   const [isDelete, setIsDelete] = useState<boolean>(false);
-  let post: PostState = useSelector(getPostState);
-  let currentUser: UserState = useSelector(getUser);
-  let isLiked: boolean = useSelector(getLikeState);
+  const post: PostState = useSelector(getPostState);
+  const currentUser: UserState = useSelector(getUser);
+  // const isLiked: boolean = useSelector(getLikeState);
+  const likeList = post.like.map((el) => el.userId);
 
   useEffect(() => {
-    console.log('modalData:', modalData);
-
     dispatch(
       getPost({
         postId: modalData.modalData,
       }),
     );
     handleIsDelete();
-    console.log(post);
-  }, [isLiked]);
+  }, []);
 
   function handleIsDelete() {
     if (currentUser.userid === post.userId) {
@@ -95,8 +93,8 @@ export default function PostInfo(modalData: any) {
     dispatch(deletePost(modalData.modalData));
   }
 
-  function handleLike(data: { postid: number | null; userid: number | null }) {
-    dispatch(pressLike(data));
+  function handleLike(data: { postid: number | null; userid: number | null; like: boolean }) {
+    dispatch(updateLikeList(data));
   }
 
   return (
@@ -109,19 +107,23 @@ export default function PostInfo(modalData: any) {
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          {isLiked ? (
+          {likeList.includes(currentUser.userid) ? (
             <HeartIcon
               fill="red"
-              onClick={() => handleLike({ postid: post.id, userid: currentUser.userid })}
+              onClick={() =>
+                handleLike({ postid: post.id, userid: currentUser.userid, like: false })
+              }
             />
           ) : (
             <HeartIcon
               fill=""
-              onClick={() => handleLike({ postid: post.id, userid: currentUser.userid })}
+              onClick={() =>
+                handleLike({ postid: post.id, userid: currentUser.userid, like: true })
+              }
             />
           )}
         </LikeIconWrapper>
-        <LikeCount>{post.likeCount} likes</LikeCount>
+        <LikeCount>{post.like.length} likes</LikeCount>
       </LikeContainer>
       <PostContentContainer>
         <Link to={`/${post.userId}`}>

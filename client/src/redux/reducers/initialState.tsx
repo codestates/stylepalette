@@ -68,7 +68,6 @@ export const initialState = {
   mainresultimage: {
     imageblob: new Blob(),
   },
-  isLiked: false,
 };
 
 export interface UserState {
@@ -86,7 +85,7 @@ export interface PostState {
   topcolor: string;
   bottomcolor: string;
   likeCount: number;
-  like: number[];
+  like: LikeList[];
   userId: number | null;
   user: {
     username: string;
@@ -95,6 +94,10 @@ export interface PostState {
   isPublic: boolean;
   createdAt: string;
   updatedAt: string;
+}
+
+export interface LikeList {
+  userId: number | null;
 }
 
 export interface PostsState {

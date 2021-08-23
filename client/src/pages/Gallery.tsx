@@ -121,7 +121,8 @@ function Gallery() {
 
   useEffect(() => {
     dispatchAllPosts();
-  }, []);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [posts]);
 
   const dispatchAllPosts = async () => {
     await dispatch(getAllPosts());

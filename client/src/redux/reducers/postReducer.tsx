@@ -4,7 +4,7 @@ import {
   GET_POST_FAILURE,
   GET_POST_SUCCESS,
   DELETE_POST_SUCCESS,
-  ISLIKED
+  UPDATE_LIKE_LIST_SUCCESS,
 } from '../actions/action';
 
 export const postsReducer = (
@@ -43,6 +43,21 @@ export const postReducer = (state = initialState.post, action: { type: string; p
       return newState;
     }
 
+    case UPDATE_LIKE_LIST_SUCCESS: {
+      const { userid, like } = action.payload;
+      const likeList = state.like;
+      let newLikeList: any[] = [];
+      if (like) {
+        newLikeList = [...likeList, { userId: userid }];
+      } else {
+        newLikeList = newLikeList.filter((el) => el.userId !== userid);
+      }
+      const newState = Object.assign({}, state, {
+        like: newLikeList,
+      });
+      return newState;
+    }
+
     // case DELETE_POST_SUCCESS: {
     //   const newState = Object.assign({}, state, {
     //     id: null,
@@ -67,21 +82,18 @@ export const postReducer = (state = initialState.post, action: { type: string; p
   }
 };
 
-export const likeReducer = (
-  state = initialState.isLiked,
-  action: { type: string; },
-) => {
-  switch (action.type) {
-    case ISLIKED: {
-      if (!state) {
-        const newState = true
-        return newState
-      } else {
-        const newState = false
-        return newState
-      }
-    }
-    default:
-      return state;
-  }
-};
+// export const likeReducer = (state = initialState.isLiked, action: { type: string }) => {
+//   switch (action.type) {
+//     case UPDATE_LIKE_LIST_SUCCESS: {
+//       if (!state) {
+//         const newState = true;
+//         return newState;
+//       } else {
+//         const newState = false;
+//         return newState;
+//       }
+//     }
+//     default:
+//       return state;
+//   }
+// };
