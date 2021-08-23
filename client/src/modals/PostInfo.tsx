@@ -4,9 +4,8 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-
-import { PrimaryButton } from '../components/Button/Button.styled';
-import { getPost, pressLike } from '../redux/actions/action';
+import Button from '../components/Button/Button';
+import { getPost, pressLike, deletePost } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPostState, getUser } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
@@ -22,7 +21,7 @@ const PostInfoWrapper = styled.div`
 const PostTitle = styled.div``;
 
 const PostImage = styled.img`
-  width: 200px;
+  width: 100%;
 `;
 
 const PostContentContainer = styled.div`
@@ -41,8 +40,6 @@ const PostOwnerProfileImage = styled.img`
 const PostOwerUserName = styled.div`
   padding-right: 5px;
 `;
-
-const PostDeleteButton = styled.button``;
 
 const LikeContainer = styled.div`
   padding: 0.5em 1em 0 1em;
@@ -68,28 +65,36 @@ export default function PostInfo(modalData: any) {
   // TODO: 유저 아이디가 동일하면 포스트 삭제 버튼이 나와야함
   // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
   const dispatch = useDispatch();
-  const [isDelete, setIsDelete] = useState<boolean>(false);
+  // const [isDelete, setIsDelete] = useState<boolean>(false);
 
-  let post: PostState = useSelector(getPostState);
-  let currentUser: UserState = useSelector(getUser);
+  const post: PostState = useSelector(getPostState);
+  const currentUser: UserState = useSelector(getUser);
 
   useEffect(() => {
     dispatch(getPost(modalData.modalData));
-    handleIsDelete();
+    // handleIsDelete();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  function handleIsDelete() {
-    if (currentUser.userid === post.userId) {
-      setIsDelete(true);
-    } else {
-      setIsDelete(false);
-    }
+  // function handleIsDelete() {
+  //   if (currentUser.userid === post.userId) {
+  //     setIsDelete(true);
+  //   } else {
+  //     setIsDelete(false);
+  //   }
+  // }
+
+  function handleClickPostDelete() {
+    dispatch(deletePost(modalData.modalData));
   }
 
-  console.log('POST', post);
   return (
     <PostInfoWrapper>
-      {isDelete ? <PostDeleteButton>삭제</PostDeleteButton> : null}
+      {currentUser.userid === post.userId ? (
+        <Button primary onClick={handleClickPostDelete}>
+          삭제
+        </Button>
+      ) : null}
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>

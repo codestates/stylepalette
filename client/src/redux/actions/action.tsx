@@ -36,6 +36,8 @@ export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 export const GET_POST_FAILURE = 'GET_POST_FAILURE';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POSTS_SUCCESS = 'GETPOSTS_SUCCESS';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 
 interface LoginProps {
   username: string;
@@ -547,6 +549,37 @@ export const getAllPosts = () => {
       })
       .catch((res) => {
         console.log('getposts failure', res);
+      });
+  };
+};
+
+export const deletePostSuccess = (data: any) => {
+  return {
+    type: DELETE_POST_SUCCESS,
+    payload: data,
+  };
+};
+
+export const deletePostFailure = (data: any) => {
+  return {
+    type: DELETE_POST_FAILURE,
+    payload: data,
+  };
+};
+
+export const deletePost = (data: getPostProps) => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .delete(`${serverUrl}/post/${data}`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log('delete post success');
+        dispatch(deletePostSuccess(data));
+        dispatch(handleModal({ isOpen: false }));
+      })
+      .catch((err) => {
+        console.log('delete post failure');
       });
   };
 };

@@ -85,6 +85,9 @@ function App() {
           <Route exact path="/mainpage">
             <MainPage />
           </Route>
+          <Route exact path="/result">
+            <Result />
+          </Route>
           <Route exact path="/mypage">
             <MyPage />
           </Route>
@@ -93,9 +96,6 @@ function App() {
           </Route>
           <Route exact path="/:userId">
             <OtherUserPage />
-          </Route>
-          <Route exact path="/result">
-            <Result />
           </Route>
         </Switch>
         {/* <ProfileEdit /> */}
