@@ -584,3 +584,12 @@ export const getAllPosts = (data: Posts) => {
     dispatch(successGetposts(data));
   };
 };
+
+export const pressLike = (data: {postid : number, userid : number}) => {
+  console.log(data)
+  axios.post(`${serverUrl}/post/${data.postid}/like`,{
+    userid : data.userid
+  })
+  .then(response => console.log(response))
+ 
+};

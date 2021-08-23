@@ -20,14 +20,25 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
 
       axios.get(`https://www.googleapis.com/oauth2/v2/userinfo?access_token=${accessToken}`,{
         withCredentials : true
-      }).then(response => {
+      }).then(async response => {
         // 유저 데이터베이스에 유저정보 저장
         const username = response.data.id
         const nickname = response.data.id
         const email = response.data.email
         const userimage = response.data.picture
-        console.log(response)
-        res.status(200).send({ username : username, realname : nickname, email : email, userimage : userimage, id_token : id_token })
+        const data = { 
+          username : username, 
+          realname : nickname, 
+          email : email, 
+          userimage : userimage
+        }
+        const user = await OAuth.createSocialUser(data)
+        const accessToken = OAuth.getToken(user)
+        if (accessToken) {
+          res.status(200).send({ message : "Successed Sign in", payload : {accessToken : accessToken, user : user}})
+        } else {
+          res.status(400).send({ message : "Failed Sign in, No Token"})
+        }
       }).catch(e => res.status(400).send({ message : e }))
   })
   .catch(e => res.status(404).send({ meassage : e }))
@@ -48,15 +59,27 @@ const kakao = async (req: Request, res: Response, next: NextFunction) => {
           'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
       })
-      .then((response) => {
+      .then(async (response) => {
         console.log(response)
         const username = response.data.id
         const nickname = response.data.properties.nickname
         const email = response.data.kakao_account.email
         const userimage = response.data.properties.profile_image
         // 유저 데이터베이스에 유저정보 저장
+        const data = { 
+          username : username, 
+          realname : nickname, 
+          email : email, 
+          userimage : userimage
+        }
+        const user = await OAuth.createSocialUser(data)
+        const accessToken = OAuth.getToken(user)
+        if (accessToken) {
+          res.status(200).send({ message : "Successed Sign in", payload : {accessToken : accessToken, user : user}})
+        } else {
+          res.status(400).send({ message : "Failed Sign in, No Token"})
+        }
 
-        res.status(200).send({ username : username, realname : nickname, email : email, userimage : userimage, id_token : access_token })
       }).catch(e => res.status(400).send({ message : e }))
 
     }).catch(e => res.status(404).send({ meassage : e }))
