@@ -69,7 +69,6 @@ export default function PostInfo(modalData: any) {
   const dispatch = useDispatch();
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
-
   let post: PostState = useSelector(getPostState);
   let currentUser: UserState = useSelector(getUser);
 
@@ -92,7 +91,7 @@ export default function PostInfo(modalData: any) {
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <button onClick={()=>pressLike({ postid : post[0].id, userid : user.userid})}>
+          <button onClick={()=>pressLike({ postid : post.id, userid : post.userid})}>
             좋아요
           </button>
         </LikeIconWrapper>

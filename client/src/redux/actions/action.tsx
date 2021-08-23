@@ -163,6 +163,7 @@ export const logIn = (data: LoginProps) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         dispatch(handleModal({ isOpen: false }));
         localStorage.setItem('token', response.data.payload.accessToken);
+        localStorage.setItem('user', response.data.payload.user);
         dispatch(
           loginSuccess({
             token: response.data.payload.accessToken,
@@ -583,7 +584,7 @@ export const setMainResultImage = (data: MainResultImageProps) => {
   };
 };
 
-export const pressLike = (data: {postid : number, userid : number}) => {
+export const pressLike = (data: {postid : number | null, userid : number | null}) => {
   console.log(data)
   axios.post(`${serverUrl}/post/${data.postid}/like`,{
     userid : data.userid
