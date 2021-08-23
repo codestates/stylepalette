@@ -304,6 +304,8 @@ export const logOut = () => {
 };
 
 export const handleModal = (data: HandleModalProps) => {
+  console.log('data:', data);
+
   return {
     type: HANDLE_MODAL,
     payload: data,
@@ -662,21 +664,22 @@ export const setMainResultImage = (data: MainResultImageProps) => {
 
 export const isLiked = () => {
   return {
-    type: ISLIKED
+    type: ISLIKED,
   };
 };
 
-export const pressLike = (data: {postid : number | null, userid : number | null}) => {
-  console.log(data)
+export const pressLike = (data: { postid: number | null; userid: number | null }) => {
+  console.log(data);
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    axios.post(`${serverUrl}/post/${data.postid}/like`,{
-      userid : data.userid
-    })
-    .then(response => {
-      console.log(response)
-      if (response.status === 201) {
-        dispatch(isLiked())
-      }
-    })
-  }
+    axios
+      .post(`${serverUrl}/post/${data.postid}/like`, {
+        userid: data.userid,
+      })
+      .then((response) => {
+        console.log(response);
+        if (response.status === 201) {
+          dispatch(isLiked());
+        }
+      });
+  };
 };

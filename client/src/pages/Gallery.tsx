@@ -128,12 +128,7 @@ function Gallery() {
   };
 
   const handleClickPostInfo = async (postid: number | null) => {
-    await dispatch(
-      getPost({
-        postId: postid,
-      }),
-    );
-    dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
+    dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
   };
 
   const filteredFunc = (value: string) => {

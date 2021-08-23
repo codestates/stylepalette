@@ -67,7 +67,7 @@ export const initialState = {
   mainresultimage: {
     imageblob: new Blob(),
   },
-  isLiked : false
+  isLiked: false,
 };
 
 export interface UserState {
@@ -112,6 +112,7 @@ export interface PostsState {
 export interface ModalState {
   isOpen: boolean;
   type: string;
+  data: number;
 }
 
 export interface RecommendColor {
