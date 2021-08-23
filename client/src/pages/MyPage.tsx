@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { handleModal, getUserInfo, getPost } from '../redux/actions/action';
+
 import { PrimaryButton } from '../components/Button/Button.styled';
 // import Photo from '../dummyData/dummyPhoto';
 import { getUser } from '../redux/selectors';

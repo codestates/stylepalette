@@ -40,6 +40,7 @@ export const initialState = {
       updatedAt: '',
     },
   ],
+
   otheruser: {
     userid: null,
     realname: '',

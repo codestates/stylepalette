@@ -40,6 +40,7 @@ export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 export const ISLIKED = 'ISLIKED';
 
+
 interface LoginProps {
   username: string;
   password: string;
@@ -280,6 +281,7 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
             user: response.data.payload.user,
           }),
         );
+
       })
       .catch((err) => {
         console.log('GOOGLE LOGIN FAILURE:', err);
@@ -583,6 +585,7 @@ export const deletePost = (data: getPostProps) => {
       })
       .catch((err) => {
         console.log('delete post failure');
+
       });
   };
 };
@@ -683,3 +686,4 @@ export const pressLike = (data: { postid: number | null; userid: number | null }
       });
   };
 };
+
