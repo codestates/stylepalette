@@ -7,6 +7,7 @@ const router = express_1.Router();
 router.get('/:postid', controllers_1.post.getPost);
 router.get('/posts/all', controllers_1.post.getPosts);
 router.post('/', controllers_1.post.postPost);
+router.post('/preview', awsS3_1.previewUpload.single("preview"), controllers_1.post.postPreview);
 router.post('/:postid/result', awsS3_1.resultUpload.single("result"), controllers_1.post.postResult);
 router.post('/:postid/like', controllers_1.post.postLike);
 router.delete('/:postid', controllers_1.post.deletePost);

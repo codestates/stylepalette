@@ -37,6 +37,7 @@ export const initialState = {
       likeCount: 0,
       isPublic: true,
       createdAt: '',
+      updatedAt: '',
     },
   ],
   otheruser: {
@@ -66,6 +67,7 @@ export const initialState = {
   mainresultimage: {
     imageblob: new Blob(),
   },
+  isLiked : false
 };
 
 export interface UserState {
@@ -103,7 +105,8 @@ export interface PostsState {
   likeCount: number;
   userId: number | null;
   isPublic: boolean;
-  createdAt: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ModalState {

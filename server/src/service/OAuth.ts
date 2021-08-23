@@ -30,10 +30,6 @@ export const createSocialUser = async (data: ISocialUserInputDTO) => {
     return user
 }
 
-const createKakaoUser = async () => {
- 
-}
-
 export const getToken = function (data : ISocialUser) {
   let accessSecret = process.env.ACCESS_SECRET ? process.env.ACCESS_SECRET : undefined
 

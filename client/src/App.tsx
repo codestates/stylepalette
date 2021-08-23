@@ -48,6 +48,8 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    console.log('TESTING SOCIAL LOGIN');
+    console.log('TESTING SOCIAL LOGIN 2');
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
     const scope = url.searchParams.get('scope');
@@ -59,8 +61,11 @@ function App() {
     // check if user has logged in
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
+    console.log(token, user)
     if (token) {
+
       dispatch(loginSuccess({ accessToken: token, user: JSON.parse(user!) }));
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -98,9 +103,6 @@ function App() {
             <OtherUserPage />
           </Route>
         </Switch>
-        {/* <ProfileEdit /> */}
-        {/* <GenderSelect /> */}
-        {/* <Result /> */}
         <Footer />
       </BrowserRouter>
     </Wrapper>

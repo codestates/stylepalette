@@ -7,8 +7,9 @@ import styled from 'styled-components';
 import Button from '../components/Button/Button';
 import { getPost, pressLike, deletePost } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
-import { getPostState, getUser } from '../redux/selectors';
+import { getPostState, getUser, getLikeState } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
+import { NumberValueToken } from 'html2canvas/dist/types/css/syntax/tokenizer';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
@@ -60,32 +61,36 @@ const LikeCount = styled.span`
   font-weight: bold;
 `;
 
-export default function PostInfo(modalData: any) {
+export default function PostInfo() {
   // TODO: Create a selector to retrieve only one post based on id
   // TODO: 유저 아이디가 동일하면 포스트 삭제 버튼이 나와야함
   // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
   const dispatch = useDispatch();
-  // const [isDelete, setIsDelete] = useState<boolean>(false);
-
-  const post: PostState = useSelector(getPostState);
-  const currentUser: UserState = useSelector(getUser);
-
+  const [isDelete, setIsDelete] = useState<boolean>(false);
+  let post: PostState = useSelector(getPostState);
+  let currentUser: UserState = useSelector(getUser);
+  let isLiked : boolean = useSelector(getLikeState)
+ 
   useEffect(() => {
     dispatch(getPost(modalData.modalData));
-    // handleIsDelete();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    handleIsDelete();
+    console.log(post)
+  }, [isLiked]);
 
-  // function handleIsDelete() {
-  //   if (currentUser.userid === post.userId) {
-  //     setIsDelete(true);
-  //   } else {
-  //     setIsDelete(false);
-  //   }
-  // }
-
+  function handleIsDelete() {
+    if (currentUser.userid === post.userId) {
+      setIsDelete(true);
+    } else {
+      setIsDelete(false);
+    }
+  }
+  
   function handleClickPostDelete() {
     dispatch(deletePost(modalData.modalData));
+  }
+
+  function handleLike(data : {postid : number | null, userid : number | null}) { 
+    dispatch(pressLike(data))
   }
 
   return (
@@ -98,9 +103,10 @@ export default function PostInfo(modalData: any) {
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <button onClick={() => pressLike({ postid: post.id, userid: currentUser.userid })}>
-            좋아요
-          </button>
+          {(isLiked) 
+          ? <HeartIcon fill="red" onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
+          : <HeartIcon fill="" onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
+          }
         </LikeIconWrapper>
         <LikeCount>{post.likeCount} likes</LikeCount>
       </LikeContainer>

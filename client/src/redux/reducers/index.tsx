@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { postReducer, postsReducer } from './postReducer';
+import { postReducer, postsReducer, likeReducer } from './postReducer';
 import userReducer from './userReducer';
 import modalReducer from './modalReducer';
 import otherUserReducer from './otherUserReducer';
@@ -11,6 +11,7 @@ const rootReducer = combineReducers({
   otherUserState: otherUserReducer,
   postState: postReducer,
   postsState: postsReducer,
+  likeState: likeReducer,
   modalState: modalReducer,
   recommendcolorState: recommendColorReducer,
   roulettecolorState: rouletteColorReducer,

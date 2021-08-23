@@ -45,8 +45,10 @@ const ButtonContainer = styled.div`
 
 export default function Result() {
   const dispatch = useDispatch();
-  const imgSrc = localStorage.getItem('imageSrc');
+  let imageResult: MainResultImage = useSelector(getMainResultImage); //! 그게 이거에요
   const isLoggedIn = useSelector(getIsLoggedIn);
+
+  const imgSrc = URL.createObjectURL(imageResult.imageblob);
 
   const handleClickPostSharing = () => {
     dispatch(handleModal({ isOpen: true, type: 'postSharing' }));
@@ -63,7 +65,7 @@ export default function Result() {
   return (
     <>
       <ResultContainer>
-        {/* <ResultImage src={imgSrc}></ResultImage> */}
+        <ResultImage src={imgSrc}></ResultImage>
         <ResultText>최종결과: 멋진 코디네요!</ResultText>
         <ButtonContainer>
           <Link to="/genderselect">
@@ -80,18 +82,6 @@ export default function Result() {
           </Link>
         </ButtonContainer>
       </ResultContainer>
-      <ButtonContainer>
-        <Button primary>
-          <Link to="/genderselect">처음으로</Link>
-        </Button>
-        <Button primary onClick={handleClickPostSharing}>
-          저장하기
-        </Button>
-        <Button primary>공유하기</Button>
-        <Button primary>
-          <Link to="/gallery">다른 작품 구경하기</Link>
-        </Button>
-      </ButtonContainer>
     </>
   );
 }

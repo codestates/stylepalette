@@ -4,6 +4,7 @@ import {
   GET_POST_FAILURE,
   GET_POST_SUCCESS,
   DELETE_POST_SUCCESS,
+  ISLIKED
 } from '../actions/action';
 
 export const postsReducer = (
@@ -61,6 +62,25 @@ export const postReducer = (state = initialState.post, action: { type: string; p
     //   return newState;
     // }
 
+    default:
+      return state;
+  }
+};
+
+export const likeReducer = (
+  state = initialState.isLiked,
+  action: { type: string; },
+) => {
+  switch (action.type) {
+    case ISLIKED: {
+      if (!state) {
+        const newState = true
+        return newState
+      } else {
+        const newState = false
+        return newState
+      }
+    }
     default:
       return state;
   }

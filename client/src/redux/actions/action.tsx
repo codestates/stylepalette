@@ -38,6 +38,7 @@ export const GET_POSTS = 'GET_POSTS';
 export const GET_POSTS_SUCCESS = 'GETPOSTS_SUCCESS';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+export const ISLIKED = 'ISLIKED';
 
 interface LoginProps {
   username: string;
@@ -105,7 +106,7 @@ interface MainResultImageProps {
 }
 
 interface getPostProps {
-  postId: number;
+  postId: number | null;
 }
 
 // actions creator functions
@@ -517,9 +518,9 @@ export const getPostFailure = (data: any) => {
 };
 
 export const getPost = (data: getPostProps) => {
-  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    axios
-      .get(`${serverUrl}/post/${data}`, {
+  return async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    await axios
+      .get(`${serverUrl}/post/${data.postId}`, {
         withCredentials: true,
       })
       .then((response) => {
@@ -539,13 +540,13 @@ export const successGetposts = (data: any) => {
 };
 
 export const getAllPosts = () => {
-  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    axios
+  return async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    await axios
       .get(`${serverUrl}/post/posts/all`, {
         withCredentials: true,
       })
-      .then((res) => {
-        dispatch(successGetposts(res.data));
+      .then(async (res) => {
+        await dispatch(successGetposts(res.data));
       })
       .catch((res) => {
         console.log('getposts failure', res);
@@ -622,9 +623,10 @@ export const successRouletteColor = (data: any) => {
 };
 
 export const rouletteColor = (data: RouletteColor) => {
-  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+  return async (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     const { maincolor } = data;
-    axios
+
+    await axios
       .post(
         `${serverUrl}/color/roulette`,
         {
@@ -658,11 +660,23 @@ export const setMainResultImage = (data: MainResultImageProps) => {
   };
 };
 
-export const pressLike = (data: { postid: number | null; userid: number | null }) => {
-  console.log(data);
-  axios
-    .post(`${serverUrl}/post/${data.postid}/like`, {
-      userid: data.userid,
+export const isLiked = () => {
+  return {
+    type: ISLIKED
+  };
+};
+
+export const pressLike = (data: {postid : number | null, userid : number | null}) => {
+  console.log(data)
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios.post(`${serverUrl}/post/${data.postid}/like`,{
+      userid : data.userid
     })
-    .then((response) => console.log(response));
+    .then(response => {
+      console.log(response)
+      if (response.status === 201) {
+        dispatch(isLiked())
+      }
+    })
+  }
 };
