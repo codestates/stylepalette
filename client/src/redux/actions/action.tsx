@@ -173,8 +173,12 @@ export const logIn = (data: LoginProps) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         dispatch(handleModal({ isOpen: false }));
         localStorage.setItem('token', response.data.payload.accessToken);
-        localStorage.setItem('user', response.data.payload.user);
-        dispatch(loginSuccess(response.data.payload));
+        dispatch(
+          loginSuccess({
+            token: response.data.payload.accessToken,
+            user: response.data.payload.user,
+          }),
+        );
       })
       .catch((error) => {
         console.log('LOGIN RESPONSE in FAILURE: ', error.response.data.message);
@@ -205,7 +209,16 @@ export const kakaoLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
           withCredentials: true,
         },
       )
-      .then((response) => console.log('KAKAO LOGIN SUCCESS', response))
+      .then((response) => {
+        console.log('KAKAO LOGIN SUCCESS', response);
+        localStorage.setItem('token', response.data.id_token);
+        dispatch(
+          loginSuccess({
+            token: response.data.id_token,
+            user: response.data,
+          }),
+        );
+      })
       .catch((error) => {
         console.log('KAKAO LOGIN FAILURE', error);
       });
@@ -226,8 +239,13 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
       )
       .then((response) => {
         console.log('GOOGLE LOGIN SUCCESS', response);
-        // localStorage.setItem('token', response.data.id_token);
-        // dispatch(loginSuccess(response.data.id_token));
+        localStorage.setItem('token', response.data.id_token);
+        dispatch(
+          loginSuccess({
+            token: response.data.id_token,
+            user: response.data,
+          }),
+        );
       })
       .catch((err) => {
         console.log('GOOGLE LOGIN FAILURE:', err);
@@ -553,48 +571,6 @@ export const setMainResultImage = (data: MainResultImageProps) => {
     payload: data,
   };
 };
-
-// export const googleLogin = (authorizationCode: string) => {
-//   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-//     axios
-//       .post(
-//         `${serverUrl}/google`,
-//         {
-//           code: authorizationCode,
-//         },
-//         {
-//           withCredentials: true,
-//         },
-//       )
-//       .then((response) => {
-//         console.log(response);
-//         localStorage.setItem('token', response.data.id_token);
-//         dispatch(loginSuccess(response.data.id_token));
-//       });
-//   };
-// };
-
-// export const kakaoLogin = async () => {
-//   const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
-//   const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=https://localhost:3000&response_type=code&state`;
-//   window.location.assign(KAKAO_LOGIN_URL);
-
-//   const url = new URL(window.location.href);
-//   const authorizationCode = url.searchParams.get('code');
-//   const scope = url.searchParams.get('scope');
-
-//   await axios
-//     .post(
-//       `${serverUrl}/kakao`,
-//       {
-//         code: authorizationCode,
-//       },
-//       {
-//         withCredentials: true,
-//       },
-//     )
-//     .then((response) => console.log(response));
-// };
 
 export const successGetposts = (data: any) => {
   return {
