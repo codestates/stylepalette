@@ -109,14 +109,14 @@ export default function PostInfo(modalData: any) {
         <LikeIconWrapper>
           {likeList.includes(currentUser.userid) ? (
             <HeartIcon
-              fill="red"
+              fill="#F44336"
               onClick={() =>
                 handleLike({ postid: post.id, userid: currentUser.userid, like: false })
               }
             />
           ) : (
             <HeartIcon
-              fill=""
+              fill="#FFFFFF"
               onClick={() =>
                 handleLike({ postid: post.id, userid: currentUser.userid, like: true })
               }
