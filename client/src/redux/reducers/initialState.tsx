@@ -17,7 +17,7 @@ export const initialState = {
     bottomcolor: '',
     likeCount: 0,
     like: [],
-    userid: null,
+    userId: null,
     user: {
       username: '',
       userimage: '',
@@ -37,6 +37,7 @@ export const initialState = {
       likeCount: 0,
       isPublic: true,
       createdAt: '',
+      updatedAt: '',
     },
   ],
   otheruser: {
@@ -84,7 +85,7 @@ export interface PostState {
   bottomcolor: string;
   likeCount: number;
   like: number[];
-  userid: number | null;
+  userId: number | null;
   user: {
     username: string;
     userimage: string;
@@ -103,7 +104,8 @@ export interface PostsState {
   likeCount: number;
   userId: number | null;
   isPublic: boolean;
-  createdAt: number;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface ModalState {

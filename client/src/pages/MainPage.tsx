@@ -708,9 +708,7 @@ function MainPage() {
 
       const imageBlob = new Blob([new Uint8Array(arr)], { type: 'image/png' });
 
-      const imgSrc = URL.createObjectURL(imageBlob);
-      localStorage.setItem('imageSrc', imgSrc);
-
+      //! 여기서 s3 에 저장해요
       dispatch(
         setMainResultImage({
           imageblob: imageBlob,

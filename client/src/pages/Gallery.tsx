@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 
 import { PostsState, RouletteColor } from '../redux/reducers/initialState';
-import { handleModal, getAllPosts, rouletteColor } from '../redux/actions/action';
+import { handleModal, getPost, rouletteColor, getAllPosts } from '../redux/actions/action';
 import { getPosts, getRouletteColor } from '../redux/selectors';
 
 const Color = [
@@ -113,20 +113,27 @@ const PostPhoto = styled.img`
 `;
 
 function Gallery() {
-  // TODO: 룰렛과 같은 형식으로 근사값으로 색을 필터링 하다보니 검, 흰이 들어가면 무조건 같이 나옴
   const dispatch = useDispatch();
   let posts: PostsState[] = useSelector(getPosts);
   let colorDatas: RouletteColor = useSelector(getRouletteColor);
-
-  const [filterPost, setFilterPost] = useState<PostsState[]>(posts);
+  const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const { palette } = colorDatas;
 
   useEffect(() => {
-    dispatch(getAllPosts());
+    dispatchAllPosts();
   }, []);
 
-  const handleClickPostInfo = (postid: number | null) => {
-    dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
+  const dispatchAllPosts = async () => {
+    await dispatch(getAllPosts());
+  };
+
+  const handleClickPostInfo = async (postid: number | null) => {
+    await dispatch(
+      getPost({
+        postId: postid,
+      }),
+    );
+    dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
   };
 
   const filteredFunc = (value: string) => {
@@ -135,7 +142,8 @@ function Gallery() {
     };
 
     dispatch(rouletteColor(colorData));
-    return posts.filter((el) => {
+
+    const filterData = posts.filter((el) => {
       for (let i = 0; i < palette.length; i++) {
         if (el.topcolor === palette[i]) {
           return el;
@@ -144,21 +152,26 @@ function Gallery() {
         }
       }
     });
+
+    const reverseData = filterData.reverse();
+
+    return reverseData;
   };
 
-  const handleGetCategory = (value: string) => {
+  const handleGetCategory = async (value: string) => {
     switch (value) {
       case '최신순': {
-        setFilterPost(posts);
+        const reversePost = posts.reverse();
+
+        setFilterPost(reversePost);
         break;
       }
       case '인기순': {
-        setFilterPost(
-          posts.sort((a, b) => {
-            return b.likeCount - a.likeCount;
-          }),
-        );
+        const sortPost = posts.sort((a, b) => {
+          return b.likeCount - a.likeCount;
+        });
 
+        setFilterPost(sortPost);
         break;
       }
       case '빨강': {
@@ -168,49 +181,49 @@ function Gallery() {
         break;
       }
       case '주황': {
-        const filterCategory = filteredFunc('#FFA500');
+        const filterCategory = await filteredFunc('#FFA500');
         setFilterPost(filterCategory);
 
         break;
       }
       case '노랑': {
-        const filterCategory = filteredFunc('#FFFF00');
+        const filterCategory = await filteredFunc('#FFFF00');
         setFilterPost(filterCategory);
 
         break;
       }
       case '초록': {
-        const filterCategory = filteredFunc('#008000');
+        const filterCategory = await filteredFunc('#008000');
         setFilterPost(filterCategory);
 
         break;
       }
       case '파랑': {
-        const filterCategory = filteredFunc('#0000FF');
+        const filterCategory = await filteredFunc('#0000FF');
         setFilterPost(filterCategory);
 
         break;
       }
       case '남색': {
-        const filterCategory = filteredFunc('#00008B');
+        const filterCategory = await filteredFunc('#00008B');
         setFilterPost(filterCategory);
 
         break;
       }
       case '보라': {
-        const filterCategory = filteredFunc('#800080');
+        const filterCategory = await filteredFunc('#800080');
         setFilterPost(filterCategory);
 
         break;
       }
       case '하양': {
-        const filterCategory = filteredFunc('#FFFFFF');
+        const filterCategory = await filteredFunc('#FFFFFF');
         setFilterPost(filterCategory);
 
         break;
       }
       case '검정': {
-        const filterCategory = filteredFunc('#000000');
+        const filterCategory = await filteredFunc('#000000');
         setFilterPost(filterCategory);
 
         break;
@@ -237,13 +250,21 @@ function Gallery() {
         </FillterContainer>
         <GalleryContainer>
           <PhotoWrapper>
-            {filterPost.map((el, idx) => {
-              return (
-                <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                  <PostPhoto key={idx} src={el.image} />
-                </NavIcon>
-              );
-            })}
+            {filterPost.length <= 1
+              ? posts.map((el, idx) => {
+                  return (
+                    <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                      <PostPhoto key={idx} src={el.image} />
+                    </NavIcon>
+                  );
+                })
+              : filterPost.map((el: any, idx: any) => {
+                  return (
+                    <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                      <PostPhoto key={idx} src={el.image} />
+                    </NavIcon>
+                  );
+                })}
           </PhotoWrapper>
         </GalleryContainer>
       </GalleryWrapper>
