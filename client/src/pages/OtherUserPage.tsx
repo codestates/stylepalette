@@ -122,7 +122,7 @@ function OtherUserPage() {
 
   const handleClickPostInfo = (event: React.MouseEvent) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
-    dispatch(getPost());
+    // dispatch(getPost());
   };
 
   return (

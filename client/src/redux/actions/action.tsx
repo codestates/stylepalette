@@ -26,13 +26,14 @@ export const GETUSERINFO_SUCCESS = 'GETUSER_SUCCESS';
 export const GETUSERINFO_FAILURE = 'GETUSER_FAILURE';
 export const USER_PICKCOLOR = 'USER_PICKCOLOR';
 export const MAIN_RESULTIMAGE = 'MAIN_RESULTIMAGE';
-export const GETPOSTS_SUCCESS = 'GETPOSTS_SUCCESS';
 export const PROFILEIMAGE_EDIT = 'PROFILEIMAGE_EDIT';
 export const PROFILEIMAGE_EDIT_SUCCESS = 'PROFILEIMAGE_EDIT_SUCCESS';
 export const PROFILEIMAGE_EDIT_FAILURE = 'PROFILEIMAGE_EDIT_FAILURE';
 export const GET_POST = 'GET_POST';
 export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 export const GET_POST_FAILURE = 'GET_POST_FAILURE';
+export const GET_POSTS = 'GET_POSTS';
+export const GET_POSTS_SUCCESS = 'GETPOSTS_SUCCESS';
 
 interface LoginProps {
   username: string;
@@ -43,10 +44,11 @@ interface SocialLoginProps {
   authorizationCode: string | null;
   scope: string | null;
 }
+
 interface HandleModalProps {
   isOpen?: boolean;
   type?: string;
-  data?: number;
+  data?: number | null;
 }
 
 interface SignUpProps {
@@ -94,20 +96,8 @@ interface MainResultImageProps {
   imageblob: Blob;
 }
 
-export interface Post {
-  id: number;
-  title: string;
-  image: string;
-  topcolor: string;
-  bottomcolor: string;
-  userid: number;
-  likeCount: number;
-  isPublic: boolean;
-  createdAt: string;
-}
-
-interface Posts {
-  data: Array<Post>;
+interface getPostProps {
+  postId: number;
 }
 
 // actions creator functions
@@ -482,18 +472,39 @@ export const getPostFailure = (data: any) => {
   };
 };
 
-export const getPost = () => {
+export const getPost = (data: getPostProps) => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios
-      .get(`${serverUrl}/post/:postid`, {
+      .get(`${serverUrl}/post/${data}`, {
         withCredentials: true,
       })
       .then((response) => {
-        console.log('getpost success: ', response);
-        // dispatch(getPostSuccess());
+        dispatch(getPostSuccess(response.data));
       })
       .catch((response) => {
-        console.log('getpost FAILURE: ', response);
+        console.log('getpost failure: ', response);
+      });
+  };
+};
+
+export const successGetposts = (data: any) => {
+  return {
+    type: GET_POSTS_SUCCESS,
+    payload: data,
+  };
+};
+
+export const getAllPosts = () => {
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .get(`${serverUrl}/post/posts/all`, {
+        withCredentials: true,
+      })
+      .then((res) => {
+        dispatch(successGetposts(res.data));
+      })
+      .catch((res) => {
+        console.log('getposts failure', res);
       });
   };
 };
@@ -572,19 +583,6 @@ export const setMainResultImage = (data: MainResultImageProps) => {
   };
 };
 
-export const successGetposts = (data: any) => {
-  return {
-    type: GETPOSTS_SUCCESS,
-    payload: data,
-  };
-};
-
-export const getAllPosts = (data: Posts) => {
-  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    dispatch(successGetposts(data));
-  };
-};
-
 export const pressLike = (data: {postid : number, userid : number}) => {
   console.log(data)
   axios.post(`${serverUrl}/post/${data.postid}/like`,{
@@ -593,3 +591,4 @@ export const pressLike = (data: {postid : number, userid : number}) => {
   .then(response => console.log(response))
  
 };
+

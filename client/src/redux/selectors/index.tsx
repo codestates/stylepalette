@@ -1,4 +1,8 @@
 export const getPosts = (state: any) => {
+  return state.postsState;
+};
+
+export const getPostState = (state: any) => {
   return state.postState;
 };
 
