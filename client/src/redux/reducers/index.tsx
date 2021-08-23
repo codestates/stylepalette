@@ -11,7 +11,7 @@ const rootReducer = combineReducers({
   otherUserState: otherUserReducer,
   postState: postReducer,
   postsState: postsReducer,
-  isLiked: likeReducer,
+  likeState: likeReducer,
   modalState: modalReducer,
   recommendcolorState: recommendColorReducer,
   roulettecolorState: rouletteColorReducer,

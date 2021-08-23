@@ -43,10 +43,10 @@ export const likeReducer = (
   switch (action.type) {
     case ISLIKED: {
       if (!state) {
-        const newState = true;
+        const newState = true
         return newState
       } else {
-        const newState = false;
+        const newState = false
         return newState
       }
     }

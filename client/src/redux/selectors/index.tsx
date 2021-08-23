@@ -7,7 +7,7 @@ export const getPostState = (state: any) => {
 };
 
 export const getLikeState = (state: any) => {
-  return state.isLiked;
+  return state.likeState;
 };
 
 export const getUser = (state: any) => {

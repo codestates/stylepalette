@@ -24,6 +24,17 @@ const getPosts = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, f
         res.status(404).send({ message: "There is no post" });
     }
 });
+const postPreview = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
+    if (req.file) {
+        const payload = req.file.location;
+        if (payload) {
+            res.status(201).send({ message: "Successed saving preview image", location: payload });
+        }
+        else {
+            res.status(404).send({ message: "Failed saving preview image" });
+        }
+    }
+});
 const postPost = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
     if (req.body && req.params) {
         const payload = req.body;
@@ -75,6 +86,7 @@ const deletePost = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0,
 exports.default = {
     getPost,
     getPosts,
+    postPreview,
     postPost,
     postResult,
     postLike,

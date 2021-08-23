@@ -9,6 +9,7 @@ import { getPost, pressLike} from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPostState, getUser, getLikeState } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
+import { NumberValueToken } from 'html2canvas/dist/types/css/syntax/tokenizer';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
@@ -72,10 +73,12 @@ export default function PostInfo(modalData: any) {
   let post: PostState = useSelector(getPostState);
   let currentUser: UserState = useSelector(getUser);
   let isLiked : boolean = useSelector(getLikeState)
-
+ 
   useEffect(() => {
+    
     dispatch(getPost(modalData.modalData));
     handleIsDelete();
+    console.log(post)
   }, [isLiked]);
 
   function handleIsDelete() {
@@ -87,7 +90,7 @@ export default function PostInfo(modalData: any) {
   }
 
   function handleLike(data : {postid : number | null, userid : number | null}) {
-    console.log(currentUser)
+  
     dispatch(pressLike(data))
   }
 
@@ -97,7 +100,10 @@ export default function PostInfo(modalData: any) {
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <HeartIcon onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
+          {(isLiked) 
+          ? <HeartIcon fill="red" onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
+          : <HeartIcon fill="" onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
+          }
         </LikeIconWrapper>
         <LikeCount>{post.likeCount} likes</LikeCount>
       </LikeContainer>

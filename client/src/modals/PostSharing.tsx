@@ -8,7 +8,7 @@ import { serverUrl } from '../utils/constants';
 
 import { getUserPickColor, getMainResultImage, getUser } from '../redux/selectors';
 import { UserPickColor, MainResultImage } from '../redux/reducers/initialState';
-import { getUserInfo } from '../redux/actions/action';
+import { getUserInfo, handleModal } from '../redux/actions/action';
 
 const PostWrapper = styled.div`
   width: 400px;
@@ -127,6 +127,8 @@ function PostSharing() {
       .catch((res) => {
         console.log(res.data);
       });
+
+    dispatch(handleModal({ isOpen: false, type: 'postSharing' }));
   };
 
   return (

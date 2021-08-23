@@ -27,6 +27,18 @@ const getPosts = async (req: Request, res: Response, next: NextFunction) => {
 
 };
 
+const postPreview = async (req: Request, res: Response, next: NextFunction) => {
+  if (req.file) {
+    const payload : string = req.file.location
+    if (payload) {
+      res.status(201).send({ message : "Successed saving preview image", location : payload })
+    } else {
+      res.status(404).send({ message : "Failed saving preview image" })
+    }
+  }
+};
+
+
 //본문내용 저장
 const postPost = async (req: Request, res: Response, next: NextFunction) => {
   if (req.body && req.params) {
@@ -83,6 +95,7 @@ const deletePost = async (req: Request, res: Response, next: NextFunction) => {
 export default {
   getPost,
   getPosts,
+  postPreview,
   postPost,
   postResult,
   postLike,
