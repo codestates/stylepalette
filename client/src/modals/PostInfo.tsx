@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { PrimaryButton } from '../components/Button/Button.styled';
-import { getPost, pressLike} from '../redux/actions/action';
+import { getPost, pressLike } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPostState, getUser, getLikeState } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
@@ -63,7 +63,7 @@ const LikeCount = styled.span`
   font-weight: bold;
 `;
 
-export default function PostInfo(modalData: any) {
+export default function PostInfo() {
   // TODO: Create a selector to retrieve only one post based on id
   // TODO: 유저 아이디가 동일하면 포스트 삭제 버튼이 나와야함
   // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
@@ -75,22 +75,21 @@ export default function PostInfo(modalData: any) {
   let isLiked : boolean = useSelector(getLikeState)
  
   useEffect(() => {
-    
     dispatch(getPost(modalData.modalData));
     handleIsDelete();
     console.log(post)
   }, [isLiked]);
 
   function handleIsDelete() {
-    if (currentUser.userid === post.userid) {
+    if (currentUser.userid === post.userId) {
       setIsDelete(true);
     } else {
       setIsDelete(false);
     }
   }
 
-  function handleLike(data : {postid : number | null, userid : number | null}) {
-  
+
+  function handleLike(data : {postid : number | null, userid : number | null}) { 
     dispatch(pressLike(data))
   }
 
