@@ -1,18 +1,21 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
+import axios from 'axios';
 
 import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
 import { RestartAlt } from '@styled-icons/material-twotone/RestartAlt';
 import { ReactComponent as Man } from '../images/Man/Man-default.svg';
 import { ReactComponent as Woman } from '../images/Woman/Woman-default.svg';
+import { serverUrl } from '../utils/constants';
 
 import {
   recommendColor,
   rouletteColor,
   setUserPickColor,
+  saveMainResultImage,
   setMainResultImage,
 } from '../redux/actions/action';
 import { RecommendColor, RouletteColor } from '../redux/reducers/initialState';
@@ -522,6 +525,7 @@ function MainPage() {
   const [pickTopColor, setPickTopColor] = useState<string>('#FFFFFF');
   const [pickBottomColor, setPickBottomColor] = useState<string>('#FFFFFF');
   const [pickSkinColor, setPickSkinColor] = useState<string>('#FFCDB1');
+  const [isNext, setIsNext] = useState<boolean>(false);
 
   //? 이미지 스크롤
   const [isDrag, setIsDrag] = useState<boolean>(false);
@@ -566,10 +570,12 @@ function MainPage() {
   function handleOriginColor(value: string) {
     setIsRoulette(true);
 
-    const originColors = {
-      maincolor: value,
-    };
-    dispatch(rouletteColor(originColors));
+    dispatch(
+      rouletteColor({
+        maincolor: value,
+        setIsRoulette: null,
+      }),
+    );
   }
 
   //! 룰렛 선택 색상
@@ -686,7 +692,7 @@ function MainPage() {
   const onThrottleRotateMove = throttle(onRotateMove, 15);
 
   //! 이미지 저장
-  async function handleResultImage(event: React.MouseEvent<HTMLButtonElement>) {
+  function handleResultImage(event: React.MouseEvent<HTMLButtonElement>) {
     const resultImage = document.getElementById('result_Image') as HTMLDivElement;
 
     //! 유저가 선택한 탑, 바텀 컬러
@@ -697,7 +703,7 @@ function MainPage() {
       }),
     );
 
-    await html2canvas(resultImage).then((canvas) => {
+    html2canvas(resultImage).then((canvas) => {
       const imgBase64 = canvas.toDataURL('image/png', 'image/octet-stream');
       const decoding = atob(imgBase64.split(',')[1]);
 
@@ -708,12 +714,14 @@ function MainPage() {
 
       const imageBlob = new Blob([new Uint8Array(arr)], { type: 'image/png' });
 
-      //! 여기서 s3 에 저장해요
       dispatch(
-        setMainResultImage({
+        saveMainResultImage({
           imageblob: imageBlob,
+          setIsNext: setIsNext,
         }),
       );
+
+      dispatch(setMainResultImage({ imageblob: imageBlob }));
     });
   }
 
@@ -867,11 +875,15 @@ function MainPage() {
           <ResetButton title="초기화" onClick={handleReset}>
             <ResetIcons />
           </ResetButton>
-          <Link to="/result">
-            <NextButton title="다음" onClick={handleResultImage}>
+          <NextButton title="다음" onClick={handleResultImage}>
+            {isNext ? (
+              <Redirect to="/result">
+                <NextIcons />
+              </Redirect>
+            ) : (
               <NextIcons />
-            </NextButton>
-          </Link>
+            )}
+          </NextButton>
         </NextButtonWrapper>
       </MainWrapper>
     </>

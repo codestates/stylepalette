@@ -1,14 +1,12 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Button from '../components/Button/Button';
 import { PrimaryButton } from '../components/Button/Button.styled';
 import Text from '../components/Text/Text';
 
 import { handleModal } from '../redux/actions/action';
-import { MainResultImage } from '../redux/reducers/initialState';
-import { getIsLoggedIn, getMainResultImage } from '../redux/selectors';
+import { getIsLoggedIn } from '../redux/selectors';
 
 const ResultContainer = styled.div`
   display: flex;
@@ -45,10 +43,14 @@ const ButtonContainer = styled.div`
 
 export default function Result() {
   const dispatch = useDispatch();
-  let imageResult: MainResultImage = useSelector(getMainResultImage); //! 그게 이거에요
+  const [imageSrc, setImageSrc] = useState<any>(null);
   const isLoggedIn = useSelector(getIsLoggedIn);
 
-  const imgSrc = URL.createObjectURL(imageResult.imageblob);
+  useEffect(() => {
+    const imgSrc = localStorage.getItem('imgLocation');
+
+    setImageSrc(imgSrc);
+  });
 
   const handleClickPostSharing = () => {
     dispatch(handleModal({ isOpen: true, type: 'postSharing' }));
@@ -58,14 +60,10 @@ export default function Result() {
     dispatch(handleModal({ isOpen: true, type: 'login' }));
   };
 
-  //TODO: 저장하기 눌렀을때 로그인이 안되어있으면 로그인 모달, 로그인이 되어있으면 자동으로 마이페이지에 저장
-  //? 1. 저장하기 눌렀을때 post 로 필요한 데이터, isPublic 에 해당하는 boolean, 사진 데이터
-  //? 2. 현재 메인 페이지에서 받아와야하는, 탑, 바텀 컬러
-
   return (
     <>
       <ResultContainer>
-        <ResultImage src={imgSrc}></ResultImage>
+        <ResultImage src={imageSrc}></ResultImage>
         <ResultText>최종결과: 멋진 코디네요!</ResultText>
         <ButtonContainer>
           <Link to="/genderselect">

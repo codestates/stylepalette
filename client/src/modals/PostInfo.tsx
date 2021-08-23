@@ -71,16 +71,15 @@ export default function PostInfo(modalData: any) {
   let currentUser: UserState = useSelector(getUser);
   let isLiked: boolean = useSelector(getLikeState);
 
-  useEffect(() => {
-    console.log('modalData:', modalData);
+  console.log('currentUser:', currentUser);
 
+  useEffect(() => {
     dispatch(
       getPost({
         postId: modalData.modalData,
       }),
     );
     handleIsDelete();
-    console.log(post);
   }, [isLiked]);
 
   function handleIsDelete() {
