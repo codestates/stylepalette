@@ -63,7 +63,9 @@ function App() {
     const user = localStorage.getItem('user');
     console.log(token, user)
     if (token) {
-      dispatch(loginSuccess({accessToken : token, user: JSON.parse(user!)}));
+
+      dispatch(loginSuccess({ accessToken: token, user: JSON.parse(user!) }));
+
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -88,17 +90,17 @@ function App() {
           <Route exact path="/mainpage">
             <MainPage />
           </Route>
+          <Route exact path="/result">
+            <Result />
+          </Route>
           <Route exact path="/mypage">
             <MyPage />
           </Route>
           <Route exact path="/gallery">
             <Gallery />
           </Route>
-          <Route exact path="/otheruserpage">
+          <Route exact path="/:userId">
             <OtherUserPage />
-          </Route>
-          <Route exact path="/result">
-            <Result />
           </Route>
         </Switch>
         <Footer />

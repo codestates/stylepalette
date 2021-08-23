@@ -1,9 +1,10 @@
 import React from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { handleModal, getUserInfo, getPost } from '../redux/actions/action';
-import { getOtherUser } from '../redux/selectors';
+import { handleModal, getOtherUserInfo, getPost } from '../redux/actions/action';
+import { getOtherUser, getPostState } from '../redux/selectors';
 
 const OtherUserPageWrapper = styled.div`
   width: 100%;
@@ -111,14 +112,21 @@ const OtherUserInfoContent = styled.span`
 `;
 
 function OtherUserPage() {
+  const dispatch = useDispatch();
+  // const post = useSelector(getPostState);
+  // const user = post.user;
+  // const userid = post.userid;
+  // @ts-ignore
+  const { userId } = useParams();
+
   useEffect(() => {
     // get user info
-    dispatch(getUserInfo());
+    dispatch(getOtherUserInfo({ userid: userId }));
+    dispatch(handleModal({ isOpen: false }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const dispatch = useDispatch();
-  const user = useSelector(getOtherUser);
+  const otheruser = useSelector(getOtherUser);
 
   const handleClickPostInfo = (event: React.MouseEvent) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
@@ -130,14 +138,14 @@ function OtherUserPage() {
       <OtherUserPageContainer>
         <OtherUserInfoContainer>
           <OtherUserPhotoWrapper>
-            <UserPhoto src={user.userimage} />
+            <UserPhoto src={otheruser.userimage} />
           </OtherUserPhotoWrapper>
           <OtherUserInfoWrapper>
-            <OtherUserInfoContent>{user.username}</OtherUserInfoContent> <br />
+            <OtherUserInfoContent>{otheruser.username}</OtherUserInfoContent> <br />
           </OtherUserInfoWrapper>
         </OtherUserInfoContainer>
         <OtherUserPostWrapper>
-          {user.map((el: any, idx: React.Key | null | undefined) => {
+          {otheruser.post.map((el: any, idx: React.Key | null | undefined) => {
             return (
               <NavIcon key={idx} onClick={handleClickPostInfo}>
                 <PostPhoto src={el.image} />
