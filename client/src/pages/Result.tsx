@@ -45,7 +45,7 @@ const ButtonContainer = styled.div`
 
 export default function Result() {
   const dispatch = useDispatch();
-  const imgSrc = localStorage.getItem('imageSrc');
+  // const imgSrc = localStorage.getItem('imageSrc');
   const isLoggedIn = useSelector(getIsLoggedIn);
 
   const handleClickPostSharing = () => {
@@ -63,7 +63,7 @@ export default function Result() {
   return (
     <>
       <ResultContainer>
-        <ResultImage src={imgSrc}></ResultImage>
+        {/* <ResultImage src={imgSrc}></ResultImage> */}
         <ResultText>최종결과: 멋진 코디네요!</ResultText>
         <ButtonContainer>
           <Link to="/genderselect">
