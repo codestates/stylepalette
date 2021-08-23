@@ -85,9 +85,6 @@ export default function PostInfo() {
   }
 
   function handleHeartIcon() {
-    console.log('currentUser:', currentUser);
-    console.log('post:', post);
-
     const data = {
       postid: post.id,
       userid: post.userId,
