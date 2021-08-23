@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import { handleModal, getUserInfo } from '../redux/actions/action';
+import { handleModal, getUserInfo, getPost } from '../redux/actions/action';
 import { PrimaryButton } from '../components/Button/Button.styled';
 // import Photo from '../dummyData/dummyPhoto';
 import { getUser } from '../redux/selectors';
@@ -118,17 +118,17 @@ const UserEditButton = styled(PrimaryButton)`
 `;
 
 function MyPage() {
-  useEffect(() => {
-    // get user info
-    dispatch(getUserInfo());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const dispatch = useDispatch();
   const user = useSelector(getUser);
 
-  const handleClickPostInfo = (event: React.MouseEvent) => {
-    dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
+  useEffect(() => {
+    // get user info
+    dispatch(getUserInfo({ userid: user.userid }));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleClickPostInfo = (postid: number | null) => {
+    dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
   };
 
   const handleClickProfileEditButton = () => {
@@ -150,7 +150,7 @@ function MyPage() {
         <UserPostWrapper>
           {user.post.map((el: any, idx: React.Key | null | undefined) => {
             return (
-              <NavIcon key={idx} onClick={handleClickPostInfo}>
+              <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
                 <PostPhoto src={el.image} />
               </NavIcon>
             );

@@ -62,7 +62,7 @@ const LikeCount = styled.span`
   font-weight: bold;
 `;
 
-export default function PostInfo() {
+export default function PostInfo(modalData: any) {
   // TODO: Create a selector to retrieve only one post based on id
   // TODO: 유저 아이디가 동일하면 포스트 삭제 버튼이 나와야함
   // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
@@ -73,6 +73,7 @@ export default function PostInfo() {
   let currentUser: UserState = useSelector(getUser);
 
   useEffect(() => {
+    dispatch(getPost(modalData.modalData));
     handleIsDelete();
   }, []);
 
@@ -85,6 +86,9 @@ export default function PostInfo() {
   }
 
   function handleHeartIcon() {
+    console.log('currentUser:', currentUser);
+    console.log('post:', post);
+
     const data = {
       postid: post.id,
       userid: post.userId,
