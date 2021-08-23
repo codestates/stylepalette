@@ -6,7 +6,6 @@ import styled from 'styled-components';
 import { handleModal, getOtherUserInfo, getPost } from '../redux/actions/action';
 import { getOtherUser, getPostState } from '../redux/selectors';
 
-
 const OtherUserPageWrapper = styled.div`
   width: 100%;
   height: 100vw;
@@ -113,12 +112,6 @@ const OtherUserInfoContent = styled.span`
 `;
 
 function OtherUserPage() {
-  useEffect(() => {
-    // get user info
-    dispatch(getUserInfo());
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
   const dispatch = useDispatch();
   // const post = useSelector(getPostState);
   // const user = post.user;
@@ -138,7 +131,6 @@ function OtherUserPage() {
   const handleClickPostInfo = (event: React.MouseEvent) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
     // dispatch(getPost());
-
   };
 
   return (
@@ -154,7 +146,6 @@ function OtherUserPage() {
         </OtherUserInfoContainer>
         <OtherUserPostWrapper>
           {otheruser.post.map((el: any, idx: React.Key | null | undefined) => {
-
             return (
               <NavIcon key={idx} onClick={handleClickPostInfo}>
                 <PostPhoto src={el.image} />
