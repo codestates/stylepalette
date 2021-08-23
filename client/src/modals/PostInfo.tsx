@@ -7,7 +7,7 @@ import styled from 'styled-components';
 import { PrimaryButton } from '../components/Button/Button.styled';
 import { getPost, pressLike} from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
-import { getPostState, getUser } from '../redux/selectors';
+import { getPostState, getUser, getLikeState } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
 
 const PostInfoWrapper = styled.div`
@@ -71,11 +71,12 @@ export default function PostInfo(modalData: any) {
 
   let post: PostState = useSelector(getPostState);
   let currentUser: UserState = useSelector(getUser);
+  let isLiked : boolean = useSelector(getLikeState)
 
   useEffect(() => {
     dispatch(getPost(modalData.modalData));
     handleIsDelete();
-  }, []);
+  }, [isLiked]);
 
   function handleIsDelete() {
     if (currentUser.userid === post.userid) {
@@ -85,15 +86,18 @@ export default function PostInfo(modalData: any) {
     }
   }
 
+  function handleLike(data : {postid : number | null, userid : number | null}) {
+    console.log(currentUser)
+    dispatch(pressLike(data))
+  }
+
   return (
     <PostInfoWrapper>
       {isDelete ? <PostDeleteButton>삭제</PostDeleteButton> : null}
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <button onClick={()=>pressLike({ postid : post.id, userid : post.userid})}>
-            좋아요
-          </button>
+          <HeartIcon onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
         </LikeIconWrapper>
         <LikeCount>{post.likeCount} likes</LikeCount>
       </LikeContainer>

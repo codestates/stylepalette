@@ -6,6 +6,10 @@ export const getPostState = (state: any) => {
   return state.postState;
 };
 
+export const getLikeState = (state: any) => {
+  return state.isLiked;
+};
+
 export const getUser = (state: any) => {
   return state.userState;
 };

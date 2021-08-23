@@ -66,6 +66,7 @@ export const initialState = {
   mainresultimage: {
     imageblob: new Blob(),
   },
+  isLiked : false
 };
 
 export interface UserState {
