@@ -62,7 +62,7 @@ function App() {
     // check if user has logged in
     const token = localStorage.getItem('token');
     if (token) {
-      dispatch(loginSuccess(token));
+      dispatch(loginSuccess({ token: token }));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

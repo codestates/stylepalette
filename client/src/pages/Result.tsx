@@ -63,7 +63,7 @@ export default function Result() {
   return (
     <>
       <ResultContainer>
-        <ResultImage src={imgSrc}></ResultImage>
+        {/* <ResultImage src={imgSrc}></ResultImage> */}
         <ResultText>최종결과: 멋진 코디네요!</ResultText>
         <ButtonContainer>
           <Link to="/genderselect">
