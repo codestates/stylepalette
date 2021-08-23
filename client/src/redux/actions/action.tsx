@@ -34,7 +34,7 @@ export const GET_POST_SUCCESS = 'GET_POST_SUCCESS';
 export const GET_POST_FAILURE = 'GET_POST_FAILURE';
 export const GET_POSTS = 'GET_POSTS';
 export const GET_POSTS_SUCCESS = 'GETPOSTS_SUCCESS';
-
+export const ISLIKED = 'ISLIKED';
 interface LoginProps {
   username: string;
   password: string;
@@ -163,6 +163,7 @@ export const logIn = (data: LoginProps) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         dispatch(handleModal({ isOpen: false }));
         localStorage.setItem('token', response.data.payload.accessToken);
+        localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
           loginSuccess({
             token: response.data.payload.accessToken,
@@ -202,6 +203,7 @@ export const kakaoLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
       .then((response) => {
         console.log('KAKAO LOGIN SUCCESS', response);
         localStorage.setItem('token', response.data.id_token);
+        localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
           loginSuccess({
             token: response.data.id_token,
@@ -230,6 +232,7 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
       .then((response) => {
         console.log('GOOGLE LOGIN SUCCESS', response);
         localStorage.setItem('token', response.data.id_token);
+        localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
           loginSuccess({
             token: response.data.id_token,
@@ -584,20 +587,24 @@ export const setMainResultImage = (data: MainResultImageProps) => {
   };
 };
 
-export const pressLike = (data: { postid: number | null; userid: number | null }) => {
-  console.log('data:', data);
 
-  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
-    axios
-      .post(
-        `${serverUrl}/post/${data.postid}/like`,
-        {
-          userid: data.userid,
-        },
-        {
-          withCredentials: true,
-        },
-      )
-      .then((response) => console.log(response));
+export const isLiked = () => {
+  return {
+    type: ISLIKED
   };
+};
+
+export const pressLike = (data: {postid : number | null, userid : number | null}) => {
+  console.log(data)
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios.post(`${serverUrl}/post/${data.postid}/like`,{
+      userid : data.userid
+    })
+    .then(response => {
+      console.log(response)
+      if (response.status === 201) {
+        dispatch(isLiked())
+      }
+    })
+  }
 };

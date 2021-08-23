@@ -129,6 +129,7 @@ function PostSharing() {
       });
 
     dispatch(getAllPosts());
+
   };
 
   return (

@@ -79,8 +79,6 @@ exports.getToken = function (data) {
         return accessSecret;
     }
 };
-exports.checkToken = function () {
-};
 exports.default = {
     createUser,
     checkUser: exports.checkUser,

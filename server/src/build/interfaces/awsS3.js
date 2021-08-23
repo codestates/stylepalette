@@ -13,6 +13,19 @@ const s3 = new aws_sdk_1.default.S3({
     secretAccessKey: process.env.ACCESS_KEY_PASSWORD,
     region: process.env.REGION
 });
+exports.previewUpload = multer_1.default({
+    storage: multer_s3_1.default({
+        s3: s3,
+        bucket: bucket,
+        contentType: multer_s3_1.default.AUTO_CONTENT_TYPE,
+        acl: 'public-read-write',
+        key: (req, file, cb) => {
+            let extension = path_1.default.extname(file.originalname);
+            cb(null, 'preview/' + Date.now().toString() + extension);
+        }
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 }
+});
 exports.profileUpload = multer_1.default({
     storage: multer_s3_1.default({
         s3: s3,

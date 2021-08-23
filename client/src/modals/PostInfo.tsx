@@ -7,8 +7,9 @@ import styled from 'styled-components';
 import { PrimaryButton } from '../components/Button/Button.styled';
 import { getPost, pressLike } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
-import { getPostState, getUser } from '../redux/selectors';
+import { getPostState, getUser, getLikeState } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
+import { NumberValueToken } from 'html2canvas/dist/types/css/syntax/tokenizer';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
@@ -71,10 +72,13 @@ export default function PostInfo() {
 
   let post: PostState = useSelector(getPostState);
   let currentUser: UserState = useSelector(getUser);
-
+  let isLiked : boolean = useSelector(getLikeState)
+ 
   useEffect(() => {
+    dispatch(getPost(modalData.modalData));
     handleIsDelete();
-  }, []);
+    console.log(post)
+  }, [isLiked]);
 
   function handleIsDelete() {
     if (currentUser.userid === post.userId) {
@@ -84,16 +88,9 @@ export default function PostInfo() {
     }
   }
 
-  function handleHeartIcon() {
-    console.log('currentUser:', currentUser);
-    console.log('post:', post);
 
-    const data = {
-      postid: post.id,
-      userid: post.userId,
-    };
-
-    dispatch(pressLike(data));
+  function handleLike(data : {postid : number | null, userid : number | null}) { 
+    dispatch(pressLike(data))
   }
 
   return (
@@ -102,7 +99,10 @@ export default function PostInfo() {
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <HeartIcon onClick={handleHeartIcon}></HeartIcon>
+          {(isLiked) 
+          ? <HeartIcon fill="red" onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
+          : <HeartIcon fill="" onClick={()=>handleLike({ postid : post.id, userid : currentUser.userid})}/>
+          }
         </LikeIconWrapper>
         <LikeCount>{post.likeCount} likes</LikeCount>
       </LikeContainer>
