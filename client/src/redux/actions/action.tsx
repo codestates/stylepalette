@@ -172,7 +172,8 @@ export const logIn = (data: LoginProps) => {
       .then((response) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         dispatch(handleModal({ isOpen: false }));
-        localStorage.setItem('token', response.data.payload);
+        localStorage.setItem('token', response.data.payload.accessToken);
+        localStorage.setItem('user', response.data.payload.user);
         dispatch(loginSuccess(response.data.payload));
       })
       .catch((error) => {
@@ -606,4 +607,13 @@ export const getAllPosts = (data: Posts) => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     dispatch(successGetposts(data));
   };
+};
+
+export const pressLike = (data: {postid : number, userid : number}) => {
+  console.log(data)
+  axios.post(`${serverUrl}/post/${data.postid}/like`,{
+    userid : data.userid
+  })
+  .then(response => console.log(response))
+ 
 };

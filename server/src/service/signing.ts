@@ -85,9 +85,7 @@ export const getToken = function (data : User) {
   }
 }
 
-export const checkToken = function () {
-  
-}
+
 
 
 export default {

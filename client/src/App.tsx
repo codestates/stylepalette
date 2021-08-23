@@ -49,20 +49,21 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('TESTING SOCIAL LOGIN');
-    console.log('TESTING SOCIAL LOGIN 2');
-    const url = new URL(window.location.href);
-    const authorizationCode = url.searchParams.get('code');
-    const scope = url.searchParams.get('scope');
-    if (authorizationCode && scope) {
-      dispatch(googleLogin({ authorizationCode, scope }));
-    } else if (authorizationCode && !scope) {
-      dispatch(kakaoLogin({ authorizationCode, scope }));
-    }
+    // console.log('TESTING SOCIAL LOGIN');
+    // console.log('TESTING SOCIAL LOGIN 2');
+    // const url = new URL(window.location.href);
+    // const authorizationCode = url.searchParams.get('code');
+    // const scope = url.searchParams.get('scope');
+    // if (authorizationCode && scope) {
+    //   dispatch(googleLogin({ authorizationCode, scope }));
+    // } else if (authorizationCode && !scope) {
+    //   dispatch(kakaoLogin({ authorizationCode, scope }));
+    // }
     // check if user has logged in
     const token = localStorage.getItem('token');
+    const user = localStorage.getItem('user');
     if (token) {
-      dispatch(loginSuccess(token));
+      dispatch(loginSuccess({accessToken : token, user: user}));
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

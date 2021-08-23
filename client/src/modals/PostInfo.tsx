@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPosts, getUser } from '../redux/selectors';
-import { Post } from '../redux/actions/action';
+import { Post, pressLike } from '../redux/actions/action';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
@@ -68,6 +68,7 @@ export default function PostInfo(modalData : any) {
   console.log('modalData: ', modalData);
   console.log('posts: ', posts);
   console.log('post: ', post);
+  console.log('user: ', user);
 
   
 
@@ -76,7 +77,9 @@ export default function PostInfo(modalData : any) {
       <PostImage src={post[0].image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <HeartIcon />
+          <button onClick={()=>pressLike({ postid : post[0].id, userid : user.userid})}>
+            좋아요
+          </button>
         </LikeIconWrapper>
         <LikeCount>{post[0].likeCount} likes</LikeCount>
       </LikeContainer>
