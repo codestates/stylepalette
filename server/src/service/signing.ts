@@ -50,7 +50,6 @@ export const checkUser = async function (data : IUserCheck) {
       exclude : ["createdAt", "updatedAt"]
     }
   })
-
   const salt =  user?.salt
   if (salt) {
     const checkecdPassword = await checkHashedPassword(data.password, salt)
@@ -86,9 +85,7 @@ export const getToken = function (data : User) {
   }
 }
 
-export const checkToken = function () {
-  
-}
+
 
 
 export default {
