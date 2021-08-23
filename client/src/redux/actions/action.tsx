@@ -162,8 +162,13 @@ export const logIn = (data: LoginProps) => {
       .then((response) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         dispatch(handleModal({ isOpen: false }));
-        localStorage.setItem('token', response.data.payload);
-        dispatch(loginSuccess(response.data.payload));
+        localStorage.setItem('token', response.data.payload.accessToken);
+        dispatch(
+          loginSuccess({
+            token: response.data.payload.accessToken,
+            user: response.data.payload.user,
+          }),
+        );
       })
       .catch((error) => {
         console.log('LOGIN RESPONSE in FAILURE: ', error.response.data.message);
@@ -194,7 +199,16 @@ export const kakaoLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
           withCredentials: true,
         },
       )
-      .then((response) => console.log('KAKAO LOGIN SUCCESS', response))
+      .then((response) => {
+        console.log('KAKAO LOGIN SUCCESS', response);
+        localStorage.setItem('token', response.data.id_token);
+        dispatch(
+          loginSuccess({
+            token: response.data.id_token,
+            user: response.data,
+          }),
+        );
+      })
       .catch((error) => {
         console.log('KAKAO LOGIN FAILURE', error);
       });
@@ -215,8 +229,13 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
       )
       .then((response) => {
         console.log('GOOGLE LOGIN SUCCESS', response);
-        // localStorage.setItem('token', response.data.id_token);
-        // dispatch(loginSuccess(response.data.id_token));
+        localStorage.setItem('token', response.data.id_token);
+        dispatch(
+          loginSuccess({
+            token: response.data.id_token,
+            user: response.data,
+          }),
+        );
       })
       .catch((err) => {
         console.log('GOOGLE LOGIN FAILURE:', err);
@@ -563,3 +582,13 @@ export const setMainResultImage = (data: MainResultImageProps) => {
     payload: data,
   };
 };
+
+export const pressLike = (data: {postid : number, userid : number}) => {
+  console.log(data)
+  axios.post(`${serverUrl}/post/${data.postid}/like`,{
+    userid : data.userid
+  })
+  .then(response => console.log(response))
+ 
+};
+

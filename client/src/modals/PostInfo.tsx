@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 
 import { PrimaryButton } from '../components/Button/Button.styled';
-import { getPost } from '../redux/actions/action';
+import { getPost, pressLike} from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPostState, getUser } from '../redux/selectors';
 import { PostState, UserState } from '../redux/reducers/initialState';
@@ -69,6 +69,7 @@ export default function PostInfo(modalData: any) {
   const dispatch = useDispatch();
   const [isDelete, setIsDelete] = useState<boolean>(false);
 
+
   let post: PostState = useSelector(getPostState);
   let currentUser: UserState = useSelector(getUser);
 
@@ -91,7 +92,9 @@ export default function PostInfo(modalData: any) {
       <PostImage src={post.image} alt="post-img" />
       <LikeContainer>
         <LikeIconWrapper>
-          <HeartIcon />
+          <button onClick={()=>pressLike({ postid : post[0].id, userid : user.userid})}>
+            좋아요
+          </button>
         </LikeIconWrapper>
         <LikeCount>{post.likeCount} likes</LikeCount>
       </LikeContainer>

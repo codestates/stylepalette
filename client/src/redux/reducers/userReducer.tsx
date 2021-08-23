@@ -31,9 +31,18 @@ const userReducer = (
     }
 
     case LOGIN_SUCCESS: {
-      const token = action.payload;
+      const { token, user } = action.payload;
       const newState = Object.assign({}, state, {
+        userid : user.id,
+        username : user.username,
+        userimage : user.userimage,
+        email : user.email,
         token: token,
+        userid: user?.id || user?.userid || null,
+        username: user?.username || '',
+        realname: user?.realname || '',
+        email: user?.email || '',
+        userimage: user?.userimage || '',
       });
 
       return newState;

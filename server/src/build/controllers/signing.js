@@ -24,12 +24,11 @@ const signIn = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, fun
         if (accessToken) {
             res.cookie("jwt", accessToken, {
                 maxAge: 1000 * 60 * 60 * 24 * 7,
-                domain: ".stylepalette.net",
                 path: "/",
                 secure: true,
                 httpOnly: true,
                 sameSite: 'none'
-            }).status(200).send({ message: "Successed Sign in", payload: accessToken });
+            }).status(200).send({ message: "Successed Sign in", payload: { accessToken: accessToken, user: foundUser } });
         }
         else {
             res.status(400).send({ message: "Failed Sign in, No Token" });
