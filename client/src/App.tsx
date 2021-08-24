@@ -69,6 +69,7 @@ function App() {
     if (token) {
       dispatch(loginSuccess({ accessToken: token, user: userInfoString }));
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

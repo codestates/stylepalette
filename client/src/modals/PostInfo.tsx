@@ -81,6 +81,7 @@ export default function PostInfo(modalData: any) {
     handleIsDelete();
   }, []);
 
+
   function handleIsDelete() {
     if (currentUser.userid === post.userId) {
       setIsDelete(true);

@@ -116,29 +116,26 @@ function Gallery() {
   const dispatch = useDispatch();
   let posts: PostsState[] = useSelector(getPosts);
   let colorDatas: RouletteColor = useSelector(getRouletteColor);
-  const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const { palette } = colorDatas;
+  const [filterPost, setFilterPost] = useState<any>(posts.reverse());
+  const [isRoulette, setIsRoulette] = useState<boolean>(false);
+
+  console.log('filterPost:', filterPost);
 
   useEffect(() => {
     dispatchAllPosts();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [posts]);
+  }, [filterPost]);
 
-  const dispatchAllPosts = async () => {
-    await dispatch(getAllPosts());
+
+  const dispatchAllPosts = () => {
+    dispatch(getAllPosts());
   };
 
   const handleClickPostInfo = async (postid: number | null) => {
     dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
   };
 
-  const filteredFunc = (value: string) => {
-    const colorData = {
-      maincolor: value,
-    };
-
-    dispatch(rouletteColor(colorData));
-
+  if (isRoulette) {
     const filterData = posts.filter((el) => {
       for (let i = 0; i < palette.length; i++) {
         if (el.topcolor === palette[i]) {
@@ -149,16 +146,23 @@ function Gallery() {
       }
     });
 
-    const reverseData = filterData.reverse();
+    setFilterPost(filterData.reverse());
+    setIsRoulette(false);
+  }
 
-    return reverseData;
+  const filteredFunc = (value: string) => {
+    dispatch(
+      rouletteColor({
+        maincolor: value,
+        setIsRoulette: setIsRoulette,
+      }),
+    );
   };
 
   const handleGetCategory = async (value: string) => {
     switch (value) {
       case '최신순': {
-        const reversePost = posts.reverse();
-
+        const reversePost = posts;
         setFilterPost(reversePost);
         break;
       }
@@ -167,60 +171,48 @@ function Gallery() {
           return b.likeCount - a.likeCount;
         });
 
-        setFilterPost(sortPost);
+        setFilterPost(sortPost.reverse());
         break;
       }
       case '빨강': {
-        const filterCategory = filteredFunc('#FF0000');
-        setFilterPost(filterCategory);
+        filteredFunc('#FF0000');
 
         break;
       }
       case '주황': {
-        const filterCategory = await filteredFunc('#FFA500');
-        setFilterPost(filterCategory);
-
+        filteredFunc('#FFA500');
         break;
       }
       case '노랑': {
-        const filterCategory = await filteredFunc('#FFFF00');
-        setFilterPost(filterCategory);
+        filteredFunc('#FFFF00');
 
         break;
       }
       case '초록': {
-        const filterCategory = await filteredFunc('#008000');
-        setFilterPost(filterCategory);
+        filteredFunc('#008000');
 
         break;
       }
       case '파랑': {
-        const filterCategory = await filteredFunc('#0000FF');
-        setFilterPost(filterCategory);
+        filteredFunc('#0000FF');
 
         break;
       }
       case '남색': {
-        const filterCategory = await filteredFunc('#00008B');
-        setFilterPost(filterCategory);
-
+        filteredFunc('#00008B');
         break;
       }
       case '보라': {
-        const filterCategory = await filteredFunc('#800080');
-        setFilterPost(filterCategory);
-
+        filteredFunc('#800080');
         break;
       }
       case '하양': {
-        const filterCategory = await filteredFunc('#FFFFFF');
-        setFilterPost(filterCategory);
+        filteredFunc('#FFFFFF');
 
         break;
       }
       case '검정': {
-        const filterCategory = await filteredFunc('#000000');
-        setFilterPost(filterCategory);
+        filteredFunc('#000000');
 
         break;
       }
@@ -247,20 +239,24 @@ function Gallery() {
         <GalleryContainer>
           <PhotoWrapper>
             {filterPost.length <= 1
-              ? posts.map((el, idx) => {
-                  return (
-                    <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                      <PostPhoto key={idx} src={el.image} />
-                    </NavIcon>
-                  );
-                })
-              : filterPost.map((el: any, idx: any) => {
-                  return (
-                    <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                      <PostPhoto key={idx} src={el.image} />
-                    </NavIcon>
-                  );
-                })}
+              ? posts
+                  .map((el, idx) => {
+                    return (
+                      <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                        <PostPhoto key={idx} src={el.image} />
+                      </NavIcon>
+                    );
+                  })
+                  .reverse()
+              : filterPost
+                  .map((el: any, idx: any) => {
+                    return (
+                      <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                        <PostPhoto key={idx} src={el.image} />
+                      </NavIcon>
+                    );
+                  })
+                  .reverse()}
           </PhotoWrapper>
         </GalleryContainer>
       </GalleryWrapper>
