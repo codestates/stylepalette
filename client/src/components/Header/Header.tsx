@@ -105,12 +105,6 @@ export default function Header() {
               <NavIcon onClick={handleClickLogOut}>
                 <Linked to="/">로그아웃</Linked>
               </NavIcon>
-              <Linked to="/genderselect">
-                <NavIcon>성별선택</NavIcon>
-              </Linked>
-              <Linked to="/otheruserpage">
-                <NavIcon>다른유저페이지</NavIcon>
-              </Linked>
             </>
           ) : (
             <>

@@ -122,6 +122,7 @@ function MyPage() {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
 
+  console.log('USER', user.userid);
   useEffect(() => {
     // get user info
     dispatch(getUserInfo({ userid: user.userid }));

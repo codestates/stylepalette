@@ -110,7 +110,7 @@ function SignUp() {
     }
   }
 
-  const signupMsg = useSelector(getMessage);
+  const signupMessage = useSelector(getMessage).signupMessage;
 
   function handleChangeName(e: React.FormEvent<HTMLInputElement>) {
     setRealname(e.currentTarget.value);
@@ -255,7 +255,7 @@ function SignUp() {
             </Button>
           )}
         </ButtonContainer>
-        <MessageWrapper>{signupMsg}</MessageWrapper>
+        <MessageWrapper>{signupMessage}</MessageWrapper>
       </SignUpContainer>
       <SignUpFooter>
         <span>계정이 있으신가요?</span>

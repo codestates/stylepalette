@@ -5,7 +5,11 @@ export const initialState = {
     username: '',
     email: '',
     userimage: '',
-    apiMessage: '',
+    apiMessage: {
+      signupMessage: '',
+      loginMessage: '',
+      passwordMessage: '',
+    },
     token: '',
     post: [],
   },
@@ -40,7 +44,6 @@ export const initialState = {
       updatedAt: '',
     },
   ],
-
   otheruser: {
     userid: null,
     realname: '',
@@ -71,6 +74,19 @@ export const initialState = {
 };
 
 export interface UserState {
+  userid: number | null;
+  realname: string;
+  username: string;
+  email: string;
+  userimage: string;
+  apiMessage: {
+    signupMessage: string;
+    loginMessage: string;
+    passwordMessage: string;
+  };
+}
+
+export interface OtherUserState {
   userid: number | null;
   realname: string;
   username: string;
