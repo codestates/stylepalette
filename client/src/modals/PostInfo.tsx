@@ -81,7 +81,6 @@ export default function PostInfo(modalData: any) {
     handleIsDelete();
   }, []);
 
-
   function handleIsDelete() {
     if (currentUser.userid === post.userId) {
       setIsDelete(true);
@@ -98,6 +97,7 @@ export default function PostInfo(modalData: any) {
     dispatch(updateLikeList(data));
   }
 
+  console.log('Likelist', likeList);
   return (
     <PostInfoWrapper>
       {currentUser.userid === post.userId ? (
@@ -124,7 +124,7 @@ export default function PostInfo(modalData: any) {
             />
           )}
         </LikeIconWrapper>
-        <LikeCount>{post.like.length} likes</LikeCount>
+        <LikeCount>{likeList.length} likes</LikeCount>
       </LikeContainer>
       <PostContentContainer>
         <Link to={`/${post.userId}`}>
