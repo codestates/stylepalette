@@ -15,7 +15,7 @@ const HeaderWrapper = styled.div`
   align-items: center;
   background-color: black;
   width: 100%;
-  height: 4rem;
+  height: 5rem;
   position: sticky;
   top: 0;
   border-bottom: solid 2px white;
@@ -34,9 +34,9 @@ const LogoWrapper = styled.span`
 const Logo = styled.img`
   position: absolute;
   left: 9%;
-  top: -10%;
-  width: 65px;
-  height: 65px;
+  top: 0%;
+  width: 70px;
+  height: 70px;
   border-radius: 50%;
 `;
 

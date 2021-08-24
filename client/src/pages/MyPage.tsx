@@ -33,10 +33,12 @@ const MyPageFooter = styled.div`
 const UserInfoContainer = styled.div`
   display: flex;
   padding: 0 15px 15px 15px;
-  margin: 0 15px 30px 15px;
+  margin: 0 15px 20px 15px;
   width: 70%;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.8);
   border: 2px groove black;
   border-width: 0 0 2px 0;
+  border-radius: 5px;
 `;
 
 const UserPhotoWrapper = styled.div`
@@ -64,10 +66,12 @@ const UserPostWrapper = styled.div`
   text-align: left;
   padding: 15px;
   margin: 15px;
+  box-shadow: 0 1px 5px 3px black;
+  border-radius: 5px;
 `;
 
 const NavIcon = styled.button`
-  margin: 0 10px 40px 0;
+  margin: 20px 12px 40px 12px;
   width: 280px;
   height: 280px;
   background-color: white;
@@ -81,7 +85,7 @@ const NavIcon = styled.button`
 `;
 
 const PostPhoto = styled.img`
-  border: 2px solid black;
+  border: 2px solid #777777;
   border-radius: 5px;
   width: 275px;
   height: 275px;

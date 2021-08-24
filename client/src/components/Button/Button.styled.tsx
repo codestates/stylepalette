@@ -44,7 +44,7 @@ export const PrimaryButton = styled(DefaultButton)`
 `;
 
 export const SecondaryButton = styled(DefaultButton)`
-  background: skyblue;
+  background: white;
   color: black;
 
   &:hover {

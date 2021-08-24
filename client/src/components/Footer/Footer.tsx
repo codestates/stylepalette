@@ -27,6 +27,8 @@ const LogoSpan = styled.span`
 `;
 
 const CopyRightWrapper = styled.div`
+  color: white;
+
   @media (max-width: 767px) {
     display: none;
   }
@@ -70,12 +72,10 @@ export default function Footer() {
       <LogoWrapper>
         <LogoSpan>StylePalette</LogoSpan>
       </LogoWrapper>
-      <CopyRightWrapper>
-        <Text size="small">COPYRIGHT © 2021 STYLEPALETTE ALL RIGHTS RESERVED</Text>
-      </CopyRightWrapper>
+      <CopyRightWrapper>COPYRIGHT © 2021 STYLEPALETTE ALL RIGHTS RESERVED</CopyRightWrapper>
       <MobileWrapper>
         <LogoSpan>StylePalette</LogoSpan>
-        <Text size="small">COPYRIGHT © 2021 STYLEPALETTE ALL RIGHTS RESERVED</Text>
+        COPYRIGHT © 2021 STYLEPALETTE ALL RIGHTS RESERVED
       </MobileWrapper>
       <GithubWrapper>
         <TeamMember>
