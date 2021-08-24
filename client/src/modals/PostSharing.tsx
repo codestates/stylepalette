@@ -8,7 +8,7 @@ import { serverUrl } from '../utils/constants';
 
 import { getUserPickColor, getMainResultImage, getUser } from '../redux/selectors';
 import { UserPickColor, MainResultImage } from '../redux/reducers/initialState';
-import { getUserInfo, getAllPosts } from '../redux/actions/action';
+import { getUserInfo, getAllPosts, handleModal } from '../redux/actions/action';
 
 const PostWrapper = styled.div`
   width: 400px;
@@ -71,23 +71,34 @@ const PostInput = styled.input`
 function PostSharing() {
   const user = useSelector(getUser);
   const dispatch = useDispatch();
+  const userPickColor: UserPickColor = useSelector(getUserPickColor);
+  const [imageSrc, setImageSrc] = useState<any>(null);
+  const [mainResultBlob, setMainResultBlob] = useState<any>(null);
+
+  const [postTitle, setPostTitle] = useState<string>('');
 
   useEffect(() => {
     // get user info
     dispatch(getUserInfo({ userid: user.userid }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
+
+    const imgSrc = localStorage.getItem('imgLocation');
+
+    setImageSrc(imgSrc);
+    handleSetMainResultBlob(imgSrc);
   }, []);
 
-  const userPickColor: UserPickColor = useSelector(getUserPickColor);
-  const mainResultImage: MainResultImage = useSelector(getMainResultImage);
-  const imgSrc = URL.createObjectURL(mainResultImage.imageblob);
-  const [postTitle, setPostTitle] = useState<string>('');
+  const handleSetMainResultBlob = async (imgSrc: any) => {
+    const imageBlob = await fetch(imgSrc).then((res) => {
+      return res.blob();
+    });
+
+    setMainResultBlob(imageBlob);
+  };
 
   function handleChangePostName(e: React.FormEvent<HTMLInputElement>) {
     setPostTitle(e.currentTarget.value);
   }
-
-  // URL.revokeObjectURL(imgSrc);
 
   const requestSignup = async (isPublic: boolean) => {
     const newPost = {
@@ -111,9 +122,7 @@ function PostSharing() {
       });
 
     let formData = new FormData();
-    formData.append('result', mainResultImage.imageblob, `${postId.postid}.png`);
-
-    console.log('postId:', postId.postid);
+    formData.append('result', mainResultBlob, `${postId.postid}.png`);
 
     await axios
       .post(`${serverUrl}/post/${postId.postid}/result`, formData, {
@@ -129,8 +138,10 @@ function PostSharing() {
         console.log(res.data);
       });
 
-    dispatch(getAllPosts());
+    await dispatch(getAllPosts());
 
+    alert('게시물 저장 완료!');
+    dispatch(handleModal({ isOpen: false, type: 'postSharing' }));
   };
 
   return (
@@ -148,7 +159,7 @@ function PostSharing() {
           ></PostInput>
         </InputWrapper>
         <InputWrapper>
-          <PostImage src={imgSrc} />
+          <PostImage src={imageSrc} />
         </InputWrapper>
       </PostContainer>
       <PostFooter>

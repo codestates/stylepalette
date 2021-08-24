@@ -1,4 +1,5 @@
 import FormData from 'form-data';
+import { Link, Redirect } from 'react-router-dom';
 import axios from 'axios';
 import { serverUrl } from '../../utils/constants';
 import dotenv from 'dotenv';
@@ -94,6 +95,7 @@ interface RecommendColor {
 
 interface RouletteColor {
   maincolor: string;
+  setIsRoulette: any;
 }
 
 interface UserPickColorProps {
@@ -107,6 +109,11 @@ interface MainResultImageProps {
 
 interface getPostProps {
   postId: number | null;
+}
+
+interface SaveMainResultImageProps {
+  imageblob: Blob;
+  setIsNext: any;
 }
 
 // actions creator functions
@@ -304,8 +311,6 @@ export const logOut = () => {
 };
 
 export const handleModal = (data: HandleModalProps) => {
-  console.log('data:', data);
-
   return {
     type: HANDLE_MODAL,
     payload: data,
@@ -639,8 +644,12 @@ export const rouletteColor = (data: RouletteColor) => {
         },
       )
       .then((res) => {
-        const data = res.data;
-        dispatch(successRouletteColor(data));
+        const datas = res.data;
+        dispatch(successRouletteColor(datas));
+
+        if (data.setIsRoulette) {
+          data.setIsRoulette(true);
+        }
       })
       .catch((res) => {
         return res;
@@ -656,6 +665,9 @@ export const setUserPickColor = (data: UserPickColorProps) => {
 };
 
 export const setMainResultImage = (data: MainResultImageProps) => {
+  const imgSrc = URL.createObjectURL(data.imageblob);
+  localStorage.setItem('imageBlob', imgSrc);
+
   return {
     type: MAIN_RESULTIMAGE,
     payload: data,
@@ -680,6 +692,22 @@ export const pressLike = (data: { postid: number | null; userid: number | null }
         if (response.status === 201) {
           dispatch(isLiked());
         }
+      });
+  };
+};
+
+export const saveMainResultImage = (data: SaveMainResultImageProps) => {
+  const formData = new FormData();
+  formData.append('preview', data.imageblob);
+
+  return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
+    axios
+      .post(`${serverUrl}/post/preview`, formData, {
+        withCredentials: true,
+      })
+      .then((response) => {
+        localStorage.setItem('imgLocation', response.data.location);
+        data.setIsNext(true);
       });
   };
 };
