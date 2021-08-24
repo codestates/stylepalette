@@ -82,8 +82,8 @@ const PhotoWrapper = styled.div`
 
 const NavIcon = styled.button`
   margin: 0 50px 100px 68px;
-  width: 300px;
-  height: 300px;
+  width: 305px;
+  height: 305px;
   background-color: white;
   border-style: none;
 
@@ -95,11 +95,10 @@ const NavIcon = styled.button`
 `;
 
 const PostPhoto = styled.img`
-  border-style: solid;
-  border-width: 2px;
-  border-color: #c79a00;
-  width: 295px;
-  height: 295px;
+  border: 2px solid black;
+  border-radius: 10px;
+  width: 300px;
+  height: 300px;
 
   &:hover {
     opacity: 80%;
@@ -120,12 +119,9 @@ function Gallery() {
   const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
 
-  console.log('filterPost:', filterPost);
-
   useEffect(() => {
     dispatchAllPosts();
   }, [filterPost]);
-
 
   const dispatchAllPosts = () => {
     dispatch(getAllPosts());
@@ -146,7 +142,11 @@ function Gallery() {
       }
     });
 
-    setFilterPost(filterData.reverse());
+    const result = filterData.filter((el) => {
+      return el.isPublic === true;
+    });
+
+    setFilterPost(result.reverse());
     setIsRoulette(false);
   }
 
@@ -163,7 +163,10 @@ function Gallery() {
     switch (value) {
       case '최신순': {
         const reversePost = posts;
-        setFilterPost(reversePost);
+        const result = reversePost.filter((el) => {
+          return el.isPublic === true;
+        });
+        setFilterPost(result);
         break;
       }
       case '인기순': {
@@ -171,7 +174,11 @@ function Gallery() {
           return b.likeCount - a.likeCount;
         });
 
-        setFilterPost(sortPost.reverse());
+        const result = sortPost.filter((el) => {
+          return el.isPublic === true;
+        });
+
+        setFilterPost(result.reverse());
         break;
       }
       case '빨강': {
@@ -181,6 +188,7 @@ function Gallery() {
       }
       case '주황': {
         filteredFunc('#FFA500');
+
         break;
       }
       case '노랑': {
@@ -240,6 +248,9 @@ function Gallery() {
           <PhotoWrapper>
             {filterPost.length <= 1
               ? posts
+                  .filter((el) => {
+                    return el.isPublic === true;
+                  })
                   .map((el, idx) => {
                     return (
                       <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
@@ -249,6 +260,9 @@ function Gallery() {
                   })
                   .reverse()
               : filterPost
+                  .filter((el: any) => {
+                    return el.isPublic === true;
+                  })
                   .map((el: any, idx: any) => {
                     return (
                       <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>

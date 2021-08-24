@@ -7,17 +7,23 @@ const FooterContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-top: solid 1px #dbdbdb;
+  border-top: solid 1px white;
+  background-color: black;
   width: 100%;
   height: 6rem;
   bottom: 0;
 `;
 
 const LogoWrapper = styled.span`
-  padding-left: 1em;
+  padding-left: 2em;
   @media (max-width: 767px) {
     display: none;
   }
+`;
+
+const LogoSpan = styled.span`
+  color: white;
+  font-size: 1.2rem;
 `;
 
 const CopyRightWrapper = styled.div`
@@ -44,39 +50,48 @@ const GithubWrapper = styled.div`
   }
 `;
 
+const GithubLink = styled(Link)`
+  text-decoration: none;
+  color: white;
+
+  &:hover {
+    opacity: 70%;
+  }
+`;
+
 const TeamMember = styled.div`
   padding: 3px;
+  color: white;
 `;
 
 export default function Footer() {
   return (
     <FooterContainer>
       <LogoWrapper>
-        <span>StylePalette</span>
+        <LogoSpan>StylePalette</LogoSpan>
       </LogoWrapper>
-
       <CopyRightWrapper>
         <Text size="small">COPYRIGHT © 2021 STYLEPALETTE ALL RIGHTS RESERVED</Text>
       </CopyRightWrapper>
       <MobileWrapper>
-        <span>StylePalette</span>
+        <LogoSpan>StylePalette</LogoSpan>
         <Text size="small">COPYRIGHT © 2021 STYLEPALETTE ALL RIGHTS RESERVED</Text>
       </MobileWrapper>
       <GithubWrapper>
         <TeamMember>
-          <Link to={{ pathname: 'http://github.com/ggh0223' }} target="_blank">
+          <GithubLink to={{ pathname: 'http://github.com/ggh0223' }} target="_blank">
             김규현 git
-          </Link>
+          </GithubLink>
         </TeamMember>
         <TeamMember>
-          <Link to={{ pathname: 'http://github.com/nayeonseo' }} target="_blank">
+          <GithubLink to={{ pathname: 'http://github.com/nayeonseo' }} target="_blank">
             서나연 git
-          </Link>
+          </GithubLink>
         </TeamMember>
         <TeamMember>
-          <Link to={{ pathname: 'http://github.com/wjswlgh96' }} target="_blank">
+          <GithubLink to={{ pathname: 'http://github.com/wjswlgh96' }} target="_blank">
             전지호 git
-          </Link>
+          </GithubLink>
         </TeamMember>
       </GithubWrapper>
     </FooterContainer>

@@ -13,16 +13,21 @@ import { NumberValueToken } from 'html2canvas/dist/types/css/syntax/tokenizer';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
+  border: solid 2px black;
+  border-radius: 10px;
   background-color: white;
-  border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
 `;
 
-const PostTitle = styled.div``;
+const PostTitle = styled.div`
+  font-weight: bold;
+  align-items: center;
+`;
 
 const PostImage = styled.img`
   width: 100%;
+  border-bottom: 2px solid black;
 `;
 
 const PostContentContainer = styled.div`
@@ -61,10 +66,13 @@ const LikeCount = styled.span`
   font-weight: bold;
 `;
 
+const OtherUserLink = styled(Link)`
+  text-decoration: none;
+  color: black;
+`;
+
 export default function PostInfo(modalData: any) {
   // TODO: Create a selector to retrieve only one post based on id
-  // TODO: 유저 아이디가 동일하면 포스트 삭제 버튼이 나와야함
-  // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
   const dispatch = useDispatch();
   const [isDelete, setIsDelete] = useState<boolean>(false);
   const post: PostState = useSelector(getPostState);
@@ -80,7 +88,6 @@ export default function PostInfo(modalData: any) {
     );
     handleIsDelete();
   }, []);
-
 
   function handleIsDelete() {
     if (currentUser.userid === post.userId) {
@@ -127,10 +134,10 @@ export default function PostInfo(modalData: any) {
         <LikeCount>{post.like.length} likes</LikeCount>
       </LikeContainer>
       <PostContentContainer>
-        <Link to={`/${post.userId}`}>
+        <OtherUserLink to={`/${post.userId}`}>
           <PostOwnerProfileImage src={post.user.userimage} />
           <PostOwerUserName>{post.user.username}</PostOwerUserName>
-        </Link>
+        </OtherUserLink>
         <PostTitle>{post.title}</PostTitle>
       </PostContentContainer>
     </PostInfoWrapper>

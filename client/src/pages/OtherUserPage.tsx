@@ -7,8 +7,7 @@ import { handleModal, getOtherUserInfo, getPost } from '../redux/actions/action'
 import { getOtherUser, getPostState } from '../redux/selectors';
 
 const OtherUserPageWrapper = styled.div`
-  width: 100%;
-  height: 100vw;
+  width: 100vw;
   display: flex;
   background-color: white;
   flex-direction: column;
@@ -19,7 +18,7 @@ const OtherUserPageWrapper = styled.div`
 const OtherUserPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   padding: 15px;
   margin: 15px;
 `;
@@ -34,15 +33,18 @@ const OtherUserPageFooter = styled.div`
 const OtherUserInfoContainer = styled.div`
   display: flex;
   padding: 0 15px 15px 15px;
-  margin: 0 15px 15px 15px;
+  margin: 0 15px 30px 15px;
   width: 95%;
-  border-style: groove;
+  border: 2px groove black;
   border-width: 0 0 2px 0;
-  border-color: #dbdbdb;
+  border-radius: 10px;
 `;
 
 const OtherUserPhotoWrapper = styled.div`
-  padding: 50px;
+  width: 355px;
+  height: 355px;
+  text-align: center;
+  padding: 50px 0 50px 70px;
 
   @media (max-width: 768px) {
     padding: 50px 50px 50px 125px;
@@ -51,9 +53,10 @@ const OtherUserPhotoWrapper = styled.div`
 
 const OtherUserInfoWrapper = styled.div`
   display: flex;
+  height: 355px;
   flex-direction: column;
   align-items: center;
-  padding: 50px 30px;
+  padding: 40px 50px;
 `;
 
 const OtherUserPostWrapper = styled.div`
@@ -66,8 +69,8 @@ const OtherUserPostWrapper = styled.div`
 
 const NavIcon = styled.button`
   margin: 0 50px 100px 60px;
-  width: 300px;
-  height: 300px;
+  width: 305px;
+  height: 305px;
   background-color: white;
   border-style: none;
 
@@ -79,14 +82,14 @@ const NavIcon = styled.button`
 `;
 
 const PostPhoto = styled.img`
-  border-style: solid;
-  border-width: 2px;
-  border-color: #c79a00;
-  width: 290px;
-  height: 290px;
+  border: 2px solid black;
+  border-radius: 5px;
+  width: 300px;
+  height: 300px;
 
   &:hover {
     opacity: 80%;
+    border-color: #ababab;
     cursor: pointer;
   }
 
@@ -97,9 +100,10 @@ const PostPhoto = styled.img`
 `;
 
 const UserPhoto = styled.img`
-  width: 175px;
-  height: 175px;
-  border-radius: 90px;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 2px solid black;
 `;
 
 const OtherUserInfoContent = styled.span`
@@ -145,13 +149,15 @@ function OtherUserPage() {
           </OtherUserInfoWrapper>
         </OtherUserInfoContainer>
         <OtherUserPostWrapper>
-          {otheruser.post.map((el: any, idx: React.Key | null | undefined) => {
-            return (
-              <NavIcon key={idx} onClick={handleClickPostInfo}>
-                <PostPhoto src={el.image} />
-              </NavIcon>
-            );
-          })}
+          {otheruser.post
+            .map((el: any, idx: React.Key | null | undefined) => {
+              return (
+                <NavIcon key={idx} onClick={handleClickPostInfo}>
+                  <PostPhoto src={el.image} />
+                </NavIcon>
+              );
+            })
+            .reverse()}
         </OtherUserPostWrapper>
       </OtherUserPageContainer>
       <OtherUserPageFooter></OtherUserPageFooter>

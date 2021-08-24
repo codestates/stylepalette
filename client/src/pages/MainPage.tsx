@@ -184,7 +184,7 @@ const ImageContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -250px 0 0 -250px;
+  margin: -250px 0 0 -300px;
   padding: 50px 0;
   text-align: center;
   width: 600px;

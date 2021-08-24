@@ -1,28 +1,43 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { getIsLoggedIn, getIsModalOpen } from '../../redux/selectors';
 import { handleModal, logOut } from '../../redux/actions/action';
 import Modal from '../../modals/Modal';
+
 import { ReactComponent as MenuIcon } from '../../images/menu.svg';
+import StylePaletteLogo from '../../images/Logo/StylePaletteLogo.png';
 
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: white;
+  background-color: black;
   width: 100%;
   height: 4rem;
   position: sticky;
   top: 0;
-  border-bottom: solid 1px #dbdbdb;
+  border-bottom: solid 2px white;
   z-index: 10;
   opacity: 90%;
 `;
+
 const LogoWrapper = styled.span`
-  padding-left: 1em;
+  display: flex;
+  flex-direction: row;
+  width: 200px;
+  height: 3.9rem;
+  padding: 0 0 0 30px;
+`;
+
+const Logo = styled.img`
+  position: absolute;
+  left: 9%;
+  top: -10%;
+  width: 65px;
+  height: 65px;
+  border-radius: 50%;
 `;
 
 const NavWrapper = styled.div`
@@ -35,8 +50,10 @@ const NavWrapper = styled.div`
 
 const LinkedLoGo = styled(Link)`
   text-decoration: none;
-  color: #666666;
-  font-size: 2rem;
+  color: white;
+  font-size: 2.2rem;
+  width: 100%;
+  text-align: center;
 
   &:hover {
     opacity: 70%;
@@ -45,8 +62,8 @@ const LinkedLoGo = styled(Link)`
 
 const Linked = styled(Link)`
   text-decoration: none;
-  color: #666666;
-  font-size: 1.15rem;
+  color: white;
+  font-size: 1.2rem;
 
   &:hover {
     opacity: 70%;
@@ -60,7 +77,7 @@ const NavMobile = styled.span`
   padding-right: 0.8em;
 `;
 const NavIcon = styled.span`
-  padding-right: 0.8em;
+  padding-right: 1.5em;
 `;
 
 // If user is logged in: nav will show: mypage, logout, gallery
@@ -91,7 +108,10 @@ export default function Header() {
     <>
       <HeaderWrapper>
         <LogoWrapper>
-          <LinkedLoGo to="/">StylePalette</LinkedLoGo>
+          <LinkedLoGo to="/">
+            <Logo src={StylePaletteLogo} alt="로고" />
+            Style
+          </LinkedLoGo>
         </LogoWrapper>
         <NavWrapper>
           {isLoggedIn ? (
@@ -105,12 +125,6 @@ export default function Header() {
               <NavIcon onClick={handleClickLogOut}>
                 <Linked to="/">로그아웃</Linked>
               </NavIcon>
-              <Linked to="/genderselect">
-                <NavIcon>성별선택</NavIcon>
-              </Linked>
-              <Linked to="/otheruserpage">
-                <NavIcon>다른유저페이지</NavIcon>
-              </Linked>
             </>
           ) : (
             <>
