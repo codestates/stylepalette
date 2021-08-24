@@ -39,7 +39,7 @@ export const GET_POSTS = 'GET_POSTS';
 export const GET_POSTS_SUCCESS = 'GETPOSTS_SUCCESS';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
-export const ISLIKED = 'ISLIKED';
+export const UPDATE_LIKE_LIST_SUCCESS = 'UPDATE_LIKE_LIST_SUCCESS';
 
 interface LoginProps {
   username: string;
@@ -111,6 +111,11 @@ interface getPostProps {
   postId: number | null;
 }
 
+interface LikeProps {
+  postid: number | null;
+  userid: number | null;
+}
+  
 interface SaveMainResultImageProps {
   imageblob: Blob;
   setIsNext: any;
@@ -674,23 +679,24 @@ export const setMainResultImage = (data: MainResultImageProps) => {
   };
 };
 
-export const isLiked = () => {
+export const updateLikeListSuccess = (data: any) => {
   return {
-    type: ISLIKED,
+    type: UPDATE_LIKE_LIST_SUCCESS,
+    payload: data,
   };
 };
 
-export const pressLike = (data: { postid: number | null; userid: number | null }) => {
-  console.log(data);
+export const updateLikeList = (data: LikeProps) => {
+  console.log('update LIKE DATA:', data);
+  const { postid, userid } = data;
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios
-      .post(`${serverUrl}/post/${data.postid}/like`, {
-        userid: data.userid,
+      .post(`${serverUrl}/post/${postid}/like`, {
+        userid: userid,
       })
       .then((response) => {
-        console.log(response);
         if (response.status === 201) {
-          dispatch(isLiked());
+          dispatch(updateLikeListSuccess(data));
         }
       });
   };

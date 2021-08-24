@@ -126,6 +126,7 @@ function Gallery() {
     dispatchAllPosts();
   }, [filterPost]);
 
+
   const dispatchAllPosts = () => {
     dispatch(getAllPosts());
   };

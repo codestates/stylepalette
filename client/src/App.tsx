@@ -61,9 +61,13 @@ function App() {
     // check if user has logged in
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
+    let userInfoString = '';
     console.log(token, user);
+    if (user !== '') {
+      userInfoString = JSON.parse(user!);
+    }
     if (token) {
-      dispatch(loginSuccess({ accessToken: token, user: JSON.parse(user!) }));
+      dispatch(loginSuccess({ accessToken: token, user: userInfoString }));
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps

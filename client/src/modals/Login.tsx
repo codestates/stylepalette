@@ -8,6 +8,7 @@ import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
 import { getMessage } from '../redux/selectors';
 import { clientUrl } from '../utils/constants'
+
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -90,28 +91,18 @@ export default function Login() {
     dispatch(handleModal({ isOpen: true, type: 'signup' }));
   };
 
-  // const handleClickGoogleLogin = () => {
-  //   const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
-  //   console.log('LOGIN GOOGLLE ID', GOOGLE_CLIENT_ID);
-  //   const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=http://stylepalette-client.s3-website.ap-northeast-2.amazonaws.com&client_id=${GOOGLE_CLIENT_ID}`;
-  //   window.location.assign(GOOGLE_LOGIN_URL);
-  // };
-  // const handleClickKakaoLogin = () => {
-  //   const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
-  //   console.log('KAKAO CLIENT ID', KAKAO_CLIENT_ID);
-  //   const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=http://stylepalette-client.s3-website.ap-northeast-2.amazonaws.com&response_type=code&state`;
-  //   window.location.assign(KAKAO_LOGIN_URL);
-  // };
   const handleClickGoogleLogin = () => {
     const GOOGLE_CLIENT_ID = process.env.REACT_APP_GOOGLE_CLIENT_ID;
     console.log('LOGIN GOOGLLE ID', GOOGLE_CLIENT_ID);
     const GOOGLE_LOGIN_URL = `https://accounts.google.com/o/oauth2/v2/auth?scope=https%3A//www.googleapis.com/auth/userinfo.email&include_granted_scopes=true&response_type=code&state=state_parameter_passthrough_value&redirect_uri=${clientUrl}&client_id=${GOOGLE_CLIENT_ID}`;
+
     window.location.assign(GOOGLE_LOGIN_URL);
   };
   const handleClickKakaoLogin = () => {
     const KAKAO_CLIENT_ID = process.env.REACT_APP_KAKAO_CLIENT_ID;
     console.log('KAKAO CLIENT ID', KAKAO_CLIENT_ID);
     const KAKAO_LOGIN_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${clientUrl}&response_type=code&state`;
+
     window.location.assign(KAKAO_LOGIN_URL);
   };
 
