@@ -49,7 +49,7 @@ if (
   server = https.createServer(credentials, app);
   server.listen(443, async function () {
     console.log(`${443}번 포트에서 서버가 열렸습니다.`);
-    //await sequelize.sync({force : true})
+    // await sequelize.sync({force : true})
     await sequelize.authenticate()
     .then(async () => {
       console.log("connection success with DB")
