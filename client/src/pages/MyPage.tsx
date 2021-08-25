@@ -21,6 +21,10 @@ const MyPageContainer = styled.div`
   justify-content: center;
   padding: 15px;
   margin: 15px;
+  @media (max-width: 768px) {
+    padding: 0px;
+    margin: 0px;
+  }
 `;
 
 const MyPageFooter = styled.div`
@@ -38,6 +42,13 @@ const UserInfoContainer = styled.div`
   border-style: groove;
   border-width: 0 0 2px 0;
   border-color: #dbdbdb;
+  @media (max-width: 768px) {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const UserPhotoWrapper = styled.div`
@@ -47,7 +58,10 @@ const UserPhotoWrapper = styled.div`
   padding: 50px 10px 10px 50px;
 
   @media (max-width: 768px) {
-    padding: 50px 50px 50px 115px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -102,6 +116,10 @@ const UserPhoto = styled.img`
   width: 175px;
   height: 175px;
   border-radius: 50%;
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 const UserInfoContent = styled.span`
@@ -109,20 +127,27 @@ const UserInfoContent = styled.span`
   font-size: 34px;
 
   @media (max-width: 768px) {
-    font-size: 34px;
+    font-size: 25px;
+    display: inline-block;
+    padding: 10px 0;
+    max-width: 120px;
+    word-wrap: break-word;
   }
 `;
 
 const UserEditButton = styled(PrimaryButton)`
   width: 175px;
   height: 75px;
+  @media (max-width: 768px) {
+    width: 85px;
+    height: 45px;
+  }
 `;
 
 function MyPage() {
   const dispatch = useDispatch();
   const user = useSelector(getUser);
 
-  console.log('USER', user.userid);
   useEffect(() => {
     // get user info
     dispatch(getUserInfo({ userid: user.userid }));
@@ -145,7 +170,7 @@ function MyPage() {
             <UserPhoto src={user.userimage} />
           </UserPhotoWrapper>
           <UserInfoWrapper>
-            <UserInfoContent>{user.username}</UserInfoContent> <br />
+            <UserInfoContent>{user.username}</UserInfoContent>
             <UserEditButton onClick={handleClickProfileEditButton}>정보 수정</UserEditButton>
           </UserInfoWrapper>
         </UserInfoContainer>
