@@ -27,63 +27,73 @@ const GalleryWrapper = styled.div`
   display: flex;
   background-color: white;
   flex-direction: column;
+  align-items: center;
   left: 0;
   top: 0;
 `;
 
 const FillterContainer = styled.div`
   display: grid;
-  justify-content: center;
+  align-items: center;
   text-align: left;
 `;
 
 const ListContainer = styled.div`
   display: inline-block;
-  max-width: 601px;
-  margin: 80px 0 40px;
+  max-width: 962px;
+  margin: 80px 0 80px;
   width: 100%;
-  border-top: 1px solid rgb(147, 112, 98);
-  border-left: 1px solid rgb(147, 112, 98);
+  border-top: 2px solid black;
+  border-left: 2px solid black;
 `;
 
 const ColorList = styled.button`
   text-align: center;
   display: inline-block;
-  width: 100px;
+  width: 160px;
+  height: 65px;
   padding: 12px 8px;
   border: none;
-  border-right: 1px solid rgb(147, 112, 98);
-  border-bottom: 1px solid rgb(147, 112, 98);
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
   cursor: pointer;
   background-color: white;
+  color: black;
+  font-weight: bold;
+  font-size: 1.2rem;
 
   &:hover {
     opacity: 80%;
-    background-color: #c79a00;
+    background-color: #dbdbdb;
   }
 
-  &:active {
-    background-color: #c79a00;
+  &:focus {
+    opacity: 80%;
+    background-color: #dbdbdb;
   }
 `;
 
 const GalleryContainer = styled.div`
-  width: 100%;
+  width: 70%;
   display: flex;
+  text-align: left;
   flex-direction: column;
   justify-content: center;
-  padding: 15px;
-  margin: 15px;
+  padding: 20px 10px;
+  margin: 15px 15px 50px 15px;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 0 0px 5px 3px #333333;
 `;
 
 const PhotoWrapper = styled.div`
-  padding: 0 50px 50px 50px;
+  padding: 20px 50px;
 `;
 
 const NavIcon = styled.button`
-  margin: 0 50px 100px 68px;
-  width: 300px;
-  height: 300px;
+  margin: 30px 6px 30px 6px;
+  width: 280px;
+  height: 280px;
   background-color: white;
   border-style: none;
 
@@ -95,11 +105,10 @@ const NavIcon = styled.button`
 `;
 
 const PostPhoto = styled.img`
-  border-style: solid;
-  border-width: 2px;
-  border-color: #c79a00;
-  width: 295px;
-  height: 295px;
+  border: 2px solid #777777;
+  border-radius: 5px;
+  width: 275px;
+  height: 275px;
 
   &:hover {
     opacity: 80%;
@@ -120,12 +129,9 @@ function Gallery() {
   const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
 
-  console.log('filterPost:', filterPost);
-
   useEffect(() => {
     dispatchAllPosts();
   }, [filterPost]);
-
 
   const dispatchAllPosts = () => {
     dispatch(getAllPosts());
@@ -163,6 +169,7 @@ function Gallery() {
     switch (value) {
       case '최신순': {
         const reversePost = posts;
+
         setFilterPost(reversePost);
         break;
       }
@@ -181,6 +188,7 @@ function Gallery() {
       }
       case '주황': {
         filteredFunc('#FFA500');
+
         break;
       }
       case '노랑': {
@@ -240,6 +248,9 @@ function Gallery() {
           <PhotoWrapper>
             {filterPost.length <= 1
               ? posts
+                  .filter((el) => {
+                    return el.isPublic === true;
+                  })
                   .map((el, idx) => {
                     return (
                       <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
@@ -249,6 +260,9 @@ function Gallery() {
                   })
                   .reverse()
               : filterPost
+                  .filter((el: any) => {
+                    return el.isPublic === true;
+                  })
                   .map((el: any, idx: any) => {
                     return (
                       <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>

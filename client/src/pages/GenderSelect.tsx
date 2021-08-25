@@ -49,13 +49,16 @@ const PhotoContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 20px;
+  @media (max-width: 768px) {
+    padding: 0px;
+  }
 `;
 
 const PhotoWrapper = styled.div`
   padding: 30px 225px 20px 225px;
 
   @media (max-width: 768px) {
-    padding: 30px 80px;
+    padding: 15px;
   }
 `;
 
@@ -65,8 +68,8 @@ const GenderPhoto = styled.img`
   margin: 10px 0 30px;
 
   @media (max-width: 768px) {
-    width: 250px;
-    height: 250px;
+    width: 150px;
+    height: 150px;
   }
 `;
 
@@ -79,16 +82,16 @@ const PhotoButton = styled.button`
   text-align: center;
 
   &:hover {
-    opacity: 70%;
+    opacity: 80%;
   }
 
   &:focus {
-    background-color: #dedede;
+    background-color: black;
   }
 
   @media (max-width: 768px) {
-    width: 250px;
-    height: 280px;
+    width: 150px;
+    height: 150px;
   }
 `;
 
@@ -101,8 +104,10 @@ const NextButtonWrapper = styled.div`
   top: 85%;
 
   @media (max-width: 768px) {
+    position: static;
     justify-content: center;
-    padding: 30px;
+    padding: 15px;
+    width: auto;
   }
 `;
 
@@ -151,11 +156,14 @@ const SelectButton = styled.button`
   height: 80px;
   border: none;
   text-align: center;
+  border: 1px solid rgb(0, 0, 0);
+  border-radius: 5px;
   background-color: white;
   font-size: 20px;
 
   &:disabled {
     opacity: 70%;
+    border: 1px solid rgb(0, 0, 0, 0.7);
   }
 
   &:hover {
@@ -176,6 +184,10 @@ const SelectButton = styled.button`
   @media (max-width: 768px) {
     display: inline;
   }
+`;
+
+const StyledLink = styled(Link)`
+  text-decoration: none;
 `;
 
 function GenderSelect() {
@@ -233,7 +245,9 @@ function GenderSelect() {
             </NextButton>
           )}
           {disabled ? (
-            <SelectButton>선택 완료</SelectButton>
+            <StyledLink to="/mainpage">
+              <SelectButton>선택 완료</SelectButton>
+            </StyledLink>
           ) : (
             <SelectButton disabled>선택 완료</SelectButton>
           )}
