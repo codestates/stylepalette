@@ -52,7 +52,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const kakao = async (req: Request, res: Response, next: NextFunction) => {
-  await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=stylepalette.net&code=${req.body.code}`, 
+  await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&code=${req.body.code}`, 
     {
       headers : {
         'Content-type' : 'application/x-www-form-urlencoded;charset=utf-8'

@@ -50,7 +50,7 @@ const google = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, fun
         .catch(e => res.status(404).send({ meassage: e }));
 });
 const kakao = (req, res, next) => tslib_1.__awaiter(void 0, void 0, void 0, function* () {
-    yield axios_1.default.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=stylepalette.net&code=${req.body.code}`, {
+    yield axios_1.default.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&code=${req.body.code}`, {
         headers: {
             'Content-type': 'application/x-www-form-urlencoded;charset=utf-8'
         }
