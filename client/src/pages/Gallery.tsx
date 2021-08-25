@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { PostsState, RouletteColor } from '../redux/reducers/initialState';
 import { handleModal, getPost, rouletteColor, getAllPosts } from '../redux/actions/action';
 import { getPosts, getRouletteColor } from '../redux/selectors';
+import { ReactComponent as FilterIcon } from '../images/filter.svg';
 
 const Color = [
   '최신순',
@@ -32,10 +33,13 @@ const GalleryWrapper = styled.div`
   top: 0;
 `;
 
-const FillterContainer = styled.div`
+const FilterContainer = styled.div`
   display: grid;
   align-items: center;
   text-align: left;
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const ListContainer = styled.div`
@@ -45,6 +49,21 @@ const ListContainer = styled.div`
   width: 100%;
   border-top: 2px solid black;
   border-left: 2px solid black;
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
+const ListContainerMobile = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 10px 10px 0 0;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const ColorList = styled.button`
@@ -230,10 +249,15 @@ function Gallery() {
     }
   };
 
+  const handleClickFilterIcon = (event: React.MouseEvent) => {
+    console.log('HANDLE CLICK');
+    dispatch(handleModal({ isOpen: true, type: 'filter' }));
+  };
+
   return (
     <>
       <GalleryWrapper>
-        <FillterContainer>
+        <FilterContainer>
           <ListContainer>
             {Color.map((el, idx) => {
               return (
@@ -243,7 +267,10 @@ function Gallery() {
               );
             })}
           </ListContainer>
-        </FillterContainer>
+        </FilterContainer>
+        <ListContainerMobile onClick={handleClickFilterIcon}>
+          <FilterIcon />
+        </ListContainerMobile>
         <GalleryContainer>
           <PhotoWrapper>
             {filterPost.length <= 1

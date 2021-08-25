@@ -18,11 +18,18 @@ const ResultContainer = styled.div`
   justify-content: center;
   align-items: center;
   background-color: white;
+  @media (max-width: 768px) {
+    height: 88vh;
+  }
 `;
 
 const ResultImage = styled.img`
   width: 550px;
   margin: 10px 0;
+  @media (max-width: 768px) {
+    width: 500px;
+    margin: 0;
+  }
 `;
 
 const ResultText = styled(Text)`
@@ -34,6 +41,10 @@ const ResultText = styled(Text)`
 const ResultButton = styled(PrimaryButton)`
   width: 140px;
   height: 50px;
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 40px;
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -76,7 +87,7 @@ export default function Result() {
           )}
 
           <Link to="/gallery">
-            <ResultButton>다른 작품 구경하기</ResultButton>
+            <ResultButton>갤러리 구경하기</ResultButton>
           </Link>
         </ButtonContainer>
       </ResultContainer>

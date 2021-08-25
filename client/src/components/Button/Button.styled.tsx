@@ -26,6 +26,8 @@ export const DefaultButton = styled.button`
 export const PrimaryButton = styled(DefaultButton)`
   background: black;
   color: white;
+  width: 100px;
+  height: 30px;
 
   &:hover {
     cursor: pointer;
