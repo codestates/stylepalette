@@ -70,7 +70,7 @@ export default function PasswordChange() {
   };
 
   const user = useSelector(getUser);
-  const message = useSelector(getMessage);
+  const passwordMessage = useSelector(getMessage).passwordMessage;
 
   const requestPasswordCheck = () => {
     // console.log('PASSWORDCHECK', user.username);
@@ -90,9 +90,11 @@ export default function PasswordChange() {
           <Label>비밀번호</Label>
           <Input type="password" onChange={handleCheckPassword}></Input>
         </InputWrapper>
-        <MessageWrapper>
-          <Text size="small">{message}</Text>
-        </MessageWrapper>
+        {passwordMessage.length > 0 && (
+          <MessageWrapper>
+            <Text size="small">{passwordMessage}</Text>
+          </MessageWrapper>
+        )}
       </InputOuterWrapper>
 
       <SubmitButtonWrapper>

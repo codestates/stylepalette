@@ -7,7 +7,7 @@ import { logIn, googleLogin, kakaoLogin } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
 import { getMessage } from '../redux/selectors';
-import { clientUrl } from '../utils/constants'
+import { clientUrl } from '../utils/constants';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -67,7 +67,7 @@ export default function Login() {
   const disabled = username === '' || password === '';
   const dispatch = useDispatch();
 
-  const loginMsg = useSelector(getMessage);
+  const loginMessage = useSelector(getMessage).loginMessage;
 
   const handleChangeUsername = (event: React.FormEvent<HTMLInputElement>) => {
     const str = event.currentTarget && event.currentTarget.value;
@@ -129,7 +129,7 @@ export default function Login() {
           ></input>
         </InputWrapper>
         <MessageWrapper>
-          <Text size="small">{loginMsg}</Text>
+          <Text size="small">{loginMessage}</Text>
         </MessageWrapper>
         <SocialButtonContainer>
           <Button primary onClick={requestSignin} disabled={disabled}>

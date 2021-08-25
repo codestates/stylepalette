@@ -1,8 +1,8 @@
 import { GET_OTHERUSER_INFO_SUCCESS, GET_OTHERUSER_INFO_FAILURE } from '../actions/action';
-import { initialState, UserState } from './initialState';
+import { initialState, OtherUserState } from './initialState';
 
 const otherUserReducer = (
-  state: UserState = initialState.otheruser,
+  state: OtherUserState = initialState.otheruser,
   action: { type: string; payload: any },
 ) => {
   switch (action.type) {

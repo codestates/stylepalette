@@ -22,6 +22,10 @@ const MyPageContainer = styled.div`
   align-items: center;
   padding: 15px;
   margin: 15px;
+  @media (max-width: 768px) {
+    padding: 0px;
+    margin: 0px;
+  }
 `;
 
 const MyPageFooter = styled.div`
@@ -40,6 +44,14 @@ const UserInfoContainer = styled.div`
   border: 2px groove black;
   border-width: 0 0 2px 0;
   border-radius: 5px;
+  
+  @media (max-width: 768px) {
+    padding: 0px;
+    margin: 0px;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+  }
 `;
 
 const UserPhotoWrapper = styled.div`
@@ -49,7 +61,10 @@ const UserPhotoWrapper = styled.div`
   padding: 50px 0 50px 70px;
 
   @media (max-width: 768px) {
-    padding: 50px 50px 50px 115px;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 `;
 
@@ -108,6 +123,11 @@ const UserPhoto = styled.img`
   height: 250px;
   border-radius: 50%;
   border: 2px solid black;
+
+  @media (max-width: 768px) {
+    width: 150px;
+    height: 150px;
+  }
 `;
 
 const UserInfoContent = styled.span`
@@ -115,13 +135,22 @@ const UserInfoContent = styled.span`
   font-size: 34px;
 
   @media (max-width: 768px) {
-    font-size: 34px;
+    font-size: 25px;
+    display: inline-block;
+    padding: 10px 0;
+    max-width: 120px;
+    word-wrap: break-word;
   }
 `;
 
 const UserEditButton = styled(PrimaryButton)`
   width: 175px;
   height: 60px;
+
+@media (max-width: 768px) {
+    width: 85px;
+    height: 45px;
+  }
 `;
 
 function MyPage() {
@@ -151,7 +180,7 @@ function MyPage() {
             <UserPhoto src={user.userimage} />
           </UserPhotoWrapper>
           <UserInfoWrapper>
-            <UserInfoContent>{user.username}</UserInfoContent> <br />
+            <UserInfoContent>{user.username}</UserInfoContent>
             <UserEditButton onClick={handleClickProfileEditButton}>정보 수정</UserEditButton>
           </UserInfoWrapper>
         </UserInfoContainer>

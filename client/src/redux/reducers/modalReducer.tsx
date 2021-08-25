@@ -9,6 +9,13 @@ const modalReducer = (state = dummyState.modal, action: { type?: string; payload
         isOpen: action.payload.isOpen,
         type: action.payload.type,
         data: action.payload.data,
+        message: {
+          signupSuccess: '',
+          signupFailure: '',
+          loginFailure: '',
+          passwordCheckSuccess: '',
+          passwordCheckFailure: '',
+        },
       });
       return newState;
     default:

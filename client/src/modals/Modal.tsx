@@ -11,6 +11,7 @@ import Menu from './Menu';
 import ProfileEdit from './ProfileEdit';
 import PostSharing from './PostSharing';
 import PasswordCheck from './PasswordCheck';
+import PasswordChange from './PasswordChange';
 
 const ModalContainer = styled.div`
   width: 100vw;
@@ -53,6 +54,8 @@ export default function Modal() {
       return <PasswordCheck />;
     } else if (modalType === `postSharing`) {
       return <PostSharing />;
+    } else if (modalType === `passwordChange`) {
+      return <PasswordChange />;
     }
   };
 
