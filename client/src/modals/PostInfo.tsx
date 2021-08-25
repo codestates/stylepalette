@@ -128,6 +128,7 @@ export default function PostInfo(modalData: any) {
     dispatch(updateLikeList(data));
   }
 
+  console.log('Likelist', likeList);
   return (
     <PostInfoWrapper>
       {currentUser.userid === post.userId ? (
@@ -137,32 +138,31 @@ export default function PostInfo(modalData: any) {
         <PostTitle>{post.title}</PostTitle>
       </PostTitleContainer>
       <PostImage src={post.image} alt="post-img" />
-
       <PostContentContainer>
         <OtherUserLink to={`/${post.userId}`}>
           <PostOwnerProfileImage src={post.user.userimage} />
           <PostOwerUserName>{post.user.username}</PostOwerUserName>
         </OtherUserLink>
-        <LikeContainer>
-          <LikeIconWrapper>
-            {likeList.includes(currentUser.userid) ? (
-              <HeartIcon
-                fill="#F44336"
-                onClick={() =>
-                  handleLike({ postid: post.id, userid: currentUser.userid, like: false })
-                }
-              />
-            ) : (
-              <HeartIcon
-                fill="#FFFFFF"
-                onClick={() =>
-                  handleLike({ postid: post.id, userid: currentUser.userid, like: true })
-                }
-              />
-            )}
-          </LikeIconWrapper>
-          <LikeCount>{post.like.length} likes</LikeCount>
-        </LikeContainer>
+          <LikeContainer>
+        <LikeIconWrapper>
+          {likeList.includes(currentUser.userid) ? (
+            <HeartIcon
+              fill="#F44336"
+              onClick={() =>
+                handleLike({ postid: post.id, userid: currentUser.userid, like: false })
+              }
+            />
+          ) : (
+            <HeartIcon
+              fill="#FFFFFF"
+              onClick={() =>
+                handleLike({ postid: post.id, userid: currentUser.userid, like: true })
+              }
+            />
+          )}
+        </LikeIconWrapper>
+        <LikeCount>{likeList.length} likes</LikeCount>
+      </LikeContainer>
       </PostContentContainer>
     </PostInfoWrapper>
   );

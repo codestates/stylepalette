@@ -25,6 +25,10 @@ const userReducer = (
         email: '',
         userimage: '',
         token: '',
+        apiMessage: {
+          ...state.apiMessage,
+          signupMessage: '',
+        },
       });
       localStorage.setItem('token', '');
       return newState;
@@ -39,6 +43,10 @@ const userReducer = (
         realname: user?.realname || '',
         email: user?.email || '',
         userimage: user?.userimage || '',
+        apiMessage: {
+          ...state.apiMessage,
+          loginMessage: '',
+        },
       });
 
       return newState;
@@ -48,7 +56,10 @@ const userReducer = (
       console.log('userREDUCER login failure');
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
-        apiMessage: message,
+        apiMessage: {
+          ...state.apiMessage,
+          loginMessage: message,
+        },
       });
       return newUserState;
     }
@@ -56,7 +67,10 @@ const userReducer = (
     case SIGNUP_SUCCESS: {
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
-        apiMessage: message,
+        apiMessage: {
+          ...state.apiMessage,
+          signupMessage: message,
+        },
       });
       return newUserState;
     }
@@ -64,7 +78,10 @@ const userReducer = (
     case SIGNUP_FAILURE: {
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
-        apiMessage: message,
+        apiMessage: {
+          ...state.apiMessage,
+          signupMessage: message,
+        },
       });
       return newUserState;
     }
@@ -92,7 +109,10 @@ const userReducer = (
     case PASSWORDCHECK_SUCCESS: {
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
-        apiMessage: message,
+        apiMessage: {
+          ...state.apiMessage,
+          passwordMessage: message,
+        },
       });
       return newUserState;
     }
@@ -100,7 +120,10 @@ const userReducer = (
     case PASSWORDCHECK_FAILURE: {
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
-        apiMessage: message,
+        apiMessage: {
+          ...state.apiMessage,
+          passwordMessage: message,
+        },
       });
       return newUserState;
     }
@@ -112,12 +135,6 @@ const userReducer = (
       });
       return newProfileState;
     }
-    // case PASSWORD_CHECK:
-    //   const { password } = action.payload;
-    //   const newPasswordState = Object.assign({}, state, {
-    //     password,
-    //   });
-    //   return newPasswordState;
     default:
       return state;
   }

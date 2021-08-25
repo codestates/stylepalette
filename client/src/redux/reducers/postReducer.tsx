@@ -6,6 +6,7 @@ import {
   DELETE_POST_SUCCESS,
   UPDATE_LIKE_LIST_SUCCESS,
 } from '../actions/action';
+import { LikeList } from './initialState';
 
 export const postsReducer = (
   state = initialState.posts,
@@ -45,12 +46,12 @@ export const postReducer = (state = initialState.post, action: { type: string; p
 
     case UPDATE_LIKE_LIST_SUCCESS: {
       const { userid, like } = action.payload;
-      const likeList = state.like;
-      let newLikeList: any[] = [];
+      const likeList: LikeList[] = state.like;
+      let newLikeList: LikeList[] = [];
       if (like) {
         newLikeList = [...likeList, { userId: userid }];
       } else {
-        newLikeList = newLikeList.filter((el) => el.userId !== userid);
+        newLikeList = likeList!.filter((el) => el.userId !== userid);
       }
       const newState = Object.assign({}, state, {
         like: newLikeList,

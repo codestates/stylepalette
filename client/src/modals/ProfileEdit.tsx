@@ -162,6 +162,7 @@ export default function ProfileEdit() {
   // };
 
   const handleClickPasswordChange = () => {
+    console.log('PASSWORD CHANGE');
     dispatch(handleModal({ isOpen: true, type: 'passwordChange' }));
   };
 

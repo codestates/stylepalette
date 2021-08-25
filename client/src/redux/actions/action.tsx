@@ -115,7 +115,7 @@ interface LikeProps {
   postid: number | null;
   userid: number | null;
 }
-  
+
 interface SaveMainResultImageProps {
   imageblob: Blob;
   setIsNext: any;
@@ -214,7 +214,6 @@ export const logIn = (data: LoginProps) => {
       )
       .then((response) => {
         console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
-        dispatch(handleModal({ isOpen: false }));
         localStorage.setItem('token', response.data.payload.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
@@ -223,6 +222,7 @@ export const logIn = (data: LoginProps) => {
             user: response.data.payload.user,
           }),
         );
+        dispatch(handleModal({ isOpen: false }));
       })
       .catch((error) => {
         console.log('LOGIN RESPONSE in FAILURE: ', error.response.data.message);
@@ -561,7 +561,7 @@ export const getAllPosts = () => {
         await dispatch(successGetposts(res.data));
       })
       .catch((res) => {
-        console.log('getposts failure', res);
+        console.log('s failure', res);
       });
   };
 };
