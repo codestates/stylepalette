@@ -79,11 +79,11 @@ const PhotoButton = styled.button`
   text-align: center;
 
   &:hover {
-    opacity: 70%;
+    opacity: 80%;
   }
 
   &:focus {
-    background-color: #dedede;
+    background-color: black;
   }
 
   @media (max-width: 768px) {

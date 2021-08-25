@@ -1,10 +1,9 @@
-import { useState } from 'react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../src/redux/actions/action';
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import { getIsModalOpen, getIsLoggedIn } from './redux/selectors/index';
+import { getIsModalOpen } from './redux/selectors/index';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import MainPage from './pages/MainPage';
@@ -12,8 +11,6 @@ import GenderSelect from './pages/GenderSelect';
 import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
-import axios from 'axios';
-import { serverUrl } from './utils/constants';
 import Result from './pages/Result';
 import { kakaoLogin, googleLogin } from './redux/actions/action';
 
