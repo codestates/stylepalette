@@ -4,6 +4,8 @@ import styled from 'styled-components';
 
 import { PrimaryButton } from '../components/Button/Button.styled';
 
+import TestGif from '../images/TestGif/Test_01.gif';
+
 const LandingPage_Section1 = styled.div`
   width: 100vw;
   height: 100vh;
@@ -30,7 +32,7 @@ const LandingPage_Section4 = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
-  background-color: orange;
+  background-color: blueviolet;
 `;
 
 const LandingPage_Section5 = styled.div`
@@ -55,14 +57,22 @@ const LandingPage_Section_Container = styled.div`
 `;
 
 const LandingPage_Content_Container = styled.div`
-  width: 650px;
+  width: 600px;
   flex-direction: column;
 `;
 
 const LandingPage_Image_Container = styled.div`
-  width: 650px;
+  width: 792px;
   text-align: center;
   font-size: 5rem;
+  border-radius: 15px;
+`;
+
+const LandingPage_Image_Test = styled.img`
+  width: 792px;
+  height: 510px;
+  border: 2px solid #afafaf;
+  border-radius: 15px;
 `;
 
 const LandingPage_Content_Title = styled.div`
@@ -75,7 +85,7 @@ const LandingPage_Content_SubTitle = styled.div`
   font-size: 1.6rem;
   font-weight: 320;
   padding-left: 0.3rem;
-  margin-bottom: 2.4rem;
+  margin-bottom: 6rem;
 `;
 
 const LandingPage_Content_Normal_Title = styled.div`
@@ -154,7 +164,9 @@ function LandingPage() {
               <NextButton onClick={handleClickScrollTo}>시작하기</NextButton>
             </NextLink>
           </LandingPage_Content_Container>
-          <LandingPage_Image_Container>이미지 공간</LandingPage_Image_Container>
+          <LandingPage_Image_Container>
+            <LandingPage_Image_Test src={TestGif} />
+          </LandingPage_Image_Container>
         </LandingPage_Section_Container>
       </LandingPage_Section1>
       <LandingPage_Section2>

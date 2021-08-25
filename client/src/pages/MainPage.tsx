@@ -35,8 +35,8 @@ const SelectList = ['피부톤', '상의', '하의', '준비중'];
 const recommendTab = ['톤인톤', '톤온톤', '모노톤'];
 const ClothList: any = {
   피부톤: [],
-  상의: ['맨투맨', '라운드티', '셔츠'],
-  하의: ['청바지', '반바지'],
+  상의: ['맨투맨', '셔츠'],
+  하의: ['준비중'],
   준비중: [],
 };
 
@@ -117,7 +117,7 @@ const Pallette = styled.button<colorProps>`
 const SkinSelectWrapper = styled.div`
   position: absolute;
   left: 7%;
-  top: 15%;
+  top: 16%;
   border: 2px solid rgba(0, 0, 0);
   border-radius: 15px;
   width: 275px;

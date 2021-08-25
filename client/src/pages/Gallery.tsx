@@ -147,6 +147,9 @@ function Gallery() {
   };
 
   if (isRoulette) {
+    palette.shift();
+    palette.pop();
+
     const filterData = posts.filter((el) => {
       for (let i = 0; i < palette.length; i++) {
         if (el.topcolor === palette[i]) {

@@ -137,9 +137,13 @@ function OtherUserPage() {
 
   const otheruser = useSelector(getOtherUser);
 
-  const handleClickPostInfo = (event: React.MouseEvent) => {
-    dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
-    // dispatch(getPost());
+  const handleClickPostInfo = (postid: number) => {
+    dispatch(
+      getPost({
+        postId: postid,
+      }),
+    );
+    dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
   };
 
   return (
@@ -157,7 +161,7 @@ function OtherUserPage() {
           {otheruser.post
             .map((el: any, idx: React.Key | null | undefined) => {
               return (
-                <NavIcon key={idx} onClick={handleClickPostInfo}>
+                <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
                   <PostPhoto src={el.image} />
                 </NavIcon>
               );
