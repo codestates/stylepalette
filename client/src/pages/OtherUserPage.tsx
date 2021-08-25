@@ -13,6 +13,7 @@ const OtherUserPageWrapper = styled.div`
   flex-direction: column;
   left: 0;
   top: 0;
+  margin-top: 5rem;
 `;
 
 const OtherUserPageContainer = styled.div`
@@ -130,6 +131,7 @@ function OtherUserPage() {
     // get user info
     dispatch(getOtherUserInfo({ userid: userId }));
     dispatch(handleModal({ isOpen: false }));
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

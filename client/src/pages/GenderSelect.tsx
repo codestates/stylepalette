@@ -12,6 +12,7 @@ const GenderWrapper = styled.div`
   display: flex;
   background-color: white;
   flex-direction: column;
+  padding-top: 5rem;
   left: 0;
   top: 0;
 `;

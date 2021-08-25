@@ -115,7 +115,7 @@ interface LikeProps {
   postid: number | null;
   userid: number | null;
 }
-  
+
 interface SaveMainResultImageProps {
   imageblob: Blob;
   setIsNext: any;
@@ -537,6 +537,7 @@ export const getPost = (data: getPostProps) => {
       })
       .then((response) => {
         dispatch(getPostSuccess(response.data));
+        dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
       })
       .catch((response) => {
         console.log('getpost failure: ', response);
@@ -583,13 +584,13 @@ export const deletePostFailure = (data: any) => {
 export const deletePost = (data: getPostProps) => {
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios
-      .delete(`${serverUrl}/post/${data}`, {
+      .delete(`${serverUrl}/post/${data.postId}`, {
         withCredentials: true,
       })
       .then((res) => {
         console.log('delete post success');
-        dispatch(deletePostSuccess(data));
-        dispatch(handleModal({ isOpen: false }));
+        dispatch(deletePostSuccess(data.postId));
+        window.location.reload();
       })
       .catch((err) => {
         console.log('delete post failure');

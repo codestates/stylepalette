@@ -13,6 +13,7 @@ const MyPageWrapper = styled.div`
   flex-direction: column;
   left: 0;
   top: 0;
+  padding-top: 5rem;
 `;
 
 const MyPageContainer = styled.div`
@@ -130,6 +131,7 @@ function MyPage() {
   useEffect(() => {
     // get user info
     dispatch(getUserInfo({ userid: user.userid }));
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

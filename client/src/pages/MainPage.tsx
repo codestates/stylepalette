@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
-import axios from 'axios';
 
 import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
 import { RestartAlt } from '@styled-icons/material-twotone/RestartAlt';
 import { ReactComponent as Man } from '../images/Man/Man-default.svg';
 import { ReactComponent as Woman } from '../images/Woman/Woman-default.svg';
-import { serverUrl } from '../utils/constants';
 
 import {
   recommendColor,
@@ -519,6 +517,10 @@ function MainPage() {
   let recommendColors: RecommendColor = useSelector(getRecommendColor);
   let rouletteColors: RouletteColor = useSelector(getRouletteColor);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [currSelectTap, setCurrSelectTap] = useState<string>('');
   const [pickSubSelect, setPickSubSelect] = useState<boolean>(false);
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
@@ -727,6 +729,10 @@ function MainPage() {
     });
   }
 
+  function handleClickScrollTo() {
+    window.scrollTo(0, 0);
+  }
+
   return (
     <>
       <MainWrapper>
@@ -877,7 +883,13 @@ function MainPage() {
           <ResetButton title="초기화" onClick={handleReset}>
             <ResetIcons />
           </ResetButton>
-          <NextButton title="다음" onClick={handleResultImage}>
+          <NextButton
+            title="다음"
+            onClick={(el) => {
+              handleResultImage(el);
+              handleClickScrollTo();
+            }}
+          >
             {isNext ? (
               <Redirect to="/result">
                 <NextIcons />

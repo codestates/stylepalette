@@ -30,6 +30,7 @@ const GalleryWrapper = styled.div`
   align-items: center;
   left: 0;
   top: 0;
+  padding-top: 5rem;
 `;
 
 const FillterContainer = styled.div`
@@ -138,7 +139,11 @@ function Gallery() {
   };
 
   const handleClickPostInfo = async (postid: number | null) => {
-    dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
+    dispatch(
+      getPost({
+        postId: postid,
+      }),
+    );
   };
 
   if (isRoulette) {
@@ -247,18 +252,20 @@ function Gallery() {
         <GalleryContainer>
           <PhotoWrapper>
             {filterPost.length <= 1
-              ? posts
-                  .filter((el) => {
-                    return el.isPublic === true;
-                  })
-                  .map((el, idx) => {
-                    return (
-                      <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                        <PostPhoto key={idx} src={el.image} />
-                      </NavIcon>
-                    );
-                  })
-                  .reverse()
+              ? posts.length <= 1
+                ? null
+                : posts
+                    .filter((el) => {
+                      return el.isPublic === true;
+                    })
+                    .map((el, idx) => {
+                      return (
+                        <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                          <PostPhoto key={idx} src={el.image} />
+                        </NavIcon>
+                      );
+                    })
+                    .reverse()
               : filterPost
                   .filter((el: any) => {
                     return el.isPublic === true;
