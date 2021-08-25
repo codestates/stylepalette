@@ -81,7 +81,7 @@ const PalletteContainer = styled.div`
   display: inline;
   position: absolute;
   left: 84%;
-  top: 7%;
+  top: 8%;
   text-align: center;
   max-width: 270px;
   max-height: 280px;
@@ -155,7 +155,7 @@ const SelectContainer = styled.div`
   display: inline-block;
   position: absolute;
   left: 1%;
-  top: 6%;
+  top: 7%;
   text-align: left;
   max-width: 600px;
   margin: 15px 0;
@@ -184,7 +184,7 @@ const ImageContainer = styled.div`
   position: absolute;
   top: 50%;
   left: 50%;
-  margin: -250px 0 0 -250px;
+  margin: -250px 0 0 -300px;
   padding: 50px 0;
   text-align: center;
   width: 600px;
@@ -237,14 +237,14 @@ const SubSelectContainer = styled.div`
   display: inline;
   position: absolute;
   left: 1%;
-  top: 15%;
+  top: 16%;
   text-align: center;
   width: 100px;
   height: 100px;
 `;
 
 const SubSelectButton = styled.button`
-  border: 2px solid rgba(0, 0, 0);
+  border: 2px solid black;
   border-radius: 15px;
   width: 100px;
   height: 100px;
@@ -262,7 +262,7 @@ const ClothContainer = styled.div`
   display: inline;
   position: absolute;
   left: 7%;
-  top: 15%;
+  top: 16%;
   text-align: center;
   width: 100px;
 `;
@@ -363,16 +363,19 @@ const RecommendSelectTab = styled.button`
 const RecommendColorWrapper = styled.div`
   position: absolute;
   width: 550px;
-  height: 130px;
+  height: 150px;
   text-align: center;
   border: 2px solid rgba(0, 0, 0);
   border-radius: 15px;
   left: 1%;
-  top: 76%;
+  top: 74%;
 `;
 
 const RecommendTabWrapper = styled.div`
   max-width: 550px;
+  height: 40px;
+  padding: 5px;
+  padding-left: 10px;
   text-align: left;
   background-color: black;
 `;
@@ -380,21 +383,18 @@ const RecommendTabWrapper = styled.div`
 const RecommendTabName = styled.span`
   font-size: 21px;
   font-style: bold;
-  padding: 5px;
-  padding-left: 10px;
-  padding-top: 0;
   color: white;
 `;
 
 const RecommendTabButton = styled.button`
   position: absolute;
-  top: -4%;
-  left: 90%;
-  font-size: 18px;
+  top: -1%;
+  left: 86%;
+  font-size: 19px;
   font-style: bold;
   border: 1px solid rgba(0, 0, 0);
-  width: 50px;
-  height: 30px;
+  width: 90px;
+  height: 40px;
   padding: 5px;
   text-align: center;
   color: white;
@@ -408,7 +408,7 @@ const RecommendTabButton = styled.button`
 const RecommendContentWrapper = styled.div`
   position: absolute;
   width: 540px;
-  height: 90px;
+  height: 100px;
   overflow: hidden;
   overflow-x: scroll;
   left: 1%;
@@ -421,9 +421,11 @@ const RecommendContentWrapper = styled.div`
 
 const RecommendContentContainer = styled.div<currRecommandProps>`
   display: flex;
+  height: 90px;
   position: absolute;
   flex-direction: row;
   left: 0%;
+  top: 10%;
 
   ${(props) => {
     if (props.currrecommandtap === '톤인톤') {

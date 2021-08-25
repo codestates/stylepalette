@@ -4,21 +4,21 @@ import styled from 'styled-components';
 import { handleModal, getUserInfo, getPost } from '../redux/actions/action';
 
 import { PrimaryButton } from '../components/Button/Button.styled';
-// import Photo from '../dummyData/dummyPhoto';
 import { getUser } from '../redux/selectors';
 
 const MyPageWrapper = styled.div`
   width: 100vw;
-  height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
+  left: 0;
+  top: 0;
 `;
 
 const MyPageContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  align-items: center;
   padding: 15px;
   margin: 15px;
   @media (max-width: 768px) {
@@ -37,11 +37,13 @@ const MyPageFooter = styled.div`
 const UserInfoContainer = styled.div`
   display: flex;
   padding: 0 15px 15px 15px;
-  margin: 0 15px 15px 15px;
-  width: 95%;
-  border-style: groove;
+  margin: 0 15px 20px 15px;
+  width: 70%;
+  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.8);
+  border: 2px groove black;
   border-width: 0 0 2px 0;
-  border-color: #dbdbdb;
+  border-radius: 5px;
+  
   @media (max-width: 768px) {
     padding: 0px;
     margin: 0px;
@@ -52,10 +54,10 @@ const UserInfoContainer = styled.div`
 `;
 
 const UserPhotoWrapper = styled.div`
-  width: 250px;
-  height: 250px;
+  width: 355px;
+  height: 355px;
   text-align: center;
-  padding: 50px 10px 10px 50px;
+  padding: 50px 0 50px 70px;
 
   @media (max-width: 768px) {
     padding: 25px;
@@ -67,23 +69,26 @@ const UserPhotoWrapper = styled.div`
 
 const UserInfoWrapper = styled.div`
   display: flex;
+  height: 355px;
   flex-direction: column;
   align-items: center;
-  padding: 50px 30px;
+  padding: 40px 50px;
 `;
 
 const UserPostWrapper = styled.div`
   display: inline-block;
-  width: 95%;
+  width: 70%;
   text-align: left;
   padding: 15px;
   margin: 15px;
+  box-shadow: 0 1px 5px 3px black;
+  border-radius: 5px;
 `;
 
 const NavIcon = styled.button`
-  margin: 0 50px 100px 60px;
-  width: 300px;
-  height: 300px;
+  margin: 20px 12px 40px 12px;
+  width: 280px;
+  height: 280px;
   background-color: white;
   border-style: none;
 
@@ -95,14 +100,14 @@ const NavIcon = styled.button`
 `;
 
 const PostPhoto = styled.img`
-  border-style: solid;
-  border-width: 2px;
-  border-color: #c79a00;
-  width: 300px;
-  height: 300px;
+  border: 2px solid #777777;
+  border-radius: 5px;
+  width: 275px;
+  height: 275px;
 
   &:hover {
     opacity: 80%;
+    border-color: #ababab;
     cursor: pointer;
   }
 
@@ -113,9 +118,11 @@ const PostPhoto = styled.img`
 `;
 
 const UserPhoto = styled.img`
-  width: 175px;
-  height: 175px;
+  width: 250px;
+  height: 250px;
   border-radius: 50%;
+  border: 2px solid black;
+
   @media (max-width: 768px) {
     width: 150px;
     height: 150px;
@@ -137,8 +144,9 @@ const UserInfoContent = styled.span`
 
 const UserEditButton = styled(PrimaryButton)`
   width: 175px;
-  height: 75px;
-  @media (max-width: 768px) {
+  height: 60px;
+
+@media (max-width: 768px) {
     width: 85px;
     height: 45px;
   }
@@ -175,13 +183,15 @@ function MyPage() {
           </UserInfoWrapper>
         </UserInfoContainer>
         <UserPostWrapper>
-          {user.post.map((el: any, idx: React.Key | null | undefined) => {
-            return (
-              <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                <PostPhoto src={el.image} />
-              </NavIcon>
-            );
-          })}
+          {user.post
+            .map((el: any, idx: React.Key | null | undefined) => {
+              return (
+                <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                  <PostPhoto src={el.image} />
+                </NavIcon>
+              );
+            })
+            .reverse()}
         </UserPostWrapper>
       </MyPageContainer>
       <MyPageFooter></MyPageFooter>

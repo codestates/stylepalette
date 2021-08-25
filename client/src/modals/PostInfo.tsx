@@ -4,7 +4,7 @@ import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import Button from '../components/Button/Button';
+import { SecondaryButton } from '../components/Button/Button.styled';
 import { getPost, updateLikeList, deletePost } from '../redux/actions/action';
 import { ReactComponent as HeartIcon } from '../images/heart.svg';
 import { getPostState, getUser, getLikeState } from '../redux/selectors';
@@ -13,16 +13,31 @@ import { NumberValueToken } from 'html2canvas/dist/types/css/syntax/tokenizer';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
-  background-color: white;
-  border: solid 1px #dbdbdb;
+  border: solid 2px black;
+  border-radius: 10px;
+  background-color: black;
   display: flex;
   flex-direction: column;
 `;
 
-const PostTitle = styled.div``;
+const PostTitleContainer = styled.div`
+  width: 100%;
+  text-align: center;
+  border-bottom: 2px solid black;
+  background-color: black;
+`;
+
+const PostTitle = styled.div`
+  font-weight: bold;
+  align-items: center;
+  font-size: 1.2rem;
+  padding: 5px;
+  color: white;
+`;
 
 const PostImage = styled.img`
   width: 100%;
+  border-bottom: 2px solid black;
 `;
 
 const PostContentContainer = styled.div`
@@ -33,18 +48,22 @@ const PostContentContainer = styled.div`
 `;
 
 const PostOwnerProfileImage = styled.img`
-  width: 2.5em;
+  width: 3.5em;
   border-radius: 50%;
-  padding: 3px;
+  margin: 5px;
 `;
 
 const PostOwerUserName = styled.div`
-  padding-right: 5px;
+  padding-top: 3px;
+  padding-left: 5px;
+  color: white;
 `;
 
-const LikeContainer = styled.div`
-  padding: 0.5em 1em 0 1em;
+const LikeContainer = styled.span`
   display: flex;
+  flex-direction: flex-end;
+  color: white;
+  padding: 0 0 35px 160px;
   justify-content: flex-end;
   align-items: center;
 `;
@@ -61,10 +80,22 @@ const LikeCount = styled.span`
   font-weight: bold;
 `;
 
+const OtherUserLink = styled(Link)`
+  display: flex;
+  text-decoration: none;
+  color: black;
+`;
+
+const PostDeleteButton = styled(SecondaryButton)`
+  position: relative;
+  left: 80%;
+  width: 55px;
+  height: 30px;
+  font-weight: bold;
+`;
+
 export default function PostInfo(modalData: any) {
   // TODO: Create a selector to retrieve only one post based on id
-  // TODO: 유저 아이디가 동일하면 포스트 삭제 버튼이 나와야함
-  // TODO: 리덕스 상태를 사용하는데 상태가 바뀔때마다 속도가 느림(dispatch 를 통해 바꿔줘서 그런듯)
   const dispatch = useDispatch();
   const [isDelete, setIsDelete] = useState<boolean>(false);
   const post: PostState = useSelector(getPostState);
@@ -101,12 +132,18 @@ export default function PostInfo(modalData: any) {
   return (
     <PostInfoWrapper>
       {currentUser.userid === post.userId ? (
-        <Button primary onClick={handleClickPostDelete}>
-          삭제
-        </Button>
+        <PostDeleteButton onClick={handleClickPostDelete}>삭제</PostDeleteButton>
       ) : null}
+      <PostTitleContainer>
+        <PostTitle>{post.title}</PostTitle>
+      </PostTitleContainer>
       <PostImage src={post.image} alt="post-img" />
-      <LikeContainer>
+      <PostContentContainer>
+        <OtherUserLink to={`/${post.userId}`}>
+          <PostOwnerProfileImage src={post.user.userimage} />
+          <PostOwerUserName>{post.user.username}</PostOwerUserName>
+        </OtherUserLink>
+          <LikeContainer>
         <LikeIconWrapper>
           {likeList.includes(currentUser.userid) ? (
             <HeartIcon
@@ -126,12 +163,6 @@ export default function PostInfo(modalData: any) {
         </LikeIconWrapper>
         <LikeCount>{likeList.length} likes</LikeCount>
       </LikeContainer>
-      <PostContentContainer>
-        <Link to={`/${post.userId}`}>
-          <PostOwnerProfileImage src={post.user.userimage} />
-          <PostOwerUserName>{post.user.username}</PostOwerUserName>
-        </Link>
-        <PostTitle>{post.title}</PostTitle>
       </PostContentContainer>
     </PostInfoWrapper>
   );
