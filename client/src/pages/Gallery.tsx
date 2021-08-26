@@ -140,6 +140,17 @@ const PostPhoto = styled.img`
   }
 `;
 
+const Modal = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const MobileListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const MobileColorList = styled.div``;
+
 function Gallery() {
   const dispatch = useDispatch();
   let posts: PostsState[] = useSelector(getPosts);
@@ -147,6 +158,7 @@ function Gallery() {
   const { palette } = colorDatas;
   const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatchAllPosts();
@@ -250,8 +262,7 @@ function Gallery() {
   };
 
   const handleClickFilterIcon = (event: React.MouseEvent) => {
-    console.log('HANDLE CLICK');
-    dispatch(handleModal({ isOpen: true, type: 'filter' }));
+    setIsModalOpen(true);
   };
 
   return (
@@ -271,6 +282,19 @@ function Gallery() {
         <ListContainerMobile onClick={handleClickFilterIcon}>
           <FilterIcon />
         </ListContainerMobile>
+        {isModalOpen && (
+          <Modal>
+            <MobileListContainer>
+              {Color.map((el, idx) => {
+                return (
+                  <MobileColorList key={idx} onClick={() => handleGetCategory(el)}>
+                    {el}
+                  </MobileColorList>
+                );
+              })}
+            </MobileListContainer>
+          </Modal>
+        )}
         <GalleryContainer>
           <PhotoWrapper>
             {filterPost.length <= 1

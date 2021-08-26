@@ -159,7 +159,8 @@ const SelectButton = styled.button`
   text-align: center;
   border: 1px solid rgb(0, 0, 0);
   border-radius: 5px;
-  background-color: white;
+  background-color: black;
+  color: white;
   font-size: 20px;
 
   &:disabled {
