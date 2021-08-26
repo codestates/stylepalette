@@ -78,6 +78,7 @@ const NavMobile = styled.span`
 `;
 const NavIcon = styled.span`
   padding-right: 1.5em;
+  color: white;
 `;
 
 // If user is logged in: nav will show: mypage, logout, gallery
