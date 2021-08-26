@@ -73,10 +73,8 @@ const UserPhotoWrapper = styled.div`
 
 const UserInfoWrapper = styled.div`
   display: flex;
-  /* height: 355px; */
   flex-direction: column;
   align-items: center;
-  /* padding: 40px 50px; */
   @media (max-width: 768px) {
     height: auto;
   }
@@ -99,7 +97,6 @@ const UserPostWrapper = styled.div`
   padding: 1rem;
   display: table-cell;
   width: 100%;
-  /* text-align: center; */
 `;
 
 const NavIcon = styled.button`
@@ -124,11 +121,6 @@ const PostPhoto = styled.img`
     opacity: 80%;
     border-color: #ababab;
     cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
-    /* width: 270px;
-    height: 270px; */
   }
 `;
 
