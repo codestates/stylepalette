@@ -15,6 +15,9 @@ const ProfileEditWrapper = styled.div`
   border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    width: 320px;
+  }
 `;
 
 const ProfileEditHeader = styled.div`

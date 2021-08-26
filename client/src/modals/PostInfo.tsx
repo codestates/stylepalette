@@ -18,6 +18,9 @@ const PostInfoWrapper = styled.div`
   background-color: black;
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    width: 320px;
+  }
 `;
 
 const PostTitleContainer = styled.div`
@@ -42,7 +45,7 @@ const PostImage = styled.img`
 
 const PostContentContainer = styled.div`
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: center;
   margin: 0 0.3em 0.3em 0.3em;
 `;
@@ -63,7 +66,7 @@ const LikeContainer = styled.span`
   display: flex;
   flex-direction: flex-end;
   color: white;
-  padding: 0 0 35px 160px;
+  padding: 0 10px;
   justify-content: flex-end;
   align-items: center;
 `;
@@ -84,6 +87,8 @@ const OtherUserLink = styled(Link)`
   display: flex;
   text-decoration: none;
   color: black;
+  align-items: center;
+}
 `;
 
 const PostDeleteButton = styled(SecondaryButton)`
@@ -92,6 +97,9 @@ const PostDeleteButton = styled(SecondaryButton)`
   width: 55px;
   height: 30px;
   font-weight: bold;
+  @media (max-width: 768px) {
+    left: 75%;
+  }
 `;
 
 export default function PostInfo(modalData: any) {
@@ -144,26 +152,26 @@ export default function PostInfo(modalData: any) {
           <PostOwnerProfileImage src={post.user.userimage} />
           <PostOwerUserName>{post.user.username}</PostOwerUserName>
         </OtherUserLink>
-          <LikeContainer>
-        <LikeIconWrapper>
-          {likeList.includes(currentUser.userid) ? (
-            <HeartIcon
-              fill="#F44336"
-              onClick={() =>
-                handleLike({ postid: post.id, userid: currentUser.userid, like: false })
-              }
-            />
-          ) : (
-            <HeartIcon
-              fill="#FFFFFF"
-              onClick={() =>
-                handleLike({ postid: post.id, userid: currentUser.userid, like: true })
-              }
-            />
-          )}
-        </LikeIconWrapper>
-        <LikeCount>{likeList.length} likes</LikeCount>
-      </LikeContainer>
+        <LikeContainer>
+          <LikeIconWrapper>
+            {likeList.includes(currentUser.userid) ? (
+              <HeartIcon
+                fill="#F44336"
+                onClick={() =>
+                  handleLike({ postid: post.id, userid: currentUser.userid, like: false })
+                }
+              />
+            ) : (
+              <HeartIcon
+                fill="#FFFFFF"
+                onClick={() =>
+                  handleLike({ postid: post.id, userid: currentUser.userid, like: true })
+                }
+              />
+            )}
+          </LikeIconWrapper>
+          <LikeCount>{likeList.length} likes</LikeCount>
+        </LikeContainer>
       </PostContentContainer>
     </PostInfoWrapper>
   );

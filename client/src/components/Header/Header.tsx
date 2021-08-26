@@ -100,7 +100,6 @@ export default function Header() {
   };
 
   const handleClickMenuIcon = (event: React.MouseEvent) => {
-    console.log('HANDLE CLICK');
     dispatch(handleModal({ isOpen: true, type: 'menu' }));
   };
 

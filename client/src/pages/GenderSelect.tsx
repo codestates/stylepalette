@@ -69,8 +69,9 @@ const GenderPhoto = styled.img`
   margin: 10px 0 30px;
 
   @media (max-width: 768px) {
-    width: 150px;
-    height: 150px;
+    width: 149px;
+    height: 149px;
+    margin: 0px;
   }
 `;
 
@@ -91,8 +92,8 @@ const PhotoButton = styled.button`
   }
 
   @media (max-width: 768px) {
-    width: 150px;
-    height: 150px;
+    width: 155px;
+    height: 155px;
   }
 `;
 
@@ -159,7 +160,8 @@ const SelectButton = styled.button`
   text-align: center;
   border: 1px solid rgb(0, 0, 0);
   border-radius: 5px;
-  background-color: white;
+  background-color: black;
+  color: white;
   font-size: 20px;
 
   &:disabled {

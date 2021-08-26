@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { PostsState, RouletteColor } from '../redux/reducers/initialState';
 import { handleModal, getPost, rouletteColor, getAllPosts } from '../redux/actions/action';
 import { getPosts, getRouletteColor } from '../redux/selectors';
+import { ReactComponent as FilterIcon } from '../images/filter.svg';
 
 const Color = [
   '최신순',
@@ -33,10 +34,13 @@ const GalleryWrapper = styled.div`
   padding-top: 5rem;
 `;
 
-const FillterContainer = styled.div`
+const FilterContainer = styled.div`
   display: grid;
   align-items: center;
   text-align: left;
+  @media (max-width: 767px) {
+    display: none;
+  }
 `;
 
 const ListContainer = styled.div`
@@ -46,6 +50,21 @@ const ListContainer = styled.div`
   width: 100%;
   border-top: 2px solid black;
   border-left: 2px solid black;
+  @media (max-width: 767px) {
+    display: none;
+  }
+`;
+
+const ListContainerMobile = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  padding: 10px 10px 0 0;
+
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const ColorList = styled.button`
@@ -122,6 +141,17 @@ const PostPhoto = styled.img`
   }
 `;
 
+const Modal = styled.div`
+  display: flex;
+  width: 100%;
+`;
+
+const MobileListContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+const MobileColorList = styled.div``;
+
 function Gallery() {
   const dispatch = useDispatch();
   let posts: PostsState[] = useSelector(getPosts);
@@ -129,6 +159,7 @@ function Gallery() {
   const { palette } = colorDatas;
   const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     dispatchAllPosts();
@@ -238,10 +269,14 @@ function Gallery() {
     }
   };
 
+  const handleClickFilterIcon = (event: React.MouseEvent) => {
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <GalleryWrapper>
-        <FillterContainer>
+        <FilterContainer>
           <ListContainer>
             {Color.map((el, idx) => {
               return (
@@ -251,7 +286,23 @@ function Gallery() {
               );
             })}
           </ListContainer>
-        </FillterContainer>
+        </FilterContainer>
+        <ListContainerMobile onClick={handleClickFilterIcon}>
+          <FilterIcon />
+        </ListContainerMobile>
+        {isModalOpen && (
+          <Modal>
+            <MobileListContainer>
+              {Color.map((el, idx) => {
+                return (
+                  <MobileColorList key={idx} onClick={() => handleGetCategory(el)}>
+                    {el}
+                  </MobileColorList>
+                );
+              })}
+            </MobileListContainer>
+          </Modal>
+        )}
         <GalleryContainer>
           <PhotoWrapper>
             {filterPost.length <= 1

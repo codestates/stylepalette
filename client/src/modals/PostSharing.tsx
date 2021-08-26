@@ -16,6 +16,9 @@ const PostWrapper = styled.div`
   border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
+  @media (max-width: 768px) {
+    width: 320px;
+  }
 `;
 
 const PostContainer = styled.div`
@@ -31,6 +34,7 @@ const PostContainer = styled.div`
 const PostHeader = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: 10px;
 `;
 
 const InputWrapper = styled.div`
@@ -46,7 +50,6 @@ const PostFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 10px 0;
 `;
 
 const PostInput = styled.input`
@@ -65,6 +68,10 @@ const PostInput = styled.input`
     outline: none;
     box-shadow: 0 0 0 1px #a8a8a8;
     background-color: #fafafa;
+  }
+
+  @media (max-width: 768px) {
+    width: 280px;
   }
 `;
 

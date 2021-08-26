@@ -37,74 +37,88 @@ const MyPageFooter = styled.div`
 
 const UserInfoContainer = styled.div`
   display: flex;
-  padding: 0 15px 15px 15px;
+  padding: 15px;
   margin: 0 15px 20px 15px;
-  width: 70%;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 768px;
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.8);
   border: 2px groove black;
   border-width: 0 0 2px 0;
   border-radius: 5px;
+  align-items: center;
 
   @media (max-width: 768px) {
     padding: 0px;
-    margin: 0px;
-    width: 100%;
+    margin: 2px;
+    width: 98%;
     justify-content: center;
-    align-items: center;
   }
 `;
 
 const UserPhotoWrapper = styled.div`
-  width: 355px;
-  height: 355px;
-  text-align: center;
-  padding: 50px 0 50px 70px;
+  /* width: 355px;
+  height: 355px; */
+  padding: 10px 20px 10px 45px;
 
   @media (max-width: 768px) {
     padding: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 200px;
+    width: 200px;
   }
 `;
 
 const UserInfoWrapper = styled.div`
   display: flex;
-  height: 355px;
+  /* height: 355px; */
   flex-direction: column;
   align-items: center;
-  padding: 40px 50px;
+  /* padding: 40px 50px; */
+  @media (max-width: 768px) {
+    height: auto;
+  }
+`;
+
+const UserPostOuterWrapper = styled.div`
+  display: table;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 768px;
+  box-shadow: 0 1px 5px 3px black;
+  border-radius: 5px;
+  @media (max-width: 768px) {
+    min-width: auto;
+  }
 `;
 
 const UserPostWrapper = styled.div`
-  display: inline-block;
-  width: 70%;
-  text-align: left;
-  padding: 15px;
-  margin: 15px;
-  box-shadow: 0 1px 5px 3px black;
-  border-radius: 5px;
+  padding: 1rem;
+  display: table-cell;
+  width: 100%;
+  /* text-align: center; */
 `;
 
 const NavIcon = styled.button`
-  margin: 20px 12px 40px 12px;
-  width: 280px;
-  height: 280px;
+  display: inline-block;
+  width: 31%;
   background-color: white;
   border-style: none;
-
+  margin: 1%;
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
-    margin: 0 60px 60px 60px;
+    width: 48%;
   }
 `;
 
 const PostPhoto = styled.img`
   border: 2px solid #777777;
   border-radius: 5px;
-  width: 275px;
-  height: 275px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 
   &:hover {
     opacity: 80%;
@@ -113,14 +127,14 @@ const PostPhoto = styled.img`
   }
 
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
+    /* width: 270px;
+    height: 270px; */
   }
 `;
 
 const UserPhoto = styled.img`
-  width: 250px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   border: 2px solid black;
 
@@ -189,17 +203,19 @@ function MyPage() {
             <UserEditButton onClick={handleClickProfileEditButton}>정보 수정</UserEditButton>
           </UserInfoWrapper>
         </UserInfoContainer>
-        <UserPostWrapper>
-          {user.post
-            .map((el: any, idx: React.Key | null | undefined) => {
-              return (
-                <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                  <PostPhoto src={el.image} />
-                </NavIcon>
-              );
-            })
-            .reverse()}
-        </UserPostWrapper>
+        <UserPostOuterWrapper>
+          <UserPostWrapper>
+            {user.post
+              .map((el: any, idx: React.Key | null | undefined) => {
+                return (
+                  <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                    <PostPhoto src={el.image} />
+                  </NavIcon>
+                );
+              })
+              .reverse()}
+          </UserPostWrapper>
+        </UserPostOuterWrapper>
       </MyPageContainer>
       <MyPageFooter></MyPageFooter>
     </MyPageWrapper>
