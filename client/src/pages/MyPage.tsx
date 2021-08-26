@@ -13,6 +13,7 @@ const MyPageWrapper = styled.div`
   flex-direction: column;
   left: 0;
   top: 0;
+  padding-top: 5rem;
 `;
 
 const MyPageContainer = styled.div`
@@ -43,7 +44,7 @@ const UserInfoContainer = styled.div`
   border: 2px groove black;
   border-width: 0 0 2px 0;
   border-radius: 5px;
-  
+
   @media (max-width: 768px) {
     padding: 0px;
     margin: 0px;
@@ -146,7 +147,7 @@ const UserEditButton = styled(PrimaryButton)`
   width: 175px;
   height: 60px;
 
-@media (max-width: 768px) {
+  @media (max-width: 768px) {
     width: 85px;
     height: 45px;
   }
@@ -159,10 +160,16 @@ function MyPage() {
   useEffect(() => {
     // get user info
     dispatch(getUserInfo({ userid: user.userid }));
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [dispatch, user.userid]);
 
   const handleClickPostInfo = (postid: number | null) => {
+    dispatch(
+      getPost({
+        postId: postid,
+      }),
+    );
     dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
   };
 
