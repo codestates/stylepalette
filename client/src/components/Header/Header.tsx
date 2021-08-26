@@ -25,18 +25,9 @@ const HeaderWrapper = styled.div`
 const LogoWrapper = styled.span`
   display: flex;
   flex-direction: row;
-  width: 200px;
+  width: 250px;
   height: 3.9rem;
   padding: 0 0 0 30px;
-`;
-
-const Logo = styled.img`
-  position: absolute;
-  left: 9%;
-  top: 0%;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
 `;
 
 const NavWrapper = styled.div`
@@ -51,7 +42,7 @@ const LinkedLoGo = styled(Link)`
   text-decoration: none;
   color: white;
   font-size: 2.2rem;
-  width: 100%;
+  width: 400px;
   text-align: center;
 
   &:hover {
@@ -78,6 +69,7 @@ const NavMobile = styled.span`
 const NavIcon = styled.span`
   padding-right: 1.5em;
   color: white;
+  cursor: pointer;
 `;
 
 // If user is logged in: nav will show: mypage, logout, gallery
@@ -111,10 +103,7 @@ export default function Header() {
     <>
       <HeaderWrapper>
         <LogoWrapper>
-          <LinkedLoGo to="/">
-            <Logo src={StylePaletteLogo} alt="로고" />
-            Style
-          </LinkedLoGo>
+          <LinkedLoGo to="/">StylePalette</LinkedLoGo>
         </LogoWrapper>
         <NavWrapper>
           {isLoggedIn ? (

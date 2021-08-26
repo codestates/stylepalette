@@ -160,6 +160,7 @@ function Gallery() {
   const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isBlack, setIsBlack] = useState<boolean>(false);
 
   useEffect(() => {
     dispatchAllPosts();
@@ -178,8 +179,10 @@ function Gallery() {
   };
 
   if (isRoulette) {
-    palette.shift();
-    palette.pop();
+    if (!isBlack) {
+      palette.shift();
+      palette.pop();
+    }
 
     const filterData = posts.filter((el) => {
       for (let i = 0; i < palette.length; i++) {
@@ -191,8 +194,11 @@ function Gallery() {
       }
     });
 
+    console.log('filterData:', filterData);
+
     setFilterPost(filterData.reverse());
     setIsRoulette(false);
+    setIsBlack(false);
   }
 
   const filteredFunc = (value: string) => {
@@ -254,11 +260,13 @@ function Gallery() {
         break;
       }
       case '하양': {
+        setIsBlack(true);
         filteredFunc('#FFFFFF');
 
         break;
       }
       case '검정': {
+        setIsBlack(true);
         filteredFunc('#000000');
 
         break;
@@ -305,8 +313,8 @@ function Gallery() {
         )}
         <GalleryContainer>
           <PhotoWrapper>
-            {filterPost.length <= 1
-              ? posts.length <= 1
+            {filterPost.length < 2
+              ? posts.length === 1
                 ? null
                 : posts
                     .filter((el) => {
