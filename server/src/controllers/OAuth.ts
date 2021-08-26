@@ -11,7 +11,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
     client_secret: process.env.GOOGLE_CLIENT_SECRET,
     code: req.body.code,
     grant_type : 'authorization_code',
-    redirect_uri : "https://localhost:3000"
+    redirect_uri : "https://stylepalette.net"
   })
   .then(response => {
     let params = new URLSearchParams(response.data);
@@ -37,7 +37,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
         if (accessToken) {
           res.cookie("jwt", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 7,
-            // domain: ".stylepalette.net",
+            domain: ".stylepalette.net",
             path: "/",
             secure: true,
             httpOnly: true,
@@ -52,7 +52,7 @@ const google = async (req: Request, res: Response, next: NextFunction) => {
 };
 
 const kakao = async (req: Request, res: Response, next: NextFunction) => {
-  await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=https://localhost:3000&code=${req.body.code}`, 
+  await axios.post(`https://kauth.kakao.com/oauth/token?grant_type=authorization_code&client_id=${process.env.KAKAO_CLIENT_ID}&redirect_uri=https://stylepalette.net&code=${req.body.code}`, 
     {
       headers : {
         'Content-type' : 'application/x-www-form-urlencoded;charset=utf-8'
@@ -84,7 +84,7 @@ const kakao = async (req: Request, res: Response, next: NextFunction) => {
         if (accessToken) {
           res.cookie("jwt", accessToken, {
             maxAge: 1000 * 60 * 60 * 24 * 7,
-            // domain: ".stylepalette.net",
+            domain: ".stylepalette.net",
             path: "/",
             secure: true,
             httpOnly: true,

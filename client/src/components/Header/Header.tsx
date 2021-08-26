@@ -16,9 +16,8 @@ const HeaderWrapper = styled.div`
   background-color: black;
   width: 100%;
   height: 5rem;
-  position: sticky;
+  position: fixed;
   top: 0;
-  border-bottom: solid 2px white;
   z-index: 10;
   opacity: 90%;
 `;
@@ -78,6 +77,7 @@ const NavMobile = styled.span`
 `;
 const NavIcon = styled.span`
   padding-right: 1.5em;
+  color: white;
 `;
 
 // If user is logged in: nav will show: mypage, logout, gallery
@@ -103,6 +103,10 @@ export default function Header() {
     dispatch(handleModal({ isOpen: true, type: 'menu' }));
   };
 
+  const handleClickScrollTo = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <>
       <HeaderWrapper>
@@ -119,7 +123,7 @@ export default function Header() {
                 <NavIcon>마이페이지</NavIcon>
               </Linked>
               <Linked to="/gallery">
-                <NavIcon>갤러리</NavIcon>
+                <NavIcon onClick={handleClickScrollTo}>갤러리</NavIcon>
               </Linked>
               <NavIcon onClick={handleClickLogOut}>
                 <Linked to="/">로그아웃</Linked>

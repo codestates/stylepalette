@@ -111,12 +111,9 @@ export default function PostInfo(modalData: any) {
   // const isLiked: boolean = useSelector(getLikeState);
   const likeList = post.like.map((el) => el.userId);
 
+  console.log('modalData:', modalData);
+
   useEffect(() => {
-    dispatch(
-      getPost({
-        postId: modalData.modalData,
-      }),
-    );
     handleIsDelete();
   }, []);
 
@@ -129,7 +126,11 @@ export default function PostInfo(modalData: any) {
   }
 
   function handleClickPostDelete() {
-    dispatch(deletePost(modalData.modalData));
+    dispatch(
+      deletePost({
+        postId: post.id,
+      }),
+    );
   }
 
   function handleLike(data: { postid: number | null; userid: number | null; like: boolean }) {

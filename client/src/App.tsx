@@ -12,6 +12,7 @@ import MyPage from './pages/MyPage';
 import OtherUserPage from './pages/OtherUserPage';
 import Gallery from './pages/Gallery';
 import Result from './pages/Result';
+import LandingPage from './pages/LandingPage';
 import { kakaoLogin, googleLogin } from './redux/actions/action';
 
 // import ProfileEdit from './modals/ProfileEdit';
@@ -81,8 +82,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             {/* TODO: Add landing page once completed */}
-            Landing Page
-            <Link to="/genderselect">성별 선택 페이지</Link>
+            <LandingPage />
           </Route>
           <Route exact path="/genderselect">
             <GenderSelect />

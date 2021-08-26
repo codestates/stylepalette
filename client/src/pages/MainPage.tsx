@@ -1,15 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
-import axios from 'axios';
 
 import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
 import { RestartAlt } from '@styled-icons/material-twotone/RestartAlt';
 import { ReactComponent as Man } from '../images/Man/Man-default.svg';
 import { ReactComponent as Woman } from '../images/Woman/Woman-default.svg';
-import { serverUrl } from '../utils/constants';
 
 import {
   recommendColor,
@@ -37,8 +35,8 @@ const SelectList = ['피부톤', '상의', '하의', '준비중'];
 const recommendTab = ['톤인톤', '톤온톤', '모노톤'];
 const ClothList: any = {
   피부톤: [],
-  상의: ['맨투맨', '라운드티', '셔츠'],
-  하의: ['청바지', '반바지'],
+  상의: ['맨투맨', '셔츠'],
+  하의: ['준비중'],
   준비중: [],
 };
 
@@ -119,7 +117,7 @@ const Pallette = styled.button<colorProps>`
 const SkinSelectWrapper = styled.div`
   position: absolute;
   left: 7%;
-  top: 15%;
+  top: 16%;
   border: 2px solid rgba(0, 0, 0);
   border-radius: 15px;
   width: 275px;
@@ -519,6 +517,10 @@ function MainPage() {
   let recommendColors: RecommendColor = useSelector(getRecommendColor);
   let rouletteColors: RouletteColor = useSelector(getRouletteColor);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const [currSelectTap, setCurrSelectTap] = useState<string>('');
   const [pickSubSelect, setPickSubSelect] = useState<boolean>(false);
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
@@ -727,6 +729,10 @@ function MainPage() {
     });
   }
 
+  function handleClickScrollTo() {
+    window.scrollTo(0, 0);
+  }
+
   return (
     <>
       <MainWrapper>
@@ -877,7 +883,13 @@ function MainPage() {
           <ResetButton title="초기화" onClick={handleReset}>
             <ResetIcons />
           </ResetButton>
-          <NextButton title="다음" onClick={handleResultImage}>
+          <NextButton
+            title="다음"
+            onClick={(el) => {
+              handleResultImage(el);
+              handleClickScrollTo();
+            }}
+          >
             {isNext ? (
               <Redirect to="/result">
                 <NextIcons />

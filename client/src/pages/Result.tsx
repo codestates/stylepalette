@@ -21,6 +21,7 @@ const ResultContainer = styled.div`
   @media (max-width: 768px) {
     height: 88vh;
   }
+  padding-top: 5rem;
 `;
 
 const ResultImage = styled.img`
@@ -33,9 +34,9 @@ const ResultImage = styled.img`
 `;
 
 const ResultText = styled(Text)`
-  font-size: 24px;
-  font-style: bold;
-  padding: 0 0 10px 0;
+  font-size: 2rem;
+  font-weight: 600;
+  padding-bottom: 2rem;
 `;
 
 const ResultButton = styled(PrimaryButton)`
@@ -61,7 +62,8 @@ export default function Result() {
     const imgSrc = localStorage.getItem('imgLocation');
 
     setImageSrc(imgSrc);
-  });
+    window.scrollTo(0, 0);
+  }, []);
 
   const handleClickPostSharing = () => {
     dispatch(handleModal({ isOpen: true, type: 'postSharing' }));
@@ -71,11 +73,15 @@ export default function Result() {
     dispatch(handleModal({ isOpen: true, type: 'login' }));
   };
 
+  const handleClickScrollTo = () => {
+    window.scrollTo(0, 0);
+  };
+
   return (
     <>
       <ResultContainer>
         <ResultImage src={imageSrc}></ResultImage>
-        <ResultText>최종결과: 멋진 코디네요!</ResultText>
+        <ResultText>멋진 코디네요!</ResultText>
         <ButtonContainer>
           <Link to="/genderselect">
             <ResultButton>처음으로</ResultButton>
@@ -87,7 +93,7 @@ export default function Result() {
           )}
 
           <Link to="/gallery">
-            <ResultButton>갤러리 구경하기</ResultButton>
+            <ResultButton onClick={handleClickScrollTo}>갤러리 구경하기</ResultButton>
           </Link>
         </ButtonContainer>
       </ResultContainer>

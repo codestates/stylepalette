@@ -13,6 +13,7 @@ const OtherUserPageWrapper = styled.div`
   flex-direction: column;
   left: 0;
   top: 0;
+  margin-top: 5rem;
 `;
 
 const OtherUserPageContainer = styled.div`
@@ -162,14 +163,19 @@ function OtherUserPage() {
     // get user info
     dispatch(getOtherUserInfo({ userid: userId }));
     dispatch(handleModal({ isOpen: false }));
+    window.scrollTo(0, 0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const otheruser = useSelector(getOtherUser);
 
-  const handleClickPostInfo = (event: React.MouseEvent) => {
-    dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
-    // dispatch(getPost());
+  const handleClickPostInfo = (postid: number) => {
+    dispatch(
+      getPost({
+        postId: postid,
+      }),
+    );
+    dispatch(handleModal({ isOpen: true, type: 'postInfo', data: postid }));
   };
 
   return (
@@ -187,7 +193,7 @@ function OtherUserPage() {
           {otheruser.post
             .map((el: any, idx: React.Key | null | undefined) => {
               return (
-                <NavIcon key={idx} onClick={handleClickPostInfo}>
+                <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
                   <PostPhoto src={el.image} />
                 </NavIcon>
               );
