@@ -1020,10 +1020,14 @@ function MainPage() {
       setIsNavModalOpen(true);
     } else if (el === '색상선택') {
       setIsNavModalOpen(true);
-      setCurrSelectTap('');
+      if (currSelectTap === '피부톤') {
+        setCurrSelectTap('');
+      }
     } else if (el === '추천색') {
       setIsNavModalOpen(true);
-      setCurrSelectTap('');
+      if (currSelectTap === '피부톤') {
+        setCurrSelectTap('');
+      }
     } else if (el === '완료') {
       handleResultImage(e);
       handleClickScrollTo();

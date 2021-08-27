@@ -6,6 +6,7 @@ import Button from '../components/Button/Button';
 import { passwordCheck } from '../redux/actions/action';
 import { getUser, getMessage } from '../redux/selectors';
 import Text from '../components/Text/Text';
+import { KeyIcon } from '../components/Icon/Icon';
 
 const PasswordCheckWrapper = styled.div`
   width: 400px;
@@ -90,7 +91,9 @@ export default function PasswordChange() {
       <PasswordCheckHeader>현재 비밀번호를 입력해주세요</PasswordCheckHeader>
       <InputOuterWrapper>
         <InputWrapper>
-          <Label>비밀번호</Label>
+          <Label>
+            <KeyIcon />
+          </Label>
           <Input type="password" onChange={handleCheckPassword}></Input>
         </InputWrapper>
         {passwordMessage.length > 0 && (

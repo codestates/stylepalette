@@ -70,7 +70,7 @@ const Linked = styled(Link)`
 `;
 
 const NavMobile = styled.span`
-  @media (min-width: 768px) {
+  @media (min-width: 769px) {
     display: none;
   }
   padding-right: 0.8em;

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const DefaultButton = styled.button`
   background: transparent;
   color: black;
-  border-radius: 3px;
+  border-radius: 20px;
   border: 1px solid black;
   margin: 0.5em 1em;
   padding: 0.25em 1em;
@@ -46,6 +46,8 @@ export const PrimaryButton = styled(DefaultButton)`
 export const SecondaryButton = styled(DefaultButton)`
   background: white;
   color: black;
+  width: 100px;
+  height: 30px;
 
   &:hover {
     cursor: pointer;

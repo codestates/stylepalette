@@ -8,6 +8,7 @@ import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
 import { getMessage } from '../redux/selectors';
 import { clientUrl } from '../utils/constants';
+import { UserIcon, KeyIcon } from '../components/Icon/Icon';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -26,7 +27,7 @@ const LoginWrapper = styled.div`
 const LoginHeader = styled.div`
   display: flex;
   justify-content: center;
-  padding: 1em;
+  padding: 2em 1em 1em 1em;
 `;
 
 const LoginContainer = styled.div`
@@ -34,7 +35,6 @@ const LoginContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   padding: 15px;
   margin: 0 20px;
 `;
@@ -47,6 +47,13 @@ const Label = styled.label`
   padding-right: 5px;
 `;
 
+// const UserIcon = styled(User)`
+//   width: 1.2em;
+// `;
+
+// const KeyIcon = styled(Key)`
+//   width: 1.2em;
+// `;
 const MessageWrapper = styled.div`
   color: red;
 `;
@@ -114,16 +121,20 @@ export default function Login() {
       <LoginHeader>로그인</LoginHeader>
       <LoginContainer>
         <InputWrapper>
-          <Label>유저네임</Label>
+          <Label>
+            <UserIcon />
+          </Label>
           <input
             type="text"
             value={username}
-            placeholder="아이디"
+            placeholder="유저네임"
             onChange={handleChangeUsername}
           ></input>
         </InputWrapper>
         <InputWrapper>
-          <Label>비밀번호</Label>
+          <Label>
+            <KeyIcon />
+          </Label>
           <input
             type="password"
             value={password}
@@ -138,10 +149,10 @@ export default function Login() {
           <Button primary onClick={requestSignin} disabled={disabled}>
             로그인
           </Button>
-          <Button primary onClick={handleClickKakaoLogin}>
+          <Button secondary onClick={handleClickKakaoLogin}>
             카카오로그인
           </Button>
-          <Button primary onClick={handleClickGoogleLogin}>
+          <Button secondary onClick={handleClickGoogleLogin}>
             구글로그인
           </Button>
         </SocialButtonContainer>
