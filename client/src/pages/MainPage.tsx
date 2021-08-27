@@ -742,12 +742,12 @@ const MobileMenu = styled.div`
   display: flex;
   flex-grow: 1;
   height: 72px;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  /* border-top: 1px solid black;
+  border-bottom: 1px solid black; */
   overflow: hidden;
 `;
 
-const MobileMenuItem = styled.div`
+const MobileMenuItem = styled.button`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1013,7 +1013,7 @@ function MainPage() {
     window.scrollTo(0, 0);
   }
 
-  function handleClickNavIcon(el: string) {
+  function handleClickNavIcon(el: string, e: React.MouseEvent<HTMLButtonElement>) {
     if (navMobileNavState === '종류선택' && el === '종류선택') {
       setIsNavModalOpen(!isNavModalOpen);
     } else if (navMobileNavState !== '종류선택' && el === '종류선택') {
@@ -1024,6 +1024,9 @@ function MainPage() {
     } else if (el === '추천색') {
       setIsNavModalOpen(true);
       setCurrSelectTap('');
+    } else if (el === '완료') {
+      handleResultImage(e);
+      handleClickScrollTo();
     }
     setNavMobileNavState(el);
 
@@ -1234,7 +1237,7 @@ function MainPage() {
               // @ts-ignore
               const MobileNavIcon = NavIconMap[el];
               return (
-                <MobileMenuItem key={idx} onClick={() => handleClickNavIcon(el)}>
+                <MobileMenuItem key={idx} onClick={(e) => handleClickNavIcon(el, e)}>
                   <MobileMenuIcon>
                     <MobileNavIcon />
                   </MobileMenuIcon>
