@@ -14,7 +14,6 @@ import Gallery from './pages/Gallery';
 import Result from './pages/Result';
 import LandingPage from './pages/LandingPage';
 import { kakaoLogin, googleLogin } from './redux/actions/action';
-import MainPageMobile from './pages/MainPageMobile';
 
 interface WrapperProps {
   isModalOpen: boolean;
@@ -78,7 +77,7 @@ function App() {
         <Switch>
           <Route exact path="/">
             {/* <LandingPage /> */}
-            <MainPageMobile />
+            <MainPage />
           </Route>
           <Route exact path="/genderselect">
             <GenderSelect />
