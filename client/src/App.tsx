@@ -76,8 +76,8 @@ function App() {
         <Header />
         <Switch>
           <Route exact path="/">
-            {/* <LandingPage /> */}
-            <MainPage />
+            <LandingPage />
+            {/* <MainPage /> */}
           </Route>
           <Route exact path="/genderselect">
             <GenderSelect />

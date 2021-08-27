@@ -289,7 +289,7 @@ const ImageMan = styled(Man)<imgProps>`
   width: 175px;
   height: 490px;
 
-  @media (max-width: 500px) {
+  @media (max-width: 481px) {
     height: 300px;
   }
 
@@ -314,7 +314,7 @@ const ImageWoMan = styled(Woman)<imgProps>`
   width: 175px;
   height: 490px;
 
-  @media (max-width: 500px) {
+  @media (max-width: 481px) {
     height: 300px;
   }
 
@@ -510,6 +510,11 @@ const RecommendColorWrapper = styled.div`
   height: 72px;
   border: 2px solid #ececec;
   border-radius: 15px;
+
+  @media (min-width: 481px) {
+    height: 150px;
+  }
+
   @media (min-width: 769px) {
     width: 550px;
     height: 150px;
@@ -580,6 +585,11 @@ const RecommendContentWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+
+  @media (min-width: 481px) {
+    height: 100px;
+  }
+
   @media (min-width: 769px) {
     width: 540px;
     height: 100px;
@@ -592,7 +602,7 @@ const RecommendContentContainer = styled.div<currRecommandProps>`
   flex-direction: row;
   left: 0%;
   top: 10%;
-  @media (min-width: 768px) {
+  @media (min-width: 769px) {
     height: 90px;
     ${(props) => {
       if (props.currrecommandtap === '톤인톤') {
@@ -617,6 +627,7 @@ const RecommendContent = styled.button<recommandProps>`
   height: 30px;
   border: none;
   margin: 5px;
+  border: 1px solid #ececec;
 
   &:hover {
     opacity: 50%;
@@ -627,7 +638,13 @@ const RecommendContent = styled.button<recommandProps>`
     background-color: ${props.color};
   `;
   }}
-  @media (min-width: 768px) {
+
+  @media (min-width: 481px) {
+    height: 80px;
+    width: 60px;
+  }
+
+  @media (min-width: 769px) {
     width: 60px;
     height: 80px;
     border: 1px solid rgba(0, 0, 0);
@@ -642,13 +659,17 @@ const RouletteWrapper = styled.div<rouletteWrapperProps>`
   height: 300px;
   top: 150px;
   border-radius: 50%;
-  /* right: 10%; */
+
+  @media (min-width: 481px) {
+    top: 320px;
+    left: 80%;
+  }
+
   @media (min-width: 769px) {
     width: 500px;
     height: 500px;
     left: 85%;
     top: 35%;
-    /* overflow: auto; */
   }
 
   ${(props) => {
@@ -669,6 +690,10 @@ const RouletteCenter = styled.div`
   background-color: white;
   z-index: 5;
   margin: -90px 0 0 -90px;
+
+  @media (max-width: 768px) {
+    border: 1px solid #ececec;
+  }
 `;
 
 const Roulette = styled.button<rouletteProps>`
@@ -695,8 +720,7 @@ const Roulette = styled.button<rouletteProps>`
     `;
   }}
   @media (max-width: 768px) {
-    /* width: 200px;
-    height: 200px; */
+    border: 1px solid #ececec;
   }
 `;
 
@@ -718,8 +742,8 @@ const MobileMenu = styled.div`
   display: flex;
   flex-grow: 1;
   height: 72px;
-  border-top: 1px dotted;
-  border-bottom: 1px dotted;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
   overflow: hidden;
 `;
 
@@ -990,12 +1014,16 @@ function MainPage() {
   }
 
   function handleClickNavIcon(el: string) {
-    if (el === '종류선택') {
+    if (navMobileNavState === '종류선택' && el === '종류선택') {
       setIsNavModalOpen(!isNavModalOpen);
+    } else if (navMobileNavState !== '종류선택' && el === '종류선택') {
+      setIsNavModalOpen(true);
     } else if (el === '색상선택') {
       setIsNavModalOpen(true);
+      setCurrSelectTap('');
     } else if (el === '추천색') {
       setIsNavModalOpen(true);
+      setCurrSelectTap('');
     }
     setNavMobileNavState(el);
 

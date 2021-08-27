@@ -4,7 +4,7 @@ export const DefaultButton = styled.button`
   background: transparent;
   color: black;
   border-radius: 3px;
-  border: 1px solid rgb(7, 104, 159);
+  border: 1px solid black;
   margin: 0.5em 1em;
   padding: 0.25em 1em;
   transition: all 0.2s linear;
@@ -22,7 +22,7 @@ export const DefaultButton = styled.button`
 `;
 
 export const PrimaryButton = styled(DefaultButton)`
-  background: rgb(7, 104, 159);
+  background: black;
   color: white;
   width: 100px;
   height: 30px;
@@ -45,7 +45,7 @@ export const PrimaryButton = styled(DefaultButton)`
 
 export const SecondaryButton = styled(DefaultButton)`
   background: white;
-  color: rgb(7, 104, 159);
+  color: black;
 
   &:hover {
     cursor: pointer;
