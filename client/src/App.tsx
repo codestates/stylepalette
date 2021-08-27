@@ -14,8 +14,7 @@ import Gallery from './pages/Gallery';
 import Result from './pages/Result';
 import LandingPage from './pages/LandingPage';
 import { kakaoLogin, googleLogin } from './redux/actions/action';
-
-// import ProfileEdit from './modals/ProfileEdit';
+import MainPageMobile from './pages/MainPageMobile';
 
 interface WrapperProps {
   isModalOpen: boolean;
@@ -46,8 +45,6 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log('TESTING SOCIAL LOGIN');
-    console.log('TESTING SOCIAL LOGIN 2');
     const url = new URL(window.location.href);
     const authorizationCode = url.searchParams.get('code');
     const scope = url.searchParams.get('scope');
@@ -78,11 +75,10 @@ function App() {
       <GlobalStyle />
       <BrowserRouter>
         <Header />
-        {/* <Gallery /> */}
         <Switch>
           <Route exact path="/">
-            {/* TODO: Add landing page once completed */}
-            <LandingPage />
+            {/* <LandingPage /> */}
+            <MainPageMobile />
           </Route>
           <Route exact path="/genderselect">
             <GenderSelect />

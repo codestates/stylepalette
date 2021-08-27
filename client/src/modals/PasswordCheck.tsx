@@ -10,9 +10,9 @@ import Text from '../components/Text/Text';
 const PasswordCheckWrapper = styled.div`
   width: 400px;
   background-color: white;
-  border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
+
   @media (max-width: 768px) {
     width: 320px;
   }
@@ -23,7 +23,7 @@ const PasswordCheckHeader = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1em;
+  padding: 2em 1em 1em 1em;
 `;
 
 const InputOuterWrapper = styled.div`

@@ -6,14 +6,14 @@ import { getIsLoggedIn, getIsModalOpen } from '../../redux/selectors';
 import { handleModal, logOut } from '../../redux/actions/action';
 import Modal from '../../modals/Modal';
 
-import { ReactComponent as MenuIcon } from '../../images/menu.svg';
+import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
 import StylePaletteLogo from '../../images/Logo/StylePaletteLogo.png';
 
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
+  /* background-color: black; */
   width: 100%;
   height: 5rem;
   position: fixed;
@@ -74,6 +74,14 @@ const NavMobile = styled.span`
     display: none;
   }
   padding-right: 0.8em;
+`;
+
+const MenuIcon = styled(MenuOutline)`
+  width: 30px;
+  color: #ff7e67;
+  @media (min-width: 768px) {
+    display: none;
+  }
 `;
 const NavIcon = styled.span`
   padding-right: 1.5em;

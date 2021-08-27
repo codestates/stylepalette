@@ -1,13 +1,18 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, ReactNode } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import styled from 'styled-components';
 import html2canvas from 'html2canvas';
-
 import { NavigateNext } from '@styled-icons/material-outlined/NavigateNext';
 import { RestartAlt } from '@styled-icons/material-twotone/RestartAlt';
 import { ReactComponent as Man } from '../images/Man/Man-default.svg';
 import { ReactComponent as Woman } from '../images/Woman/Woman-default.svg';
+import { TShirt2 } from '@styled-icons/remix-line/TShirt2';
+import { Brush } from '@styled-icons/remix-line/Brush';
+import { CheckCircle } from '@styled-icons/boxicons-regular/CheckCircle';
+import { ColorPalette as ColorNavIcon } from '@styled-icons/ionicons-outline/ColorPalette';
+import { ReactComponent as CloseIcon } from '../images/close.svg';
+import Button from '../components/Button/Button';
 
 import {
   recommendColor,
@@ -18,6 +23,22 @@ import {
 } from '../redux/actions/action';
 import { RecommendColor, RouletteColor } from '../redux/reducers/initialState';
 import { getRecommendColor, getRouletteColor } from '../redux/selectors';
+
+// Mobile navigation
+const NavModal = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 72px;
+  width: 100%;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
 
 const Color = [
   '#FF0000',
@@ -31,13 +52,35 @@ const Color = [
   '#000000',
 ];
 const SkinColor = ['#FEE6D8', '#FFCDB1', '#633F1E'];
-const SelectList = ['피부톤', '상의', '하의', '준비중'];
+const SelectList = ['피부톤', '상의', '하의'];
 const recommendTab = ['톤인톤', '톤온톤', '모노톤'];
 const ClothList: any = {
   피부톤: [],
   상의: ['맨투맨', '셔츠'],
   하의: ['준비중'],
-  // 준비중: [],
+};
+
+//Mobile
+const BrushIcon = styled(Brush)`
+  width: 25px;
+`;
+const CheckCircleFillIcon = styled(CheckCircle)`
+  width: 25px;
+`;
+const ColorIcon = styled(ColorNavIcon)`
+  width: 25px;
+`;
+
+const Tshirt = styled(TShirt2)`
+  width: 25px;
+`;
+
+const NavList = ['종류선택', '색상선택', '추천색', '완료'];
+const NavIconMap = {
+  종류선택: Tshirt,
+  색상선택: BrushIcon,
+  추천색: ColorIcon,
+  완료: CheckCircleFillIcon,
 };
 
 interface imgProps {
@@ -73,28 +116,41 @@ const MainWrapper = styled.div`
   background-color: white;
   left: 0;
   top: 0;
+
+  @media (max-width: 768px) {
+    display: flex;
+  }
 `;
 
 const PalletteContainer = styled.div`
-  display: inline;
-  position: absolute;
-  left: 84%;
-  top: 8%;
-  text-align: center;
-  max-width: 270px;
-  max-height: 280px;
-  margin: 15px;
-  border-radius: 45px;
-  border: 2px solid rgba(0, 0, 0);
-  background-color: white;
+  display: none;
+  @media (min-width: 769px) {
+    display: inline;
+    position: absolute;
+    left: 84%;
+    top: 8%;
+    text-align: center;
+    max-width: 270px;
+    max-height: 280px;
+    margin: 15px;
+    border-radius: 45px;
+    border: 2px solid rgba(0, 0, 0);
+    background-color: white;
+  }
 `;
-
+const MobilePaletteContainer = styled.div`
+  white-space: nowrap;
+  overflow: auto;
+  ::-webkit-scrollbar {
+    display: none;
+  }
+`;
 const Pallette = styled.button<colorProps>`
   display: inline-block;
   border: 2px solid rgba(0, 0, 0);
-  width: 60px;
-  height: 60px;
-  margin: 15px 10px;
+  width: 30px;
+  height: 30px;
+  margin: 5px 10px;
   border-radius: 90px;
   cursor: pointer;
   background-color: ${(props) => props.color || 'white'};
@@ -112,17 +168,30 @@ const Pallette = styled.button<colorProps>`
       transform: scale(1.2, 1.2);
     }
   }
+  @media (min-width: 769px) {
+    width: 60px;
+    height: 60px;
+    margin: 15px 10px;
+  }
 `;
 
 const SkinSelectWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: absolute;
-  left: 7%;
-  top: 16%;
-  border: 2px solid rgba(0, 0, 0);
-  border-radius: 15px;
-  width: 275px;
-  height: 100px;
-  text-align: center;
+  bottom: 130px;
+  width: 100%;
+  height: 50px;
+
+  @media (min-width: 769px) {
+    left: 7%;
+    top: 16%;
+    border: 2px solid rgba(0, 0, 0);
+    border-radius: 15px;
+    width: 275px;
+    height: 100px;
+  }
 `;
 
 const SkinSelectButton = styled.button<colorProps>`
@@ -134,6 +203,11 @@ const SkinSelectButton = styled.button<colorProps>`
   cursor: pointer;
   background-color: ${(props) => props.color || 'white'};
 
+  @media (max-width: 768px) {
+    width: 30px;
+    height: 30px;
+    margin: 5px 10px;
+  }
   &:hover {
     animation: hoverColor 0.1s forwards linear alternate;
   }
@@ -158,6 +232,9 @@ const SelectContainer = styled.div`
   max-width: 600px;
   margin: 15px 0;
   width: 100%;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const SelectorList = styled.button`
@@ -175,6 +252,13 @@ const SelectorList = styled.button`
   &:hover {
     opacity: 50%;
   }
+
+  @media (max-width: 768px) {
+    width: 80px;
+    height: 33px;
+    font-size: 17px;
+    border-radius: 20px;
+  }
 `;
 
 const ImageContainer = styled.div`
@@ -187,11 +271,25 @@ const ImageContainer = styled.div`
   text-align: center;
   width: 600px;
   height: 600px;
+  @media (max-width: 768px) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: auto;
+    padding: 100px;
+    position: initial;
+    margin: 0;
+  }
 `;
 
 const ImageMan = styled(Man)<imgProps>`
   width: 175px;
   height: 490px;
+
+  @media (max-width: 768px) {
+    height: 300px;
+  }
 
   ${(props) => {
     return `
@@ -214,6 +312,10 @@ const ImageWoMan = styled(Woman)<imgProps>`
   width: 175px;
   height: 490px;
 
+  @media (max-width: 768px) {
+    height: 300px;
+  }
+
   ${(props) => {
     return `
       #Skin {
@@ -234,25 +336,37 @@ const ImageWoMan = styled(Woman)<imgProps>`
 const SubSelectContainer = styled.div`
   display: inline;
   position: absolute;
-  left: 1%;
-  top: 16%;
-  text-align: center;
-  width: 100px;
-  height: 100px;
+  left: 20px;
+  top: 25%;
+  width: 50px;
+  height: 50px;
+
+  @media (min-width: 769px) {
+    left: 1%;
+    top: 16%;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+  }
 `;
 
 const SubSelectButton = styled.button`
-  border: 2px solid black;
-  border-radius: 15px;
-  width: 100px;
-  height: 100px;
+  width: 50px;
+  height: 45px;
+  font-size: 16px;
   font-style: bold;
-  font-size: 24px;
   background-color: white;
   cursor: pointer;
-
+  border: 2px solid black;
+  border-radius: 15px;
   &:hover {
     background-color: #eaeaea;
+  }
+
+  @media (min-width: 769px) {
+    width: 100px;
+    height: 100px;
+    font-size: 24px;
   }
 `;
 
@@ -263,6 +377,8 @@ const ClothContainer = styled.div`
   top: 16%;
   text-align: center;
   width: 100px;
+  @media (max-width: 768px) {
+  }
 `;
 
 const ClothButton = styled.button`
@@ -280,6 +396,9 @@ const ClothButton = styled.button`
   &:hover {
     opacity: 50%;
   }
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const NextButtonWrapper = styled.div`
@@ -288,9 +407,14 @@ const NextButtonWrapper = styled.div`
   text-align: center;
   width: 205px;
   height: 100px;
+  bottom: 10px;
+  right: 10px;
 
-  left: 87%;
-  top: 88%;
+  @media (max-width: 768px) {
+    top: 85px;
+    left: 10px;
+    text-align: start;
+  }
 `;
 
 const NextButton = styled.button`
@@ -306,10 +430,16 @@ const NextButton = styled.button`
   &:hover {
     opacity: 50%;
   }
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const NextIcons = styled(NavigateNext)`
   color: white;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const ResetButton = styled.button`
@@ -325,6 +455,10 @@ const ResetButton = styled.button`
   &:hover {
     opacity: 50%;
   }
+  @media (max-width: 768px) {
+    width: 45px;
+    height: 45px;
+  }
 `;
 
 const ResetIcons = styled(RestartAlt)`
@@ -338,17 +472,20 @@ const RecommendSelectWrapper = styled.div`
   left: 1%;
   top: 90%;
   width: 350px;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const RecommendSelectTab = styled.button`
+  width: 80px;
+  height: 33px;
+  font-size: 17px;
+  border-radius: 20px;
   border: 2px solid rgba(0, 0, 0);
-  border-radius: 15px;
-  width: 100px;
-  height: 50px;
   margin: 8px;
   margin-left: 0;
   font-style: bold;
-  font-size: 24px;
   color: white;
   background-color: black;
   cursor: pointer;
@@ -356,32 +493,50 @@ const RecommendSelectTab = styled.button`
   &:hover {
     opacity: 50%;
   }
+  @media (min-width: 769px) {
+    border-radius: 15px;
+    width: 100px;
+    height: 50px;
+    font-size: 24px;
+  }
 `;
 
 const RecommendColorWrapper = styled.div`
   position: absolute;
-  width: 550px;
-  height: 150px;
-  text-align: center;
+  bottom: 130px;
+  width: 100%;
+  height: 72px;
   border: 2px solid rgba(0, 0, 0);
   border-radius: 15px;
-  left: 1%;
-  top: 74%;
+  @media (min-width: 769px) {
+    width: 550px;
+    height: 150px;
+    text-align: center;
+    left: 1%;
+    top: 74%;
+  }
 `;
 
 const RecommendTabWrapper = styled.div`
-  max-width: 550px;
-  height: 40px;
-  padding: 5px;
-  padding-left: 10px;
-  text-align: left;
-  background-color: black;
+  width: 100%;
+
+  @media (min-width: 769px) {
+    max-width: 550px;
+    height: 40px;
+    padding: 5px;
+    padding-left: 10px;
+    text-align: left;
+    background-color: black;
+  }
 `;
 
 const RecommendTabName = styled.span`
   font-size: 21px;
   font-style: bold;
   color: white;
+  @media (max-width: 768px) {
+    display: none;
+  }
 `;
 
 const RecommendTabButton = styled.button`
@@ -405,8 +560,8 @@ const RecommendTabButton = styled.button`
 
 const RecommendContentWrapper = styled.div`
   position: absolute;
-  width: 540px;
-  height: 100px;
+  width: 100%;
+  height: 40px;
   overflow: hidden;
   overflow-x: scroll;
   left: 1%;
@@ -415,11 +570,13 @@ const RecommendContentWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+  @media (min-width: 769px) {
+    width: 540px;
+    height: 100px;
+  }
 `;
 
 const RecommendContentContainer = styled.div<currRecommandProps>`
-  display: flex;
-  height: 90px;
   position: absolute;
   flex-direction: row;
   left: 0%;
@@ -440,11 +597,15 @@ const RecommendContentContainer = styled.div<currRecommandProps>`
       `;
     }
   }}
+  @media(min-width: 768px) {
+    height: 90px;
+  }
+  display: flex;
 `;
 
 const RecommendContent = styled.button<recommandProps>`
-  width: 60px;
-  height: 80px;
+  width: 30px;
+  height: 30px;
   border: 1px solid rgba(0, 0, 0);
   margin: 5px;
 
@@ -457,15 +618,26 @@ const RecommendContent = styled.button<recommandProps>`
     background-color: ${props.color};
   `;
   }}
+  @media (min-width: 768px) {
+    width: 60px;
+    height: 80px;
+  }
 `;
 
 const RouletteWrapper = styled.div<rouletteWrapperProps>`
   position: absolute;
-  width: 500px;
-  height: 500px;
-  left: 85%;
+  left: 70%;
+  width: 300px;
+  height: 300px;
   top: 35%;
   border-radius: 50%;
+  /* right: 10%; */
+  @media (min-width: 769px) {
+    width: 500px;
+    height: 500px;
+    left: 85%;
+    top: 35%;
+  }
 
   ${(props) => {
     return `
@@ -509,10 +681,63 @@ const Roulette = styled.button<rouletteProps>`
       background-color: ${props.color};
       transform: rotate(${props.degree}deg);
     `;
-  }}
+  }}/* @media (max-width: 768px) {
+    display: none;
+  } */
 `;
 
-function MainPage() {
+const MobileNavigationContainer = styled.div`
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
+
+const MobileMenu = styled.div`
+  display: flex;
+  flex-grow: 1;
+  height: 72px;
+  border-top: 1px dotted;
+  border-bottom: 1px dotted;
+  overflow: hidden;
+`;
+
+const MobileMenuItem = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  text-decoration: none;
+  &:focus,
+  &:hover {
+    outline: none;
+    color: #dbdbdb;
+  }
+`;
+const MobileMenuIcon = styled.span`
+  display: block;
+  margin-bottom: 4px;
+  font-size: 26px;
+  color: black
+  transition: 0.25s ease;
+`;
+
+const MobileMenuItemLabel = styled.span`
+  display: block;
+  font-size: 13px;
+  color: black
+  transition: 0.25s ease;
+`;
+
+function MainPageMobile() {
   const dispatch = useDispatch();
   let recommendColors: RecommendColor = useSelector(getRecommendColor);
   let rouletteColors: RouletteColor = useSelector(getRouletteColor);
@@ -530,7 +755,8 @@ function MainPage() {
   const [pickBottomColor, setPickBottomColor] = useState<string>('#FFFFFF');
   const [pickSkinColor, setPickSkinColor] = useState<string>('#FFCDB1');
   const [isNext, setIsNext] = useState<boolean>(false);
-
+  const [isNavModalOpen, setIsNavModalOpen] = useState<boolean>(false);
+  const [navMobileNavState, setNavMobileNavState] = useState<string>('');
   //? 이미지 스크롤
   const [isDrag, setIsDrag] = useState<boolean>(false);
   const [startX, setStartX] = useState<any>();
@@ -733,6 +959,19 @@ function MainPage() {
     window.scrollTo(0, 0);
   }
 
+  function handleClickNavIcon(el: string) {
+    if (el === '종류선택') {
+      setIsNavModalOpen(!isNavModalOpen);
+    } else if (el === '색상선택') {
+      setIsNavModalOpen(true);
+    } else if (el === '추천색') {
+      setIsNavModalOpen(true);
+    }
+    setNavMobileNavState(el);
+
+    return;
+  }
+
   return (
     <>
       <MainWrapper>
@@ -792,7 +1031,9 @@ function MainPage() {
           <RecommendColorWrapper>
             <RecommendTabWrapper>
               <RecommendTabName>{currRecommendTap}</RecommendTabName>
-              <RecommendTabButton onClick={handleIsRecommendFalse}>닫기</RecommendTabButton>
+              <RecommendTabButton onClick={handleIsRecommendFalse}>
+                <CloseIcon />
+              </RecommendTabButton>
             </RecommendTabWrapper>
             <RecommendContentWrapper
               onMouseDown={onDragStart}
@@ -879,6 +1120,69 @@ function MainPage() {
             />
           )}
         </ImageContainer>
+        {isNavModalOpen && (
+          <NavModal>
+            {navMobileNavState === '종류선택' && (
+              <>
+                {SelectList.map((el, idx) => {
+                  return (
+                    <SelectorList key={idx} onClick={() => handleCurrSelectTap(el)}>
+                      {el}
+                    </SelectorList>
+                  );
+                })}
+              </>
+            )}
+            {navMobileNavState === '색상선택' && (
+              <>
+                <MobilePaletteContainer>
+                  {Color.map((el, idx) => {
+                    return (
+                      <Pallette
+                        key={idx}
+                        onClick={() => handleOriginColor(el)}
+                        color={el}
+                      ></Pallette>
+                    );
+                  })}
+                </MobilePaletteContainer>
+              </>
+            )}
+            {navMobileNavState === '추천색' && (
+              <>
+                {recommendTab.map((el, idx) => {
+                  return (
+                    <RecommendSelectTab
+                      key={idx}
+                      onClick={(event) => {
+                        handleRecommendTap(el);
+                        handleIsRecommendTrue(event);
+                      }}
+                    >
+                      {el}
+                    </RecommendSelectTab>
+                  );
+                })}
+              </>
+            )}
+          </NavModal>
+        )}
+        <MobileNavigationContainer>
+          <MobileMenu>
+            {NavList.map((el, idx) => {
+              // @ts-ignore
+              const MobileNavIcon = NavIconMap[el];
+              return (
+                <MobileMenuItem key={idx} onClick={() => handleClickNavIcon(el)}>
+                  <MobileMenuIcon>
+                    <MobileNavIcon />
+                  </MobileMenuIcon>
+                  <MobileMenuItemLabel>{el}</MobileMenuItemLabel>
+                </MobileMenuItem>
+              );
+            })}
+          </MobileMenu>
+        </MobileNavigationContainer>
         <NextButtonWrapper>
           <ResetButton title="초기화" onClick={handleReset}>
             <ResetIcons />
@@ -904,4 +1208,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default MainPageMobile;

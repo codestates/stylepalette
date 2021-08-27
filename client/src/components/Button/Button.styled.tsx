@@ -4,7 +4,7 @@ export const DefaultButton = styled.button`
   background: transparent;
   color: black;
   border-radius: 3px;
-  border: 1px solid black;
+  border: 1px solid rgb(7, 104, 159);
   margin: 0.5em 1em;
   padding: 0.25em 1em;
   transition: all 0.2s linear;
@@ -14,8 +14,6 @@ export const DefaultButton = styled.button`
   }
 
   &:hover {
-    // change color
-    /* color: #dbdbdb; */
     cursor: pointer;
     opacity: 90%;
     transform: translatey(3px);
@@ -24,7 +22,7 @@ export const DefaultButton = styled.button`
 `;
 
 export const PrimaryButton = styled(DefaultButton)`
-  background: black;
+  background: rgb(7, 104, 159);
   color: white;
   width: 100px;
   height: 30px;
@@ -47,7 +45,7 @@ export const PrimaryButton = styled(DefaultButton)`
 
 export const SecondaryButton = styled(DefaultButton)`
   background: white;
-  color: black;
+  color: rgb(7, 104, 159);
 
   &:hover {
     cursor: pointer;

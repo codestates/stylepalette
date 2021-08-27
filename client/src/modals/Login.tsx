@@ -15,9 +15,9 @@ dotenv.config();
 const LoginWrapper = styled.div`
   width: 400px;
   background-color: white;
-  border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
+
   @media (max-width: 768px) {
     width: 320px;
   }
@@ -36,7 +36,7 @@ const LoginContainer = styled.div`
   align-items: center;
   border: 1px solid black;
   padding: 15px;
-  margin: 15px;
+  margin: 0 20px;
 `;
 
 const InputWrapper = styled.div`
@@ -148,7 +148,7 @@ export default function Login() {
       </LoginContainer>
       <LoginFooter>
         <span>아직 회원이 아니신가요?</span>
-        <Button primary onClick={handleClickSignUp}>
+        <Button secondary onClick={handleClickSignUp}>
           회원가입
         </Button>
       </LoginFooter>
