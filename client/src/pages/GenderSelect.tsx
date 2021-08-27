@@ -10,7 +10,7 @@ const GenderWrapper = styled.div`
   width: 100vw;
   height: 100vh;
   display: flex;
-  background-color: white;
+  background-color: #fafafa;
   flex-direction: column;
   padding-top: 5rem;
   left: 0;
@@ -80,7 +80,7 @@ const PhotoButton = styled.button`
   height: 380px;
   border-style: none;
   border-radius: 45px;
-  background-color: white;
+  background-color: #fafafa;
   text-align: center;
 
   &:hover {
@@ -88,7 +88,7 @@ const PhotoButton = styled.button`
   }
 
   &:focus {
-    background-color: black;
+    background-color: #ff7e67;
   }
 
   @media (max-width: 768px) {

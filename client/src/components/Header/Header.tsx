@@ -7,13 +7,12 @@ import { handleModal, logOut } from '../../redux/actions/action';
 import Modal from '../../modals/Modal';
 
 import { ReactComponent as MenuIcon } from '../../images/menu.svg';
-import StylePaletteLogo from '../../images/Logo/StylePaletteLogo.png';
 
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: black;
+  background-color: #fafafa;
   width: 100%;
   height: 5rem;
   position: fixed;
@@ -33,14 +32,15 @@ const LogoWrapper = styled.span`
 const NavWrapper = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 767px) {
+
+  @media (max-width: 768px) {
     display: none;
   }
 `;
 
 const LinkedLoGo = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: #ff7e67;
   font-size: 2.2rem;
   width: 400px;
   text-align: center;
@@ -52,7 +52,7 @@ const LinkedLoGo = styled(Link)`
 
 const Linked = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: #ff7e67;
   font-size: 1.2rem;
 
   &:hover {
@@ -61,15 +61,24 @@ const Linked = styled(Link)`
 `;
 
 const NavMobile = styled.span`
-  @media (min-width: 768px) {
-    display: none;
+  display: none;
+  margin-right: 2rem;
+
+  @media (max-width: 768px) {
+    display: inline;
   }
-  padding-right: 0.8em;
 `;
+
 const NavIcon = styled.span`
-  padding-right: 1.5em;
-  color: white;
+  color: #ff7e67;
   cursor: pointer;
+  margin-right: 2.5rem;
+  font-size: 1.2rem;
+`;
+
+const MenuIcons = styled(MenuIcon)`
+  width: 30px;
+  height: 30px;
 `;
 
 // If user is logged in: nav will show: mypage, logout, gallery
@@ -126,7 +135,7 @@ export default function Header() {
           )}
         </NavWrapper>
         <NavMobile onClick={handleClickMenuIcon}>
-          <MenuIcon />
+          <MenuIcons />
         </NavMobile>
       </HeaderWrapper>
       {isModalOpen && <Modal />}
