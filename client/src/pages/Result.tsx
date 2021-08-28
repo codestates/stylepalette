@@ -11,46 +11,59 @@ import { getIsLoggedIn } from '../redux/selectors';
 const ResultContainer = styled.div`
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: 88vh;
   left: 0;
   top: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   background-color: white;
-  @media (max-width: 768px) {
-    height: 88vh;
-  }
   padding-top: 5rem;
+
+  @media (min-width: 768px) {
+    height: 100vh;
+  }
 `;
 
 const ResultImage = styled.img`
-  width: 550px;
-  margin: 10px 0;
-  @media (max-width: 768px) {
-    width: 500px;
-    margin: 0;
+  width: 300px;
+  margin: 0;
+  margin-top: -100px;
+  @media (min-width: 768px) {
+    width: 550px;
+    margin: 10px 0;
   }
 `;
 
 const ResultText = styled(Text)`
-  font-size: 2rem;
-  font-weight: 600;
-  padding-bottom: 2rem;
+  font-size: 1.5rem;
+  height: 60px;
+  @media (min-width: 768px) {
+    font-size: 2rem;
+    font-weight: 600;
+    height: 80px;
+  }
 `;
 
 const ResultButton = styled(PrimaryButton)`
-  width: 140px;
+  width: 80px;
   height: 50px;
-  @media (max-width: 768px) {
-    width: 80px;
-    height: 40px;
+  border-radius: 20px;
+  word-break: keep-all;
+  @media (min-width: 768px) {
+    width: 140px;
   }
 `;
 
 const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
+  align-items: center;
+  margin: 2px;
+  height: auto;
+  @media (min-width: 768px) {
+    height: 120px;
+  }
 `;
 
 export default function Result() {

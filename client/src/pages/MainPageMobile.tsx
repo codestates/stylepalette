@@ -11,7 +11,8 @@ import { TShirt2 } from '@styled-icons/remix-line/TShirt2';
 import { Brush } from '@styled-icons/remix-line/Brush';
 import { CheckCircle } from '@styled-icons/boxicons-regular/CheckCircle';
 import { ColorPalette as ColorNavIcon } from '@styled-icons/ionicons-outline/ColorPalette';
-import { Close as CloseIcon } from '@styled-icons/evaicons-solid/Close';
+import { ReactComponent as CloseIcon } from '../images/close.svg';
+import Button from '../components/Button/Button';
 
 import {
   recommendColor,
@@ -118,7 +119,6 @@ const MainWrapper = styled.div`
 
   @media (max-width: 768px) {
     display: flex;
-    position: relative;
   }
 `;
 
@@ -147,7 +147,7 @@ const MobilePaletteContainer = styled.div`
 `;
 const Pallette = styled.button<colorProps>`
   display: inline-block;
-  border: 1px solid #ececec;
+  border: 2px solid rgba(0, 0, 0);
   width: 30px;
   height: 30px;
   margin: 5px 10px;
@@ -172,7 +172,6 @@ const Pallette = styled.button<colorProps>`
     width: 60px;
     height: 60px;
     margin: 15px 10px;
-    border: 2px solid rgba(0, 0, 0);
   }
 `;
 
@@ -208,7 +207,6 @@ const SkinSelectButton = styled.button<colorProps>`
     width: 30px;
     height: 30px;
     margin: 5px 10px;
-    border: solid 1px #ececec;
   }
   &:hover {
     animation: hoverColor 0.1s forwards linear alternate;
@@ -281,7 +279,7 @@ const ImageContainer = styled.div`
     height: auto;
     padding: 100px;
     position: initial;
-    margin: 0px 0px 55px 0;
+    margin: 0;
   }
 `;
 
@@ -289,7 +287,7 @@ const ImageMan = styled(Man)<imgProps>`
   width: 175px;
   height: 490px;
 
-  @media (max-width: 481px) {
+  @media (max-width: 768px) {
     height: 300px;
   }
 
@@ -314,7 +312,7 @@ const ImageWoMan = styled(Woman)<imgProps>`
   width: 175px;
   height: 490px;
 
-  @media (max-width: 481px) {
+  @media (max-width: 768px) {
     height: 300px;
   }
 
@@ -508,13 +506,8 @@ const RecommendColorWrapper = styled.div`
   bottom: 130px;
   width: 100%;
   height: 72px;
-  border: 2px solid #ececec;
+  border: 2px solid rgba(0, 0, 0);
   border-radius: 15px;
-
-  @media (min-width: 481px) {
-    height: 150px;
-  }
-
   @media (min-width: 769px) {
     width: 550px;
     height: 150px;
@@ -526,8 +519,6 @@ const RecommendColorWrapper = styled.div`
 
 const RecommendTabWrapper = styled.div`
   width: 100%;
-  display: flex;
-  justify-content: flex-end;
 
   @media (min-width: 769px) {
     max-width: 550px;
@@ -549,27 +540,21 @@ const RecommendTabName = styled.span`
 `;
 
 const RecommendTabButton = styled.button`
-  margin: 5px;
-  background: none;
-  border: none;
-  width: 20px;
+  position: absolute;
+  top: -1%;
+  left: 86%;
+  font-size: 19px;
+  font-style: bold;
+  border: 1px solid rgba(0, 0, 0);
+  width: 90px;
+  height: 40px;
+  padding: 5px;
+  text-align: center;
+  color: white;
+  background-color: black;
 
   &:hover {
     opacity: 50%;
-  }
-
-  @media (min-width: 769px) {
-    border: 1px solid rgba(0, 0, 0);
-    width: 90px;
-    height: 40px;
-    padding: 5px;
-    text-align: center;
-    color: white;
-    background-color: black;
-    font-size: 19px;
-    position: absolute;
-    top: -1%;
-    left: 86%;
   }
 `;
 
@@ -585,11 +570,6 @@ const RecommendContentWrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-
-  @media (min-width: 481px) {
-    height: 100px;
-  }
-
   @media (min-width: 769px) {
     width: 540px;
     height: 100px;
@@ -597,37 +577,37 @@ const RecommendContentWrapper = styled.div`
 `;
 
 const RecommendContentContainer = styled.div<currRecommandProps>`
-  display: flex;
   position: absolute;
   flex-direction: row;
   left: 0%;
   top: 10%;
-  @media (min-width: 769px) {
-    height: 90px;
-    ${(props) => {
-      if (props.currrecommandtap === '톤인톤') {
-        return `
+
+  ${(props) => {
+    if (props.currrecommandtap === '톤인톤') {
+      return `
       width: 920px;
     `;
-      } else if (props.currrecommandtap === '톤온톤') {
-        return `
+    } else if (props.currrecommandtap === '톤온톤') {
+      return `
       width: 1480px;
     `;
-      } else if (props.currrecommandtap === '모노톤') {
-        return `
+    } else if (props.currrecommandtap === '모노톤') {
+      return `
         width: 850px;
       `;
-      }
-    }}
+    }
+  }}
+  @media(min-width: 768px) {
+    height: 90px;
   }
+  display: flex;
 `;
 
 const RecommendContent = styled.button<recommandProps>`
   width: 30px;
   height: 30px;
-  border: none;
+  border: 1px solid rgba(0, 0, 0);
   margin: 5px;
-  border: 1px solid #ececec;
 
   &:hover {
     opacity: 50%;
@@ -638,33 +618,20 @@ const RecommendContent = styled.button<recommandProps>`
     background-color: ${props.color};
   `;
   }}
-
-  @media (min-width: 481px) {
-    height: 80px;
-    width: 60px;
-  }
-
-  @media (min-width: 769px) {
+  @media (min-width: 768px) {
     width: 60px;
     height: 80px;
-    border: 1px solid rgba(0, 0, 0);
   }
 `;
 
 const RouletteWrapper = styled.div<rouletteWrapperProps>`
   position: absolute;
-  overflow: hidden;
   left: 70%;
   width: 300px;
   height: 300px;
-  top: 150px;
+  top: 35%;
   border-radius: 50%;
-
-  @media (min-width: 481px) {
-    top: 320px;
-    left: 80%;
-  }
-
+  /* right: 10%; */
   @media (min-width: 769px) {
     width: 500px;
     height: 500px;
@@ -690,10 +657,6 @@ const RouletteCenter = styled.div`
   background-color: white;
   z-index: 5;
   margin: -90px 0 0 -90px;
-
-  @media (max-width: 768px) {
-    border: 1px solid #ececec;
-  }
 `;
 
 const Roulette = styled.button<rouletteProps>`
@@ -718,10 +681,9 @@ const Roulette = styled.button<rouletteProps>`
       background-color: ${props.color};
       transform: rotate(${props.degree}deg);
     `;
-  }}
-  @media (max-width: 768px) {
-    border: 1px solid #ececec;
-  }
+  }}/* @media (max-width: 768px) {
+    display: none;
+  } */
 `;
 
 const MobileNavigationContainer = styled.div`
@@ -742,12 +704,12 @@ const MobileMenu = styled.div`
   display: flex;
   flex-grow: 1;
   height: 72px;
-  /* border-top: 1px solid black;
-  border-bottom: 1px solid black; */
+  border-top: 1px dotted;
+  border-bottom: 1px dotted;
   overflow: hidden;
 `;
 
-const MobileMenuItem = styled.button`
+const MobileMenuItem = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -775,7 +737,7 @@ const MobileMenuItemLabel = styled.span`
   transition: 0.25s ease;
 `;
 
-function MainPage() {
+function MainPageMobile() {
   const dispatch = useDispatch();
   let recommendColors: RecommendColor = useSelector(getRecommendColor);
   let rouletteColors: RouletteColor = useSelector(getRouletteColor);
@@ -919,40 +881,24 @@ function MainPage() {
   };
 
   //! 룰렛 관련 함수
-  function onRotateStart(
-    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
-  ) {
-    console.log('ON rotate start with touch');
+  function onRotateStart(event: React.MouseEvent<HTMLDivElement>) {
     event.preventDefault();
-
     setIsRotate(true);
-    // @ts-ignore
-    const yValue = event.pageY || event.touches[0].pageY;
-    setStartY(yValue);
-    // setStartY(event.pageY);
+    setStartY(event.pageY);
   }
 
-  function onRotateEnd(event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>) {
+  function onRotateEnd(event: React.MouseEvent<HTMLDivElement>) {
     setIsRotate(false);
   }
 
-  const onRotateMove = (
-    event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
-  ) => {
+  const onRotateMove = (event: React.MouseEvent<HTMLDivElement>) => {
     if (isRotate) {
-      // @ts-ignore
-      // @ts-ignore
-      const yValue = event.pageY || event.touches[0].pageY;
-      if (startY <= yValue) {
-        // if (startY <= event.pageY) {
+      if (startY <= event.pageY) {
         setDegree(degree - rotateSpeed);
-        // @ts-ignore
-        setStartY(yValue);
-        // @ts-ignore
-      } else if (startY >= yValue) {
+        setStartY(event.pageY);
+      } else if (startY >= event.pageY) {
         setDegree(degree + rotateSpeed);
-        // @ts-ignore
-        setStartY(yValue);
+        setStartY(event.pageY);
       }
     }
   };
@@ -1013,24 +959,13 @@ function MainPage() {
     window.scrollTo(0, 0);
   }
 
-  function handleClickNavIcon(el: string, e: React.MouseEvent<HTMLButtonElement>) {
-    if (navMobileNavState === '종류선택' && el === '종류선택') {
+  function handleClickNavIcon(el: string) {
+    if (el === '종류선택') {
       setIsNavModalOpen(!isNavModalOpen);
-    } else if (navMobileNavState !== '종류선택' && el === '종류선택') {
-      setIsNavModalOpen(true);
     } else if (el === '색상선택') {
       setIsNavModalOpen(true);
-      if (currSelectTap === '피부톤') {
-        setCurrSelectTap('');
-      }
     } else if (el === '추천색') {
       setIsNavModalOpen(true);
-      if (currSelectTap === '피부톤') {
-        setCurrSelectTap('');
-      }
-    } else if (el === '완료') {
-      handleResultImage(e);
-      handleClickScrollTo();
     }
     setNavMobileNavState(el);
 
@@ -1059,11 +994,8 @@ function MainPage() {
         {isRoulette ? (
           <RouletteWrapper
             onMouseDown={onRotateStart}
-            onTouchStart={onRotateStart}
             onMouseMove={onThrottleRotateMove}
-            onTouchMove={onThrottleRotateMove}
             onMouseUp={onRotateEnd}
-            onTouchEnd={onRotateEnd}
             onMouseLeave={onRotateEnd}
             degree={degree}
           >
@@ -1241,7 +1173,7 @@ function MainPage() {
               // @ts-ignore
               const MobileNavIcon = NavIconMap[el];
               return (
-                <MobileMenuItem key={idx} onClick={(e) => handleClickNavIcon(el, e)}>
+                <MobileMenuItem key={idx} onClick={() => handleClickNavIcon(el)}>
                   <MobileMenuIcon>
                     <MobileNavIcon />
                   </MobileMenuIcon>
@@ -1276,4 +1208,4 @@ function MainPage() {
   );
 }
 
-export default MainPage;
+export default MainPageMobile;

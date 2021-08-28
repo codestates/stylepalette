@@ -12,7 +12,7 @@ import Text from '../components/Text/Text';
 const ProfileEditWrapper = styled.div`
   width: 400px;
   background-color: white;
-  border: solid 1px #dbdbdb;
+  /* border: solid 1px #dbdbdb; */
   display: flex;
   flex-direction: column;
   @media (max-width: 768px) {

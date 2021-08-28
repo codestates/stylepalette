@@ -12,6 +12,7 @@ import ProfileEdit from './ProfileEdit';
 import PostSharing from './PostSharing';
 import PasswordCheck from './PasswordCheck';
 import PasswordChange from './PasswordChange';
+import { ReactComponent as CloseIcon } from '../images/close.svg';
 
 const ModalContainer = styled.div`
   width: 100vw;
@@ -28,7 +29,10 @@ const ModalContainer = styled.div`
 
 //placeholder to stop event propagation
 //https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
-const ModalContent = styled.div``;
+const ModalContent = styled.div`
+  border-radius: 10px;
+  border: solid 1px #dbdbdb;
+`;
 
 export default function Modal() {
   const dispatch = useDispatch();
@@ -62,7 +66,7 @@ export default function Modal() {
   return (
     <ModalContainer onClick={handleModalClose}>
       <Button close onClick={handleModalClose}>
-        X
+        <CloseIcon />
       </Button>
       <ModalContent onClick={(e) => e.stopPropagation()}>
         {renderModalContentComponent()}

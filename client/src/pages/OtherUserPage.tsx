@@ -39,7 +39,9 @@ const OtherUserInfoContainer = styled.div`
   display: flex;
   padding: 15px;
   margin: 0 15px 20px 15px;
-  width: 70%;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 768px;
   box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.8);
   border: 2px groove black;
   border-width: 0 0 2px 0;
@@ -78,51 +80,47 @@ const OtherUserInfoWrapper = styled.div`
   }
 `;
 
-const OtherUserPostWrapper = styled.div`
-  display: inline-block;
-  width: 70%;
-  text-align: left;
-  padding: 15px;
-  margin: 15px;
+const OtherUserPostOuterWrapper = styled.div`
+  display: table;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 768px;
   box-shadow: 0 1px 5px 3px black;
   border-radius: 5px;
   @media (max-width: 768px) {
-    /* flex-direction: column; */
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    margin: 5px;
-    width: 98%;
+    min-width: auto;
   }
 `;
 
+const OtherUserPostWrapper = styled.div`
+  padding: 1rem;
+  display: table-cell;
+  width: 100%;
+`;
+
 const NavIcon = styled.button`
-  margin: 20px 12px 40px 12px;
-  width: 300px;
-  height: 300px;
+  display: inline-block;
+  width: 31%;
   background-color: white;
   border-style: none;
-
+  margin: 1%;
   @media (max-width: 768px) {
-    margin: 10px;
+    width: 48%;
   }
 `;
 
 const PostPhoto = styled.img`
   border: 2px solid #777777;
   border-radius: 5px;
-  width: 295px;
-  height: 295px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 
   &:hover {
     opacity: 80%;
     border-color: #ababab;
     cursor: pointer;
-  }
-
-  @media (max-width: 768px) {
-    /* width: 200px;
-    height: 200px; */
   }
 `;
 
@@ -189,17 +187,19 @@ function OtherUserPage() {
             <OtherUserInfoContent>{otheruser.username}</OtherUserInfoContent> <br />
           </OtherUserInfoWrapper>
         </OtherUserInfoContainer>
-        <OtherUserPostWrapper>
-          {otheruser.post
-            .map((el: any, idx: React.Key | null | undefined) => {
-              return (
-                <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                  <PostPhoto src={el.image} />
-                </NavIcon>
-              );
-            })
-            .reverse()}
-        </OtherUserPostWrapper>
+        <OtherUserPostOuterWrapper>
+          <OtherUserPostWrapper>
+            {otheruser.post
+              .map((el: any, idx: React.Key | null | undefined) => {
+                return (
+                  <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                    <PostPhoto src={el.image} />
+                  </NavIcon>
+                );
+              })
+              .reverse()}
+          </OtherUserPostWrapper>
+        </OtherUserPostOuterWrapper>
       </OtherUserPageContainer>
       <OtherUserPageFooter></OtherUserPageFooter>
     </OtherUserPageWrapper>
