@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
+import { PrimaryButton } from '../components/Button/Button.styled';
 import { logIn, googleLogin, kakaoLogin } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
@@ -56,6 +57,11 @@ const SocialButtonContainer = styled.div`
   display: flex;
   flex-direction: column;
   padding: 10px 0;
+`;
+
+const LoginButton = styled(PrimaryButton)`
+  width: 120px;
+  text-align: center;
 `;
 
 const LoginFooter = styled.div`
@@ -152,9 +158,9 @@ export default function Login() {
           <Text size="small">{loginMessage}</Text>
         </MessageWrapper>
         <SocialButtonContainer>
-          <Button primary onClick={requestSignin} disabled={disabled}>
+          <LoginButton onClick={requestSignin} disabled={disabled}>
             로그인
-          </Button>
+          </LoginButton>
           <Button secondary onClick={handleClickKakaoLogin}>
             카카오로그인
           </Button>

@@ -53,11 +53,6 @@ const Color = [
 const SkinColor = ['#FEE6D8', '#FFCDB1', '#633F1E'];
 const SelectList = ['피부톤', '상의', '하의'];
 const recommendTab = ['톤인톤', '톤온톤', '모노톤'];
-const ClothList: any = {
-  피부톤: [],
-  상의: ['맨투맨', '셔츠'],
-  하의: ['준비중'],
-};
 
 //Mobile
 const BrushIcon = styled(Brush)`
@@ -81,6 +76,7 @@ const NavIconMap = {
   추천색: ColorIcon,
   완료: CheckCircleFillIcon,
 };
+
 
 interface imgProps {
   picktopcolor?: string;
@@ -369,37 +365,6 @@ const SubSelectButton = styled.button`
     width: 100px;
     height: 100px;
     font-size: 24px;
-  }
-`;
-
-const ClothContainer = styled.div`
-  display: inline;
-  position: absolute;
-  left: 7%;
-  top: 16%;
-  text-align: center;
-  width: 100px;
-  @media (max-width: 768px) {
-  }
-`;
-
-const ClothButton = styled.button`
-  font-style: bold;
-  font-size: 24px;
-  border: 2px solid rgba(0, 0, 0);
-  border-radius: 15px;
-  width: 100px;
-  height: 100px;
-  margin: 0 0 4px 0;
-  background-color: black;
-  color: white;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 50%;
-  }
-  @media (max-width: 768px) {
-    display: none;
   }
 `;
 
@@ -785,7 +750,6 @@ function MainPage() {
   }, []);
 
   const [currSelectTap, setCurrSelectTap] = useState<string>('');
-  const [pickSubSelect, setPickSubSelect] = useState<boolean>(false);
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
   const [isRecommend, setIsRecommend] = useState<boolean>(false);
   const [currRecommendTap, setCurrRecommendTap] = useState<string>('');
@@ -819,7 +783,6 @@ function MainPage() {
   //! 리셋
   function handleReset(event: React.MouseEvent<HTMLButtonElement>) {
     setCurrSelectTap('');
-    setPickSubSelect(false);
     setIsRoulette(false);
     setIsRecommend(false);
     setCurrRecommendTap('');
@@ -831,7 +794,6 @@ function MainPage() {
   //! 상의, 하의 선택 탭
   function handleCurrSelectTap(value: string) {
     setCurrSelectTap(value);
-    setPickSubSelect(false);
   }
 
   //! 팔레트 오리지널 색 선택
@@ -871,12 +833,6 @@ function MainPage() {
       setPickBottomColor(value);
     } else if (currSelectTap === '피부톤') {
       setPickSkinColor(value);
-    }
-  }
-
-  function handlePickSelect(value: string) {
-    if (value === '상의' || value === '하의' || value === '피부톤') {
-      setPickSubSelect(true);
     }
   }
 
@@ -1051,9 +1007,7 @@ function MainPage() {
         </SelectContainer>
         {currSelectTap.length !== 0 ? (
           <SubSelectContainer>
-            <SubSelectButton onClick={() => handlePickSelect(currSelectTap)}>
-              {currSelectTap}
-            </SubSelectButton>
+            <SubSelectButton>{currSelectTap}</SubSelectButton>
           </SubSelectContainer>
         ) : null}
         {isRoulette ? (
@@ -1147,13 +1101,6 @@ function MainPage() {
               </RecommendContentContainer>
             </RecommendContentWrapper>
           </RecommendColorWrapper>
-        ) : null}
-        {pickSubSelect ? (
-          <ClothContainer>
-            {ClothList[currSelectTap].map((el: string, idx: number) => {
-              return <ClothButton key={idx}>{el}</ClothButton>;
-            })}
-          </ClothContainer>
         ) : null}
         {currSelectTap === '피부톤' ? (
           <SkinSelectWrapper>

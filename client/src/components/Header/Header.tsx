@@ -5,15 +5,13 @@ import styled from 'styled-components';
 import { getIsLoggedIn, getIsModalOpen } from '../../redux/selectors';
 import { handleModal, logOut } from '../../redux/actions/action';
 import Modal from '../../modals/Modal';
-
 import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
-import StylePaletteLogo from '../../images/Logo/StylePaletteLogo.png';
 
 const HeaderWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  /* background-color: black; */
+  background-color: #fafafa;
   width: 100%;
   height: 5rem;
   position: fixed;
@@ -25,33 +23,25 @@ const HeaderWrapper = styled.div`
 const LogoWrapper = styled.span`
   display: flex;
   flex-direction: row;
-  width: 200px;
+  width: 250px;
   height: 3.9rem;
   padding: 0 0 0 30px;
-`;
-
-const Logo = styled.img`
-  position: absolute;
-  left: 9%;
-  top: 0%;
-  width: 70px;
-  height: 70px;
-  border-radius: 50%;
 `;
 
 const NavWrapper = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 767px) {
+
+  @media (max-width: 768px) {
     display: none;
   }
 `;
 
 const LinkedLoGo = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: #ff7e67;
   font-size: 2.2rem;
-  width: 100%;
+  width: 400px;
   text-align: center;
 
   &:hover {
@@ -61,7 +51,7 @@ const LinkedLoGo = styled(Link)`
 
 const Linked = styled(Link)`
   text-decoration: none;
-  color: white;
+  color: #ff7e67;
   font-size: 1.2rem;
 
   &:hover {
@@ -70,10 +60,11 @@ const Linked = styled(Link)`
 `;
 
 const NavMobile = styled.span`
+  margin-right: 2rem;
+  
   @media (min-width: 769px) {
     display: none;
   }
-  padding-right: 0.8em;
 `;
 
 const MenuIcon = styled(MenuOutline)`
@@ -83,9 +74,17 @@ const MenuIcon = styled(MenuOutline)`
     display: none;
   }
 `;
+
 const NavIcon = styled.span`
-  padding-right: 1.5em;
-  color: white;
+  color: #ff7e67;
+  cursor: pointer;
+  margin-right: 2.5rem;
+  font-size: 1.2rem;
+`;
+
+const MenuIcons = styled(MenuIcon)`
+  width: 30px;
+  height: 30px;
 `;
 
 // If user is logged in: nav will show: mypage, logout, gallery
@@ -119,10 +118,7 @@ export default function Header() {
     <>
       <HeaderWrapper>
         <LogoWrapper>
-          <LinkedLoGo to="/">
-            <Logo src={StylePaletteLogo} alt="로고" />
-            Style
-          </LinkedLoGo>
+          <LinkedLoGo to="/">StylePalette</LinkedLoGo>
         </LogoWrapper>
         <NavWrapper>
           {isLoggedIn ? (
@@ -145,7 +141,7 @@ export default function Header() {
           )}
         </NavWrapper>
         <NavMobile onClick={handleClickMenuIcon}>
-          <MenuIcon />
+          <MenuIcons />
         </NavMobile>
       </HeaderWrapper>
       {isModalOpen && <Modal />}

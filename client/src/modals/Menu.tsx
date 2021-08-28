@@ -14,7 +14,15 @@ const MenuContainer = styled.div`
 `;
 
 const NavIcon = styled.span`
-  padding-bottom: 10px;
+  padding-bottom: 2rem;
+  font-size: 1.2rem;
+  color: #ff7e67;
+`;
+
+const NavLink = styled(Link)`
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: #ff7e67;
 `;
 
 export default function Menu() {
@@ -44,13 +52,13 @@ export default function Menu() {
         {isLoggedIn ? (
           <>
             <NavIcon onClick={handleModalClose}>
-              <Link to="/mypage">마이페이지</Link>
+              <NavLink to="/mypage">마이페이지</NavLink>
             </NavIcon>
             <NavIcon onClick={handleModalClose}>
-              <Link to="/gallery">갤러리</Link>
+              <NavLink to="/gallery">갤러리</NavLink>
             </NavIcon>
             <NavIcon onClick={handleClickLogOut}>
-              <Link to="/">로그아웃</Link>
+              <NavLink to="/">로그아웃</NavLink>
             </NavIcon>
           </>
         ) : (
