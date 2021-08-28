@@ -94,7 +94,7 @@ function App() {
           <Route exact path="/gallery">
             <Gallery />
           </Route>
-          <Route exact path="/:userId">
+          <Route exact path="/user/:userId">
             <OtherUserPage />
           </Route>
         </Switch>
