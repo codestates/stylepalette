@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const DefaultButton = styled.button`
   background: transparent;
   color: black;
-  border-radius: 3px;
+  border-radius: 20px;
   border: 1px solid black;
   margin: 0.5em 1em;
   padding: 0.25em 1em;
@@ -14,8 +14,6 @@ export const DefaultButton = styled.button`
   }
 
   &:hover {
-    // change color
-    /* color: #dbdbdb; */
     cursor: pointer;
     opacity: 90%;
     transform: translatey(3px);
@@ -28,26 +26,32 @@ export const PrimaryButton = styled(DefaultButton)`
   color: white;
   width: 100px;
   height: 30px;
+  border: none;
 
   &:hover {
     cursor: pointer;
     opacity: 90%;
   }
 
-  &:active {
+  /* &:active {
     outline: none;
     background-color: #f8bbd0;
     border-color: #f8bbd0;
-  }
+  } */
 
   &:disabled {
     opacity: 50%;
+    animation: none;
+    transform: none;
   }
 `;
 
 export const SecondaryButton = styled(DefaultButton)`
   background: white;
   color: black;
+  width: 100px;
+  height: 30px;
+  border: 1px solid #07689f;
 
   &:hover {
     cursor: pointer;

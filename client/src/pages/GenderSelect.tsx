@@ -15,6 +15,9 @@ const GenderWrapper = styled.div`
   padding-top: 5rem;
   left: 0;
   top: 0;
+  @media (max-width: 768px) {
+    justify-content: center;
+  }
 `;
 
 const GenderContainer = styled.div`
@@ -25,10 +28,10 @@ const GenderContainer = styled.div`
 `;
 
 const ContentWrapper = styled.div`
-  padding: 50px;
-
-  @media (max-width: 768px) {
-    padding: 50px 50px 30px 50px;
+  padding: 50px 50px 30px 50px;
+  overflow: hidden;
+  @media (min-width: 768px) {
+    padding: 50px;
   }
 `;
 
@@ -41,43 +44,48 @@ const GenderContent = styled.h1`
 
 const PhotoContent = styled.h2`
   text-align: center;
-  font-size: 2.5rem;
+  font-size: 1rem;
+  @media (min-width: 768px) {
+    font-size: 2.5rem;
+  }
 `;
 
 const PhotoContainer = styled.div`
+  overflow: hidden;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  @media (max-width: 768px) {
-    padding: 0px;
+  padding: 0px;
+
+  @media (min-width: 768px) {
+    padding: 20px;
   }
 `;
 
 const PhotoWrapper = styled.div`
-  padding: 30px 225px 20px 225px;
+  padding: 15px;
 
-  @media (max-width: 768px) {
-    padding: 15px;
+  @media (min-width: 769px) {
+    padding: 30px 225px 20px 225px;
   }
 `;
 
 const GenderPhoto = styled.img`
-  width: 330px;
-  height: 330px;
-  margin: 10px 0 30px;
-
-  @media (max-width: 768px) {
-    width: 149px;
-    height: 149px;
-    margin: 0px;
+  width: 149px;
+  height: 149px;
+  margin: 0px;
+  @media (min-width: 768px) {
+    width: 330px;
+    height: 330px;
+    margin: 10px 0 30px;
   }
 `;
 
 const PhotoButton = styled.button`
-  width: 350px;
-  height: 380px;
+  width: 155px;
+  height: 155px;
+
   border-style: none;
   border-radius: 45px;
   background-color: #fafafa;
@@ -91,9 +99,9 @@ const PhotoButton = styled.button`
     background-color: #ff7e67;
   }
 
-  @media (max-width: 768px) {
-    width: 155px;
-    height: 155px;
+  @media (min-width: 768px) {
+    width: 350px;
+    height: 380px;
   }
 `;
 
@@ -158,15 +166,14 @@ const SelectButton = styled.button`
   height: 80px;
   border: none;
   text-align: center;
-  border: 1px solid rgb(0, 0, 0);
-  border-radius: 5px;
-  background-color: black;
+  border-radius: 50px;
+  background-color: #a2d5f2;
   color: white;
   font-size: 20px;
 
   &:disabled {
     opacity: 70%;
-    border: 1px solid rgb(0, 0, 0, 0.7);
+    border: 1px solid #efefef;
   }
 
   &:hover {

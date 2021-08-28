@@ -5,8 +5,7 @@ import styled from 'styled-components';
 import { getIsLoggedIn, getIsModalOpen } from '../../redux/selectors';
 import { handleModal, logOut } from '../../redux/actions/action';
 import Modal from '../../modals/Modal';
-
-import { ReactComponent as MenuIcon } from '../../images/menu.svg';
+import { MenuOutline } from '@styled-icons/evaicons-outline/MenuOutline';
 
 const HeaderWrapper = styled.div`
   display: flex;
@@ -61,11 +60,18 @@ const Linked = styled(Link)`
 `;
 
 const NavMobile = styled.span`
-  display: none;
   margin-right: 2rem;
+  
+  @media (min-width: 769px) {
+    display: none;
+  }
+`;
 
-  @media (max-width: 768px) {
-    display: inline;
+const MenuIcon = styled(MenuOutline)`
+  width: 30px;
+  color: #ff7e67;
+  @media (min-width: 768px) {
+    display: none;
   }
 `;
 

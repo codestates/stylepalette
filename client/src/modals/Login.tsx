@@ -9,6 +9,7 @@ import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
 import { getMessage } from '../redux/selectors';
 import { clientUrl } from '../utils/constants';
+import { UserIcon, KeyIcon } from '../components/Icon/Icon';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -16,9 +17,10 @@ dotenv.config();
 const LoginWrapper = styled.div`
   width: 400px;
   background-color: white;
-  border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
+  position: relative;
+
   @media (max-width: 768px) {
     width: 320px;
   }
@@ -27,7 +29,7 @@ const LoginWrapper = styled.div`
 const LoginHeader = styled.div`
   display: flex;
   justify-content: center;
-  padding: 1em;
+  padding: 2em 1em 1em 1em;
 `;
 
 const LoginContainer = styled.div`
@@ -35,9 +37,8 @@ const LoginContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   padding: 15px;
-  margin: 15px;
+  margin: 0 20px;
 `;
 
 const InputWrapper = styled.div`
@@ -68,6 +69,17 @@ const LoginFooter = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px 0;
+`;
+
+const Dot = styled.div`
+  position: absolute;
+  border-radius: 100%;
+  z-index: 11;
+  background-color: #ff7e67;
+  top: -65px;
+  right: -80px;
+  width: 160px;
+  height: 160px;
 `;
 
 export default function Login() {
@@ -117,19 +129,24 @@ export default function Login() {
 
   return (
     <LoginWrapper>
-      <LoginHeader>로그인</LoginHeader>
+      <LoginHeader>STYLE PALETTE</LoginHeader>
+      {/* <Dot /> */}
       <LoginContainer>
         <InputWrapper>
-          <Label>유저네임</Label>
+          <Label>
+            <UserIcon />
+          </Label>
           <input
             type="text"
             value={username}
-            placeholder="아이디"
+            placeholder="유저네임"
             onChange={handleChangeUsername}
           ></input>
         </InputWrapper>
         <InputWrapper>
-          <Label>비밀번호</Label>
+          <Label>
+            <KeyIcon />
+          </Label>
           <input
             type="password"
             value={password}
@@ -144,13 +161,17 @@ export default function Login() {
           <LoginButton onClick={requestSignin} disabled={disabled}>
             로그인
           </LoginButton>
-          <LoginButton onClick={handleClickKakaoLogin}>카카오로그인</LoginButton>
-          <LoginButton onClick={handleClickGoogleLogin}>구글로그인</LoginButton>
+          <Button secondary onClick={handleClickKakaoLogin}>
+            카카오로그인
+          </Button>
+          <Button secondary onClick={handleClickGoogleLogin}>
+            구글로그인
+          </Button>
         </SocialButtonContainer>
       </LoginContainer>
       <LoginFooter>
         <span>아직 회원이 아니신가요?</span>
-        <Button primary onClick={handleClickSignUp}>
+        <Button secondary onClick={handleClickSignUp}>
           회원가입
         </Button>
       </LoginFooter>

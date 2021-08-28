@@ -6,13 +6,14 @@ import Button from '../components/Button/Button';
 import { passwordCheck } from '../redux/actions/action';
 import { getUser, getMessage } from '../redux/selectors';
 import Text from '../components/Text/Text';
+import { KeyIcon } from '../components/Icon/Icon';
 
 const PasswordCheckWrapper = styled.div`
   width: 400px;
   background-color: white;
-  border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
+
   @media (max-width: 768px) {
     width: 320px;
   }
@@ -23,7 +24,7 @@ const PasswordCheckHeader = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 1em;
+  padding: 2em 1em 1em 1em;
 `;
 
 const InputOuterWrapper = styled.div`
@@ -90,7 +91,9 @@ export default function PasswordChange() {
       <PasswordCheckHeader>현재 비밀번호를 입력해주세요</PasswordCheckHeader>
       <InputOuterWrapper>
         <InputWrapper>
-          <Label>비밀번호</Label>
+          <Label>
+            <KeyIcon />
+          </Label>
           <Input type="password" onChange={handleCheckPassword}></Input>
         </InputWrapper>
         {passwordMessage.length > 0 && (

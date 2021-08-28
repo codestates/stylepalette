@@ -3,11 +3,11 @@ import { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-
 import { PostsState, RouletteColor } from '../redux/reducers/initialState';
 import { handleModal, getPost, rouletteColor, getAllPosts } from '../redux/actions/action';
 import { getPosts, getRouletteColor } from '../redux/selectors';
 import { ReactComponent as FilterIcon } from '../images/filter.svg';
+import { ReactComponent as CloseIcon } from '../images/close.svg';
 
 const Color = [
   '최신순',
@@ -23,7 +23,7 @@ const Color = [
   '검정',
 ];
 
-const GalleryWrapper = styled.div`
+const GalleryPageWrapper = styled.div`
   width: 100vw;
   display: flex;
   background-color: white;
@@ -34,22 +34,28 @@ const GalleryWrapper = styled.div`
   padding-top: 5rem;
 `;
 
+const GalleryWrapper = styled.div`
+  padding: 15px;
+  @media (max-width: 768px) {
+    padding: 2px;
+  }
+`;
+
 const FilterContainer = styled.div`
-  display: grid;
+  display: flex;
+  justify-content: center;
   align-items: center;
-  text-align: left;
   @media (max-width: 767px) {
     display: none;
   }
 `;
 
 const ListContainer = styled.div`
-  display: inline-block;
+  display: flex;
+  justify-content: center;
   max-width: 962px;
-  margin: 80px 0 80px;
+  margin: 20px;
   width: 100%;
-  border-top: 2px solid black;
-  border-left: 2px solid black;
   @media (max-width: 767px) {
     display: none;
   }
@@ -60,7 +66,7 @@ const ListContainerMobile = styled.div`
   justify-content: flex-end;
   align-items: center;
   width: 100%;
-  padding: 10px 10px 0 0;
+  padding: 10px;
 
   @media (min-width: 768px) {
     display: none;
@@ -68,7 +74,7 @@ const ListContainerMobile = styled.div`
 `;
 
 const ColorList = styled.button`
-  text-align: center;
+  /* text-align: center;
   display: inline-block;
   width: 160px;
   height: 65px;
@@ -90,67 +96,99 @@ const ColorList = styled.button`
   &:focus {
     opacity: 80%;
     background-color: #dbdbdb;
+  } */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 40px;
+  border: 1px solid #ececec;
+  background: #fff;
+  margin: 0 4px 4px 0;
+  font-size: 12px;
+  height: 40px;
+  width: 60px;
+  cursor: pointer;
+  &:focus {
+    opacity: 80%;
+    background-color: #dbdbdb;
   }
 `;
 
 const GalleryContainer = styled.div`
-  width: 70%;
-  display: flex;
-  text-align: left;
-  flex-direction: column;
-  justify-content: center;
-  padding: 20px 10px;
-  margin: 15px 15px 50px 15px;
-  border: 2px solid black;
+  display: table;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+  min-width: 768px;
+  box-shadow: 0 1px 5px 3px black;
   border-radius: 5px;
-  box-shadow: 0 0px 5px 3px #333333;
+  @media (max-width: 768px) {
+    min-width: auto;
+  }
 `;
 
 const PhotoWrapper = styled.div`
-  padding: 20px 50px;
+  padding: 1rem;
+  display: table-cell;
+  width: 100%;
+  /* padding: 20px 50px; */
 `;
 
 const NavIcon = styled.button`
-  margin: 30px 6px 30px 6px;
-  width: 280px;
-  height: 280px;
+  display: inline-block;
+  width: 31%;
   background-color: white;
   border-style: none;
-
+  margin: 1%;
   @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
-    margin: 0 50px 50px 50px;
+    width: 48%;
   }
 `;
 
 const PostPhoto = styled.img`
   border: 2px solid #777777;
   border-radius: 5px;
-  width: 275px;
-  height: 275px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
 
   &:hover {
     opacity: 80%;
     cursor: pointer;
   }
-
-  @media (max-width: 768px) {
-    width: 200px;
-    height: 200px;
-  }
 `;
 
 const Modal = styled.div`
-  display: flex;
+  display: block;
   width: 100%;
+  padding: 20px;
+  background: rgba(250, 250, 250, 0.95);
 `;
 
-const MobileListContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+// const MobileListContainer = styled.div`
+//   display: flex;
+// `;
+
+const MobileColorList = styled.button`
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  border-radius: 40px;
+  border: 1px solid #ececec;
+  background: #fff;
+  margin: 0 4px 4px 0;
+  font-size: 12px;
+  height: 34px;
+  width: 50px;
+  cursor: pointer;
+  &:focus {
+    opacity: 80%;
+    background-color: #ececec;
+  }
 `;
-const MobileColorList = styled.div``;
 
 function Gallery() {
   const dispatch = useDispatch();
@@ -160,7 +198,6 @@ function Gallery() {
   const [filterPost, setFilterPost] = useState<any>(posts.reverse());
   const [isRoulette, setIsRoulette] = useState<boolean>(false);
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const [isBlack, setIsBlack] = useState<boolean>(false);
 
   useEffect(() => {
     dispatchAllPosts();
@@ -179,10 +216,8 @@ function Gallery() {
   };
 
   if (isRoulette) {
-    if (!isBlack) {
-      palette.shift();
-      palette.pop();
-    }
+    palette.shift();
+    palette.pop();
 
     const filterData = posts.filter((el) => {
       for (let i = 0; i < palette.length; i++) {
@@ -194,11 +229,8 @@ function Gallery() {
       }
     });
 
-    console.log('filterData:', filterData);
-
     setFilterPost(filterData.reverse());
     setIsRoulette(false);
-    setIsBlack(false);
   }
 
   const filteredFunc = (value: string) => {
@@ -260,13 +292,11 @@ function Gallery() {
         break;
       }
       case '하양': {
-        setIsBlack(true);
         filteredFunc('#FFFFFF');
 
         break;
       }
       case '검정': {
-        setIsBlack(true);
         filteredFunc('#000000');
 
         break;
@@ -278,29 +308,29 @@ function Gallery() {
   };
 
   const handleClickFilterIcon = (event: React.MouseEvent) => {
-    setIsModalOpen(true);
+    setIsModalOpen(!isModalOpen);
   };
 
   return (
     <>
-      <GalleryWrapper>
-        <FilterContainer>
-          <ListContainer>
-            {Color.map((el, idx) => {
-              return (
-                <ColorList key={idx} onClick={() => handleGetCategory(el)}>
-                  {el}
-                </ColorList>
-              );
-            })}
-          </ListContainer>
-        </FilterContainer>
-        <ListContainerMobile onClick={handleClickFilterIcon}>
-          <FilterIcon />
-        </ListContainerMobile>
-        {isModalOpen && (
-          <Modal>
-            <MobileListContainer>
+      <GalleryPageWrapper>
+        <GalleryWrapper>
+          <FilterContainer>
+            <ListContainer>
+              {Color.map((el, idx) => {
+                return (
+                  <ColorList key={idx} onClick={() => handleGetCategory(el)}>
+                    {el}
+                  </ColorList>
+                );
+              })}
+            </ListContainer>
+          </FilterContainer>
+          <ListContainerMobile onClick={handleClickFilterIcon}>
+            {isModalOpen ? <CloseIcon /> : <FilterIcon />}
+          </ListContainerMobile>
+          {isModalOpen && (
+            <Modal>
               {Color.map((el, idx) => {
                 return (
                   <MobileColorList key={idx} onClick={() => handleGetCategory(el)}>
@@ -308,41 +338,41 @@ function Gallery() {
                   </MobileColorList>
                 );
               })}
-            </MobileListContainer>
-          </Modal>
-        )}
-        <GalleryContainer>
-          <PhotoWrapper>
-            {filterPost.length < 2
-              ? posts.length === 1
-                ? null
-                : posts
-                    .filter((el) => {
+            </Modal>
+          )}
+          <GalleryContainer>
+            <PhotoWrapper>
+              {filterPost.length <= 1
+                ? posts.length <= 1
+                  ? null
+                  : posts
+                      .filter((el) => {
+                        return el.isPublic === true;
+                      })
+                      .map((el, idx) => {
+                        return (
+                          <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
+                            <PostPhoto key={idx} src={el.image} />
+                          </NavIcon>
+                        );
+                      })
+                      .reverse()
+                : filterPost
+                    .filter((el: any) => {
                       return el.isPublic === true;
                     })
-                    .map((el, idx) => {
+                    .map((el: any, idx: any) => {
                       return (
                         <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
                           <PostPhoto key={idx} src={el.image} />
                         </NavIcon>
                       );
                     })
-                    .reverse()
-              : filterPost
-                  .filter((el: any) => {
-                    return el.isPublic === true;
-                  })
-                  .map((el: any, idx: any) => {
-                    return (
-                      <NavIcon key={idx} onClick={() => handleClickPostInfo(el.id)}>
-                        <PostPhoto key={idx} src={el.image} />
-                      </NavIcon>
-                    );
-                  })
-                  .reverse()}
-          </PhotoWrapper>
-        </GalleryContainer>
-      </GalleryWrapper>
+                    .reverse()}
+            </PhotoWrapper>
+          </GalleryContainer>
+        </GalleryWrapper>
+      </GalleryPageWrapper>
     </>
   );
 }
