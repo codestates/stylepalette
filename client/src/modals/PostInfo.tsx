@@ -88,7 +88,6 @@ const OtherUserLink = styled(Link)`
   text-decoration: none;
   color: black;
   align-items: center;
-}
 `;
 
 const PostDeleteButton = styled(SecondaryButton)`

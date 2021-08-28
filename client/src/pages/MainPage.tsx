@@ -77,7 +77,6 @@ const NavIconMap = {
   완료: CheckCircleFillIcon,
 };
 
-
 interface imgProps {
   picktopcolor?: string;
   pickbottomcolor?: string;
@@ -729,14 +728,14 @@ const MobileMenuIcon = styled.span`
   display: block;
   margin-bottom: 4px;
   font-size: 26px;
-  color: black
+  color: black;
   transition: 0.25s ease;
 `;
 
 const MobileMenuItemLabel = styled.span`
   display: block;
   font-size: 13px;
-  color: black
+  color: black;
   transition: 0.25s ease;
 `;
 
