@@ -18,6 +18,7 @@ const LoginWrapper = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
+  position: relative;
 
   @media (max-width: 768px) {
     width: 320px;
@@ -47,13 +48,6 @@ const Label = styled.label`
   padding-right: 5px;
 `;
 
-// const UserIcon = styled(User)`
-//   width: 1.2em;
-// `;
-
-// const KeyIcon = styled(Key)`
-//   width: 1.2em;
-// `;
 const MessageWrapper = styled.div`
   color: red;
 `;
@@ -69,6 +63,17 @@ const LoginFooter = styled.div`
   justify-content: center;
   align-items: center;
   padding: 10px 0;
+`;
+
+const Dot = styled.div`
+  position: absolute;
+  border-radius: 100%;
+  z-index: 11;
+  background-color: #ff7e67;
+  top: -65px;
+  right: -80px;
+  width: 160px;
+  height: 160px;
 `;
 
 export default function Login() {
@@ -118,7 +123,8 @@ export default function Login() {
 
   return (
     <LoginWrapper>
-      <LoginHeader>로그인</LoginHeader>
+      <LoginHeader>STYLE PALETTE</LoginHeader>
+      {/* <Dot /> */}
       <LoginContainer>
         <InputWrapper>
           <Label>

@@ -26,20 +26,23 @@ export const PrimaryButton = styled(DefaultButton)`
   color: white;
   width: 100px;
   height: 30px;
+  border: none;
 
   &:hover {
     cursor: pointer;
     opacity: 90%;
   }
 
-  &:active {
+  /* &:active {
     outline: none;
     background-color: #f8bbd0;
     border-color: #f8bbd0;
-  }
+  } */
 
   &:disabled {
     opacity: 50%;
+    animation: none;
+    transform: none;
   }
 `;
 
@@ -48,6 +51,7 @@ export const SecondaryButton = styled(DefaultButton)`
   color: black;
   width: 100px;
   height: 30px;
+  border: 1px solid #07689f;
 
   &:hover {
     cursor: pointer;
