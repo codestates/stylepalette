@@ -36,7 +36,6 @@ export const postReducer = (state = initialState.post, action: { type: string; p
     }
 
     case GET_POST_FAILURE: {
-      console.log('postReducer failure');
       const message = action.payload;
       const newState = Object.assign({}, state, {
         apiMessage: message,

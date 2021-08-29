@@ -76,9 +76,6 @@ export default function PasswordChange() {
   const passwordMessage = useSelector(getMessage).passwordMessage;
 
   const requestPasswordCheck = () => {
-    // console.log('PASSWORDCHECK', user.username);
-    // console.log('PASSWORDCHECK', password);
-
     const userInfo = {
       username: user.username,
       password: password,

@@ -144,12 +144,9 @@ export const getUserInfo = (data: UserInfoProps) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log('getuser success: ', response);
         dispatch(getUserSuccess(response.data[0]));
       })
-      .catch((response) => {
-        console.log('getuser FAILURE: ', response);
-      });
+      .catch((response) => {});
   };
 };
 
@@ -175,12 +172,9 @@ export const getOtherUserInfo = (data: UserInfoProps) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log('get otheruser success: ', response);
         dispatch(getOtherUserSuccess(response.data[0]));
       })
-      .catch((response) => {
-        console.log('get otheruser FAILURE: ', response);
-      });
+      .catch((response) => {});
   };
 };
 
@@ -252,7 +246,6 @@ export const kakaoLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
         },
       )
       .then((response) => {
-        console.log('KAKAO LOGIN SUCCESS', response);
         localStorage.setItem('token', response.data.payload.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
@@ -262,9 +255,7 @@ export const kakaoLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
           }),
         );
       })
-      .catch((error) => {
-        console.log('KAKAO LOGIN FAILURE', error);
-      });
+      .catch((error) => {});
   };
 };
 
@@ -281,7 +272,6 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
         },
       )
       .then((response) => {
-        console.log('GOOGLE LOGIN SUCCESS', response);
         localStorage.setItem('token', response.data.payload.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
@@ -291,9 +281,7 @@ export const googleLogin = ({ authorizationCode, scope }: SocialLoginProps) => {
           }),
         );
       })
-      .catch((err) => {
-        console.log('GOOGLE LOGIN FAILURE:', err);
-      });
+      .catch((err) => {});
   };
 };
 
@@ -351,7 +339,6 @@ export const signup = (data: SignUpProps) => {
         },
       )
       .then((response) => {
-        console.log('SIGNUP RESPONSE in SUCCESS: ', response);
         // @ts-ignore
         const message = '회원가입이 성공적으로 완료됐습니다.';
         if (response.status === 201) {
@@ -396,9 +383,7 @@ export const profileEdit = (data: ProfileEditProps) => {
       .then((response) => {
         dispatch(profileEditSuccess(data));
       })
-      .catch((error) => {
-        // console.log('PROFILE EDIT  RESPONSE in FAILURE: ');
-      });
+      .catch((error) => {});
   };
 };
 
@@ -414,11 +399,9 @@ export const passwordChange = (data: ProfileEditProps) => {
         },
       )
       .then((response) => {
-        console.log('PASSWORD CHANGE RESPONSE in SUCCESS: ', response.data);
         dispatch(handleModal({ isOpen: false }));
       })
       .catch((error) => {
-        console.log('PASSWORD CHANGE RESPONSE in FAILURE: ');
         // let errorMsg;
         // if (error.response) {
         //   errorMsg = error.response.data.message;
@@ -494,11 +477,9 @@ export const profileImageChange = (data: ProfileImageEditProps) => {
         withCredentials: true,
       })
       .then((response) => {
-        console.log('PROFILEIMAGE RESPONSE in SUCCESS: ', response.data);
         dispatch(profileImageChangeSucess(response.data.location));
       })
       .catch((error) => {
-        console.log('PROFILEIMAGE RESPONSE in FAILURE: ');
         // let errorMsg;
         // if (error.response) {
         //   errorMsg = error.response.data.message;
@@ -531,9 +512,7 @@ export const getPost = (data: getPostProps) => {
         dispatch(getPostSuccess(response.data));
         dispatch(handleModal({ isOpen: true, type: 'postInfo' }));
       })
-      .catch((response) => {
-        console.log('getpost failure: ', response);
-      });
+      .catch((response) => {});
   };
 };
 
@@ -553,9 +532,7 @@ export const getAllPosts = () => {
       .then(async (res) => {
         await dispatch(successGetposts(res.data));
       })
-      .catch((res) => {
-        console.log('s failure', res);
-      });
+      .catch((res) => {});
   };
 };
 
@@ -580,13 +557,10 @@ export const deletePost = (data: getPostProps) => {
         withCredentials: true,
       })
       .then((res) => {
-        console.log('delete post success');
         dispatch(deletePostSuccess(data.postId));
         window.location.reload();
       })
-      .catch((err) => {
-        console.log('delete post failure');
-      });
+      .catch((err) => {});
   };
 };
 
@@ -680,7 +654,6 @@ export const updateLikeListSuccess = (data: any) => {
 };
 
 export const updateLikeList = (data: LikeProps) => {
-  console.log('update LIKE DATA:', data);
   const { postid, userid } = data;
   return (dispatch: (arg0: { type: string; payload?: any }) => void) => {
     axios

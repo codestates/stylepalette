@@ -846,7 +846,6 @@ function MainPage() {
   }
 
   function handleIsRecommendFalse(event: React.MouseEvent<HTMLButtonElement>) {
-    console.log('CLILCKED');
     setIsRecommend(false);
   }
 
@@ -879,7 +878,6 @@ function MainPage() {
   function onRotateStart(
     event: React.MouseEvent<HTMLDivElement> | React.TouchEvent<HTMLDivElement>,
   ) {
-    console.log('ON rotate start with touch');
     event.preventDefault();
 
     setIsRotate(true);

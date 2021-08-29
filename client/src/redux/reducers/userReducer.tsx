@@ -53,7 +53,6 @@ const userReducer = (
     }
 
     case LOGIN_FAILURE: {
-      console.log('userREDUCER login failure');
       const message = action.payload;
       const newUserState = Object.assign({}, state, {
         apiMessage: {

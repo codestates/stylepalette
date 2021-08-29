@@ -111,8 +111,6 @@ export default function PostInfo(modalData: any) {
   // const isLiked: boolean = useSelector(getLikeState);
   const likeList = post.like.map((el) => el.userId);
 
-  console.log('modalData:', modalData);
-
   useEffect(() => {
     handleIsDelete();
   }, []);
@@ -137,7 +135,6 @@ export default function PostInfo(modalData: any) {
     dispatch(updateLikeList(data));
   }
 
-  console.log('Likelist', likeList);
   return (
     <PostInfoWrapper>
       {currentUser.userid === post.userId ? (

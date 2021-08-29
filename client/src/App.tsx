@@ -57,7 +57,6 @@ function App() {
     const token = localStorage.getItem('token');
     const user = localStorage.getItem('user');
     let userInfoString = '';
-    console.log(token, user);
     if (user !== '') {
       userInfoString = JSON.parse(user!);
     }
