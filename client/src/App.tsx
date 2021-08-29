@@ -29,14 +29,11 @@ const Wrapper = styled.div<WrapperProps>`
 `;
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;700&display=swap');
-  /* @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap'); */
-  @import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
   * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
-  font-family: 'Noto Sans KR', sans-serif;
+  font-family: 'Open Sans Condensed', sans-serif;
   overflow-x: hidden;
   overflow-y: auto;
   color: #09214c;
