@@ -558,7 +558,7 @@ export const deletePost = (data: getPostProps) => {
       })
       .then((res) => {
         dispatch(deletePostSuccess(data.postId));
-        window.location.reload();
+        dispatch(handleModal({ isOpen: false }));
       })
       .catch((err) => {});
   };

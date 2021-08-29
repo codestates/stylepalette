@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginSuccess } from '../src/redux/actions/action';
-import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
 import { getIsModalOpen } from './redux/selectors/index';
 import Header from './components/Header/Header';
@@ -77,7 +77,6 @@ function App() {
         <Switch>
           <Route exact path="/">
             <LandingPage />
-            {/* <MainPage /> */}
           </Route>
           <Route exact path="/genderselect">
             <GenderSelect />

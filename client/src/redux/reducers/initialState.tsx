@@ -84,6 +84,7 @@ export interface UserState {
     loginMessage: string;
     passwordMessage: string;
   };
+  post: PostState[];
 }
 
 export interface OtherUserState {

@@ -10,6 +10,7 @@ import {
   GETUSERINFO_SUCCESS,
   GETUSERINFO_FAILURE,
   PROFILEIMAGE_EDIT_SUCCESS,
+  DELETE_POST_SUCCESS,
 } from '../actions/action';
 import { initialState, UserState } from './initialState';
 
@@ -134,6 +135,15 @@ const userReducer = (
       });
       return newProfileState;
     }
+
+    case DELETE_POST_SUCCESS: {
+      const newPosts = state.post?.filter((el: any) => el.id !== action.payload);
+      const newState = Object.assign({}, state, {
+        post: newPosts,
+      });
+      return newState;
+    }
+
     default:
       return state;
   }

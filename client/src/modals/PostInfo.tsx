@@ -105,23 +105,11 @@ const PostDeleteButton = styled(SecondaryButton)`
 export default function PostInfo(modalData: any) {
   // TODO: Create a selector to retrieve only one post based on id
   const dispatch = useDispatch();
-  const [isDelete, setIsDelete] = useState<boolean>(false);
   const post: PostState = useSelector(getPostState);
   const currentUser: UserState = useSelector(getUser);
-  // const isLiked: boolean = useSelector(getLikeState);
   const likeList = post.like.map((el) => el.userId);
 
-  useEffect(() => {
-    handleIsDelete();
-  }, []);
-
-  function handleIsDelete() {
-    if (currentUser.userid === post.userId) {
-      setIsDelete(true);
-    } else {
-      setIsDelete(false);
-    }
-  }
+  useEffect(() => {}, []);
 
   function handleClickPostDelete() {
     dispatch(

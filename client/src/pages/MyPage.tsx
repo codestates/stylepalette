@@ -153,8 +153,6 @@ function MyPage() {
   useEffect(() => {
     // get user info
     dispatch(getUserInfo({ userid: user.userid }));
-    window.scrollTo(0, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, user.userid]);
 
   const handleClickPostInfo = (postid: number | null) => {
