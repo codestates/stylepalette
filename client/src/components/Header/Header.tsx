@@ -45,7 +45,7 @@ const LinkedLoGo = styled(Link)`
   color: #ff7e67;
   font-size: 2.2rem;
   text-align: center;
-  font-family: 'Open Sans Condensed', sans-serif;
+  font-family: 'Lobster', cursive;
   &:hover {
     opacity: 70%;
   }
