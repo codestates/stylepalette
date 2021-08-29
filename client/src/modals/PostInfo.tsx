@@ -147,7 +147,7 @@ export default function PostInfo(modalData: any) {
       </PostTitleContainer>
       <PostImage src={post.image} alt="post-img" />
       <PostContentContainer>
-        <OtherUserLink to={`/${post.userId}`}>
+        <OtherUserLink to={`/user/${post.userId}`}>
           <PostOwnerProfileImage src={post.user.userimage} />
           <PostOwerUserName>{post.user.username}</PostOwerUserName>
         </OtherUserLink>
