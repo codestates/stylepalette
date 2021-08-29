@@ -13,9 +13,9 @@ import { NumberValueToken } from 'html2canvas/dist/types/css/syntax/tokenizer';
 
 const PostInfoWrapper = styled.div`
   width: 400px;
-  border: solid 2px black;
+  border: solid 1px #09214c;
   border-radius: 10px;
-  background-color: black;
+  background-color: #fafafa
   display: flex;
   flex-direction: column;
   @media (max-width: 768px) {
@@ -26,8 +26,8 @@ const PostInfoWrapper = styled.div`
 const PostTitleContainer = styled.div`
   width: 100%;
   text-align: center;
-  border-bottom: 2px solid black;
-  background-color: black;
+  border-bottom: 1px solid #09214c;
+  background-color: #fafafa;
 `;
 
 const PostTitle = styled.div`
@@ -35,12 +35,12 @@ const PostTitle = styled.div`
   align-items: center;
   font-size: 1.2rem;
   padding: 5px;
-  color: white;
+  color: #09214c;
 `;
 
 const PostImage = styled.img`
   width: 100%;
-  border-bottom: 2px solid black;
+  border-bottom: 1px solid #09214c;
 `;
 
 const PostContentContainer = styled.div`
@@ -48,6 +48,7 @@ const PostContentContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 0 0.3em 0.3em 0.3em;
+  background-color: #fafafa;
 `;
 
 const PostOwnerProfileImage = styled.img`
@@ -59,7 +60,7 @@ const PostOwnerProfileImage = styled.img`
 const PostOwerUserName = styled.div`
   padding-top: 3px;
   padding-left: 5px;
-  color: white;
+  color: #09214c;
 `;
 
 const LikeContainer = styled.span`

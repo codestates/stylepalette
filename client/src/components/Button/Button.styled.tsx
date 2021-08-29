@@ -1,17 +1,13 @@
 import styled from 'styled-components';
 
 export const DefaultButton = styled.button`
-  background: transparent;
-  color: black;
+  background: #ff7e67;
+  color: white;
   border-radius: 20px;
-  border: 1px solid black;
+  border: 1px solid #ff7e67;
   margin: 0.5em 1em;
   padding: 0.25em 1em;
   transition: all 0.2s linear;
-
-  &:disabled {
-    // change opacity
-  }
 
   &:hover {
     cursor: pointer;
@@ -22,9 +18,9 @@ export const DefaultButton = styled.button`
 `;
 
 export const PrimaryButton = styled(DefaultButton)`
-  background: black;
+  background: #09214c;
   color: white;
-  width: 100px;
+  /* width: 100px; */
   height: 30px;
   border: none;
 
@@ -33,11 +29,9 @@ export const PrimaryButton = styled(DefaultButton)`
     opacity: 90%;
   }
 
-  /* &:active {
+  &:active {
     outline: none;
-    background-color: #f8bbd0;
-    border-color: #f8bbd0;
-  } */
+  }
 
   &:disabled {
     opacity: 50%;
@@ -48,10 +42,10 @@ export const PrimaryButton = styled(DefaultButton)`
 
 export const SecondaryButton = styled(DefaultButton)`
   background: white;
-  color: black;
-  width: 100px;
+  color: #09214c;
+  /* width: 100px; */
   height: 30px;
-  border: 1px solid #07689f;
+  border: 1px solid #09214c;
 
   &:hover {
     cursor: pointer;
@@ -59,6 +53,7 @@ export const SecondaryButton = styled(DefaultButton)`
 `;
 
 export const CloseButton = styled(DefaultButton)`
+  background: none;
   border: none;
   padding: 1em;
   margin: 20px;

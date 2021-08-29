@@ -12,6 +12,7 @@ import { UserState } from '../redux/reducers/initialState';
 const PasswordWrapper = styled.div`
   width: 400px;
   background-color: white;
+  border-radius: 10px;
   border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
@@ -30,18 +31,11 @@ const PasswordChangeHeader = styled.div`
 
 const InputOuterWrapper = styled.div`
   display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid black;
+  justify-content: flex-start;
+  align-items: flex-start;
+  border: 1px solid #09214c;
   padding: 15px;
   margin: 15px;
-`;
-const LabelContainer = styled.div`
-  padding: 5px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: flex-start;
 `;
 
 const Label = styled.label`
@@ -53,15 +47,18 @@ const InputWrapper = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+  width: 100%;
 `;
 
 const Input = styled.input`
   margin: 5px;
+  width: 98%;
 `;
 
 const MessageWrapper = styled.div`
   color: red;
+  margin: 5px;
 `;
 
 const SubmitButtonWrapper = styled.div`
@@ -125,19 +122,22 @@ export default function PasswordChange() {
     <PasswordWrapper>
       <PasswordChangeHeader>비밀번호 변경</PasswordChangeHeader>
       <InputOuterWrapper>
-        <LabelContainer>
-          <Label>새 비밀번호</Label>
-          <Label>새 비밀번호 확인</Label>
-        </LabelContainer>
         <InputWrapper>
+          <Label>새 비밀번호</Label>
           <Input type="password" onChange={handleChangeNewPassword}></Input>
           <MessageWrapper>
-            <Text size="small">{passwordStrengthMsg}</Text>
+            <Text size="small" color="red">
+              {passwordStrengthMsg}
+            </Text>
           </MessageWrapper>
+          <Label>새 비밀번호 확인</Label>
+
           <Input type="password" onChange={handleChangeNewPasswordConfirm}></Input>
           {newPassword !== '' && newPasswordConfirm !== '' ? (
             <MessageWrapper>
-              <Text size="small">{passwordMsg}</Text>
+              <Text size="small" color="red">
+                {passwordMsg}
+              </Text>
             </MessageWrapper>
           ) : (
             <MessageWrapper></MessageWrapper>
@@ -148,7 +148,9 @@ export default function PasswordChange() {
         <Button primary onClick={requestPasswordChange} disabled={disabled}>
           변경 완료
         </Button>
-        <Button onClick={handleClickProfileEdit}>회원 정보 수정</Button>
+        <Button secondary onClick={handleClickProfileEdit}>
+          회원 정보 수정
+        </Button>
       </SubmitButtonWrapper>
     </PasswordWrapper>
   );

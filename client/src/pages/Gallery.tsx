@@ -9,6 +9,10 @@ import { getPosts, getRouletteColor } from '../redux/selectors';
 import { ReactComponent as FilterIcon } from '../images/filter.svg';
 import { ReactComponent as CloseIcon } from '../images/close.svg';
 
+interface DotProps {
+  color: string;
+}
+
 const Color = [
   '최신순',
   '인기순',
@@ -25,6 +29,7 @@ const Color = [
 
 const GalleryPageWrapper = styled.div`
   width: 100vw;
+  height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
@@ -74,36 +79,12 @@ const ListContainerMobile = styled.div`
 `;
 
 const ColorList = styled.button`
-  /* text-align: center;
-  display: inline-block;
-  width: 160px;
-  height: 65px;
-  padding: 12px 8px;
-  border: none;
-  border-right: 2px solid black;
-  border-bottom: 2px solid black;
-  cursor: pointer;
-  background-color: white;
-  color: black;
-  font-weight: bold;
-  font-size: 1.2rem;
-
-  &:hover {
-    opacity: 80%;
-    background-color: #dbdbdb;
-  }
-
-  &:focus {
-    opacity: 80%;
-    background-color: #dbdbdb;
-  } */
-
   display: inline-flex;
   align-items: center;
   justify-content: center;
   position: relative;
   border-radius: 40px;
-  border: 1px solid #ececec;
+  border: 1px solid #efefef;
   background: #fff;
   margin: 0 4px 4px 0;
   font-size: 12px;
@@ -122,8 +103,6 @@ const GalleryContainer = styled.div`
   width: 100%;
   max-width: 1200px;
   min-width: 768px;
-  box-shadow: 0 1px 5px 3px black;
-  border-radius: 5px;
   @media (max-width: 768px) {
     min-width: auto;
   }
@@ -148,7 +127,7 @@ const NavIcon = styled.button`
 `;
 
 const PostPhoto = styled.img`
-  border: 2px solid #777777;
+  border: 2px solid #efefef;
   border-radius: 5px;
   width: 100%;
   height: auto;
@@ -165,11 +144,8 @@ const Modal = styled.div`
   width: 100%;
   padding: 20px;
   background: rgba(250, 250, 250, 0.95);
+  border-radius: 20px;
 `;
-
-// const MobileListContainer = styled.div`
-//   display: flex;
-// `;
 
 const MobileColorList = styled.button`
   display: inline-flex;
@@ -177,7 +153,7 @@ const MobileColorList = styled.button`
   justify-content: center;
   position: relative;
   border-radius: 40px;
-  border: 1px solid #ececec;
+  border: 1px solid #efefef;
   background: #fff;
   margin: 0 4px 4px 0;
   font-size: 12px;
@@ -186,8 +162,58 @@ const MobileColorList = styled.button`
   cursor: pointer;
   &:focus {
     opacity: 80%;
-    background-color: #ececec;
+    background-color: #efefef;
   }
+`;
+
+const Dot = styled.span<DotProps>`
+  height: 10px;
+  width: 10px;
+  border: 1px solid #efefef;
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 4px;
+  ${(props) => {
+    if (props.color === '빨강') {
+      return `
+        background:#FF0000;
+    `;
+    } else if (props.color === '주황') {
+      return `
+        background: #FFA500;
+    `;
+    } else if (props.color === '노랑') {
+      return `
+        background: #FFFF00;
+    `;
+    } else if (props.color === '초록') {
+      return `
+        background: #008000;
+    `;
+    } else if (props.color === '파랑') {
+      return `
+        background: #0000FF;
+    `;
+    } else if (props.color === '남색') {
+      return `
+        background: #00008B;
+    `;
+    } else if (props.color === '보라') {
+      return `
+        background: #800080;
+    `;
+    } else if (props.color === '하양') {
+      return `
+        background: #FFFFFF;
+    `;
+    } else if (props.color === '검정') {
+      return `
+        background: #000000;
+    `;
+    } else {
+      return `display:none`;
+    }
+  }}
 `;
 
 function Gallery() {
@@ -320,6 +346,7 @@ function Gallery() {
               {Color.map((el, idx) => {
                 return (
                   <ColorList key={idx} onClick={() => handleGetCategory(el)}>
+                    <Dot color={el} />
                     {el}
                   </ColorList>
                 );
@@ -334,6 +361,7 @@ function Gallery() {
               {Color.map((el, idx) => {
                 return (
                   <MobileColorList key={idx} onClick={() => handleGetCategory(el)}>
+                    <Dot color={el} />
                     {el}
                   </MobileColorList>
                 );

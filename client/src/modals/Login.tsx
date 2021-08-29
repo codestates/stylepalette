@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
-import { PrimaryButton } from '../components/Button/Button.styled';
+import { PrimaryButton, SecondaryButton } from '../components/Button/Button.styled';
 import { logIn, googleLogin, kakaoLogin } from '../redux/actions/action';
 import { handleModal } from '../redux/actions/action';
 import Text from '../components/Text/Text';
@@ -20,16 +20,26 @@ const LoginWrapper = styled.div`
   display: flex;
   flex-direction: column;
   position: relative;
+  border-radius: 10px;
+  border: solid 1px #dbdbdb;
 
   @media (max-width: 768px) {
     width: 320px;
   }
 `;
 
-const LoginHeader = styled.div`
+const LoginHeader = styled.h1`
   display: flex;
   justify-content: center;
-  padding: 2em 1em 1em 1em;
+  padding-top: 2em;
+  color: #ff7e67;
+  font-family: 'Sacramento', cursive;
+`;
+
+const LoginSubHeader = styled.h2`
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
 `;
 
 const LoginContainer = styled.div`
@@ -60,6 +70,11 @@ const SocialButtonContainer = styled.div`
 `;
 
 const LoginButton = styled(PrimaryButton)`
+  width: 120px;
+  text-align: center;
+`;
+
+const SocialLoginButton = styled(SecondaryButton)`
   width: 120px;
   text-align: center;
 `;
@@ -129,8 +144,8 @@ export default function Login() {
 
   return (
     <LoginWrapper>
-      <LoginHeader>STYLE PALETTE</LoginHeader>
-      {/* <Dot /> */}
+      <LoginHeader>StylePalette</LoginHeader>
+      <LoginSubHeader>로그인</LoginSubHeader>
       <LoginContainer>
         <InputWrapper>
           <Label>
@@ -155,18 +170,16 @@ export default function Login() {
           ></input>
         </InputWrapper>
         <MessageWrapper>
-          <Text size="small">{loginMessage}</Text>
+          <Text size="small" color="red">
+            {loginMessage}
+          </Text>
         </MessageWrapper>
         <SocialButtonContainer>
           <LoginButton onClick={requestSignin} disabled={disabled}>
             로그인
           </LoginButton>
-          <Button secondary onClick={handleClickKakaoLogin}>
-            카카오로그인
-          </Button>
-          <Button secondary onClick={handleClickGoogleLogin}>
-            구글로그인
-          </Button>
+          <SocialLoginButton onClick={handleClickKakaoLogin}>카카오로그인</SocialLoginButton>
+          <SocialLoginButton onClick={handleClickGoogleLogin}>구글로그인</SocialLoginButton>
         </SocialButtonContainer>
       </LoginContainer>
       <LoginFooter>

@@ -16,13 +16,11 @@ const MenuContainer = styled.div`
 const NavIcon = styled.span`
   padding-bottom: 2rem;
   font-size: 1.2rem;
-  color: #ff7e67;
 `;
 
 const NavLink = styled(Link)`
   text-decoration: none;
   font-size: 1.2rem;
-  color: #ff7e67;
 `;
 
 export default function Menu() {

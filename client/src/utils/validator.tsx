@@ -1,6 +1,6 @@
-// 아이디: 영어 또는 숫자만 가능
+// 아이디: 최소 4자 이상 15자 이하 & 영어 또는 숫자만 가능
 export function validId(str: string) {
-  return /^[A-Za-z][A-Za-z0-9]{4,15}$/.test(str);
+  return str.length >= 4 && str.length <= 15 && /^[A-Za-z][A-Za-z0-9]*$/.test(str);
 }
 
 // 비밀번호: 최소 8자 이상 15자이면서, 알파벳과 숫자 및 특수문자(@$!%*#?&) 는 하나 이상 포함

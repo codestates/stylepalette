@@ -37,47 +37,37 @@ const MyPageFooter = styled.div`
 
 const UserInfoContainer = styled.div`
   display: flex;
-  padding: 15px;
-  margin: 0 15px 20px 15px;
-  width: 100%;
-  max-width: 1200px;
-  min-width: 768px;
-  box-shadow: 0px 0px 5px 3px rgba(0, 0, 0, 0.8);
-  border: 2px groove black;
-  border-width: 0 0 2px 0;
-  border-radius: 5px;
   align-items: center;
-
-  @media (max-width: 768px) {
-    padding: 0px;
-    margin: 2px;
-    width: 98%;
-    justify-content: center;
+  border-bottom: 2px solid #efefef;
+  padding: 0px;
+  margin: 2px;
+  width: 98%;
+  min-width: 98%;
+  justify-content: flex-start;
+  padding: 1rem 0 1rem 1rem;
+  @media (min-width: 768px) {
+    padding: 15px;
+    width: 100%;
+    max-width: 1200px;
+    min-width: 768px;
   }
 `;
 
 const UserPhotoWrapper = styled.div`
-  /* width: 355px;
-  height: 355px; */
-  padding: 10px 20px 10px 45px;
-
-  @media (max-width: 768px) {
-    padding: 25px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 200px;
-    width: 200px;
+  padding: 5px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  @media (min-width: 768px) {
+    padding: 10px 20px 10px 45px;
   }
 `;
 
 const UserInfoWrapper = styled.div`
+  height: auto;
   display: flex;
   flex-direction: column;
   align-items: center;
-  @media (max-width: 768px) {
-    height: auto;
-  }
 `;
 
 const UserPostOuterWrapper = styled.div`
@@ -86,8 +76,6 @@ const UserPostOuterWrapper = styled.div`
   width: 100%;
   max-width: 1200px;
   min-width: 768px;
-  box-shadow: 0 1px 5px 3px black;
-  border-radius: 5px;
   @media (max-width: 768px) {
     min-width: auto;
   }
@@ -111,7 +99,7 @@ const NavIcon = styled.button`
 `;
 
 const PostPhoto = styled.img`
-  border: 2px solid #777777;
+  border: 2px solid #efefef;
   border-radius: 5px;
   width: 100%;
   height: auto;
@@ -125,37 +113,35 @@ const PostPhoto = styled.img`
 `;
 
 const UserPhoto = styled.img`
-  width: 150px;
-  height: 150px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  border: 2px solid black;
+  border: 2px solid #efefef;
 
-  @media (max-width: 768px) {
+  @media (min-width: 768px) {
     width: 150px;
     height: 150px;
   }
 `;
 
-const UserInfoContent = styled.span`
-  padding: 10px;
-  font-size: 34px;
+const UserInfoContent = styled.div`
+  font-size: 25px;
+  display: inline-block;
+  padding: 10px 0;
+  word-wrap: break-word;
 
-  @media (max-width: 768px) {
-    font-size: 25px;
-    display: inline-block;
-    padding: 10px 0;
-    max-width: 120px;
-    word-wrap: break-word;
+  @media (min-width: 768px) {
+    padding: 10px;
+    font-size: 34px;
   }
 `;
 
 const UserEditButton = styled(PrimaryButton)`
-  width: 175px;
-  height: 60px;
-
-  @media (max-width: 768px) {
-    width: 85px;
-    height: 45px;
+  width: 85px;
+  height: 45px;
+  @media (min-width: 768px) {
+    width: 175px;
+    height: 60px;
   }
 `;
 
