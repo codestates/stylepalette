@@ -29,7 +29,7 @@ const Color = [
 
 const GalleryPageWrapper = styled.div`
   width: 100vw;
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   background-color: white;
   flex-direction: column;
@@ -41,6 +41,7 @@ const GalleryPageWrapper = styled.div`
 
 const GalleryWrapper = styled.div`
   padding: 15px;
+
   @media (max-width: 768px) {
     padding: 2px;
   }
