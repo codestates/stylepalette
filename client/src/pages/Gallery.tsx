@@ -151,7 +151,7 @@ const PostPhoto = styled.img`
   border: 2px solid #777777;
   border-radius: 5px;
   width: 100%;
-  height: auto;
+  height: 362px;
   object-fit: cover;
 
   &:hover {
