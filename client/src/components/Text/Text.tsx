@@ -4,7 +4,7 @@ interface TextProps {
   size?: string; // small, medium, large
   color?: string; // any CSS color
 }
-const StyledText = styled.div<TextProps>`
+const StyledText = styled.p<TextProps>`
   font-size: 17px; // Default font size is medium
   ${(props) => {
     if (props.size === 'small') {

@@ -12,7 +12,7 @@ const HeaderWrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   background-color: #fafafa;
-  width: 100%;
+  width: 100vw;
   height: 5rem;
   position: fixed;
   top: 0;
@@ -23,9 +23,12 @@ const HeaderWrapper = styled.div`
 const LogoWrapper = styled.span`
   display: flex;
   flex-direction: row;
-  width: 250px;
   height: 3.9rem;
   padding: 0 0 0 30px;
+  align-items: center;
+  @media (max-width: 768px) {
+    padding: 0 0 0 15px;
+  }
 `;
 
 const NavWrapper = styled.div`
@@ -41,9 +44,8 @@ const LinkedLoGo = styled(Link)`
   text-decoration: none;
   color: #ff7e67;
   font-size: 2.2rem;
-  width: 400px;
   text-align: center;
-
+  font-family: 'Sacramento', cursive;
   &:hover {
     opacity: 70%;
   }
@@ -51,7 +53,7 @@ const LinkedLoGo = styled(Link)`
 
 const Linked = styled(Link)`
   text-decoration: none;
-  color: #ff7e67;
+  color: #09214c;
   font-size: 1.2rem;
 
   &:hover {
@@ -60,8 +62,8 @@ const Linked = styled(Link)`
 `;
 
 const NavMobile = styled.span`
-  margin-right: 2rem;
-  
+  margin-right: 15px;
+
   @media (min-width: 769px) {
     display: none;
   }
@@ -69,14 +71,14 @@ const NavMobile = styled.span`
 
 const MenuIcon = styled(MenuOutline)`
   width: 30px;
-  color: #ff7e67;
-  @media (min-width: 768px) {
+  color: #09214c;
+  @media (min-width: 769px) {
     display: none;
   }
 `;
 
 const NavIcon = styled.span`
-  color: #ff7e67;
+  color: #09214c;
   cursor: pointer;
   margin-right: 2.5rem;
   font-size: 1.2rem;

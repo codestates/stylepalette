@@ -13,6 +13,8 @@ const PasswordCheckWrapper = styled.div`
   background-color: white;
   display: flex;
   flex-direction: column;
+  border-radius: 10px;
+  border: solid 1px #dbdbdb;
 
   @media (max-width: 768px) {
     width: 320px;
@@ -32,9 +34,6 @@ const InputOuterWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
-  padding: 15px;
-  margin: 15px;
 `;
 
 const Label = styled.label`
@@ -98,15 +97,15 @@ export default function PasswordChange() {
         </InputWrapper>
         {passwordMessage.length > 0 && (
           <MessageWrapper>
-            <Text size="small">{passwordMessage}</Text>
+            <Text size="small" color="red">
+              {passwordMessage}
+            </Text>
           </MessageWrapper>
         )}
       </InputOuterWrapper>
 
       <SubmitButtonWrapper>
-        <Button primary onClick={requestPasswordCheck}>
-          확인
-        </Button>
+        <Button onClick={requestPasswordCheck}>확인</Button>
       </SubmitButtonWrapper>
     </PasswordCheckWrapper>
   );

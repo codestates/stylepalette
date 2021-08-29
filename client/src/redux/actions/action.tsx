@@ -213,7 +213,6 @@ export const logIn = (data: LoginProps) => {
         },
       )
       .then((response) => {
-        console.log('LOGIN RESPONSE in SUCCESS: ', response.data.payload);
         localStorage.setItem('token', response.data.payload.accessToken);
         localStorage.setItem('user', JSON.stringify(response.data.payload.user));
         dispatch(
@@ -225,7 +224,6 @@ export const logIn = (data: LoginProps) => {
         dispatch(handleModal({ isOpen: false }));
       })
       .catch((error) => {
-        console.log('LOGIN RESPONSE in FAILURE: ', error.response.data.message);
         let errorMsg;
         if (error.response) {
           errorMsg = error.response.data.message;
@@ -362,7 +360,6 @@ export const signup = (data: SignUpProps) => {
         }
       })
       .catch((response) => {
-        console.log('SIGNUP RESPONSE in FAILURE: ', response);
         const message = '이미 존재하는 아이디입니다.';
         if (response.status === 400) {
           dispatch(signupFailure(message));
@@ -464,11 +461,6 @@ export const passwordCheck = (data: PasswordCheckProps) => {
         dispatch(passwordCheckSuccess(message));
       })
       .catch((error) => {
-        // console.log('CHECKUSER RESPONSE in FAILURE: ');
-        // let errorMsg;
-        // if (error.response) {
-        //   errorMsg = error.response.data.message;
-        // }
         const wrongPasswordMsg = '비밀번호가 일치하지 않습니다.';
         if (error.response.status === 400) {
           dispatch(passwordCheckFailure(wrongPasswordMsg));

@@ -12,6 +12,7 @@ import Text from '../components/Text/Text';
 const SignUpWrapper = styled.div`
   width: 400px;
   background-color: white;
+  border-radius: 10px;
   border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
@@ -25,15 +26,22 @@ const SignUpContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  border: 1px solid black;
   padding: 15px;
   margin: 15px;
 `;
 
-const SignUpHeader = styled.div`
+const SignUpHeader = styled.h1`
   display: flex;
   justify-content: center;
-  padding: 1em;
+  padding-top: 2em;
+  color: #ff7e67;
+  font-family: 'Sacramento', cursive;
+`;
+
+const SignUpSubHeader = styled.h2`
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
 `;
 
 const InputWrapper = styled.div`
@@ -51,9 +59,8 @@ const SignUpInput = styled.input`
   width: 266px;
   height: 36px;
   border-style: solid;
-  border-radius: 3px;
   border-width: 1px;
-  border-color: #dbdbdb;
+  border-color: #09214c;
   padding: 10px;
   margin: 3px;
   background-color: #fafafa;
@@ -67,6 +74,8 @@ const SignUpInput = styled.input`
 
 const MessageWrapper = styled.div`
   color: red;
+  word-wrap: auto;
+  width: 266px;
 `;
 
 const ButtonContainer = styled.div`
@@ -137,6 +146,8 @@ function SignUp() {
     setUsername(e.currentTarget.value);
     if (validId(e.currentTarget.value) || e.currentTarget.value === '') {
       setUsernameMsg('');
+    } else if (e.currentTarget.value.length < 4 || e.currentTarget.value.length > 15) {
+      setUsernameMsg('길이가 4자 이상 15이하여야 합니다.');
     } else {
       setUsernameMsg('알파벳 혹은 숫자만 가능합니다.');
     }
@@ -180,7 +191,8 @@ function SignUp() {
 
   return (
     <SignUpWrapper>
-      <SignUpHeader>회원 가입</SignUpHeader>
+      <SignUpHeader>StylePalette</SignUpHeader>
+      <SignUpSubHeader>회원가입</SignUpSubHeader>
       <SignUpContainer>
         <InputWrapper>
           <SignUpInput
@@ -193,7 +205,9 @@ function SignUp() {
           />
         </InputWrapper>
         <MessageWrapper>
-          <Text size="small">{realnameMsg}</Text>
+          <Text size="small" color="red">
+            {realnameMsg}
+          </Text>
         </MessageWrapper>
         <InputWrapper>
           <SignUpInput
@@ -206,20 +220,24 @@ function SignUp() {
           />
         </InputWrapper>
         <MessageWrapper>
-          <Text size="small">{emailMsg}</Text>
+          <Text size="small" color="red">
+            {emailMsg}
+          </Text>
         </MessageWrapper>
         <InputWrapper>
           <SignUpInput
             type="text"
-            name="아이디"
-            placeholder="아이디"
+            name="유저네임"
+            placeholder="유저네임"
             autoComplete="off"
             value={username}
             onChange={handleChangeUsername}
           />
         </InputWrapper>
         <MessageWrapper>
-          <Text size="small">{usernameMsg}</Text>
+          <Text size="small" color="red">
+            {usernameMsg}
+          </Text>
         </MessageWrapper>
         <InputWrapper>
           <SignUpInput
@@ -232,7 +250,9 @@ function SignUp() {
           />
         </InputWrapper>
         <MessageWrapper>
-          <Text size="small">{passwordStrengthMsg}</Text>
+          <Text size="small" color="red">
+            {passwordStrengthMsg}
+          </Text>
         </MessageWrapper>
         <InputWrapper>
           <SignUpInput
@@ -245,7 +265,9 @@ function SignUp() {
           />
         </InputWrapper>
         <MessageWrapper>
-          <Text size="small">{passwordMsg}</Text>
+          <Text size="small" color="red">
+            {passwordMsg}
+          </Text>
         </MessageWrapper>
         <ButtonContainer>
           {disabled ? (

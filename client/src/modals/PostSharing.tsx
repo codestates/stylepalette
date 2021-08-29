@@ -13,6 +13,7 @@ import { getUserInfo, getAllPosts, handleModal } from '../redux/actions/action';
 const PostWrapper = styled.div`
   width: 400px;
   background-color: white;
+  border-radius: 10px;
   border: solid 1px #dbdbdb;
   display: flex;
   flex-direction: column;
@@ -34,7 +35,7 @@ const PostContainer = styled.div`
 const PostHeader = styled.div`
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 15px;
 `;
 
 const InputWrapper = styled.div`
@@ -50,6 +51,7 @@ const PostFooter = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 15px;
 `;
 
 const PostInput = styled.input`
@@ -153,7 +155,7 @@ function PostSharing() {
 
   return (
     <PostWrapper>
-      <PostHeader>게시물 공유</PostHeader>
+      {/* <PostHeader>게시물 작성</PostHeader> */}
       <PostContainer>
         <InputWrapper>
           <PostInput

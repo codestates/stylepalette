@@ -2,7 +2,13 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Button from '../components/Button/Button';
-import { handleModal } from '../redux/actions/action';
+import {
+  handleModal,
+  loginFailure,
+  signupSuccess,
+  signupFailure,
+  passwordCheckFailure,
+} from '../redux/actions/action';
 import Login from './Login';
 import SignUp from './SignUp';
 import { getModalType, getModalData } from '../redux/selectors';
@@ -21,17 +27,15 @@ const ModalContainer = styled.div`
   justify-content: center;
   align-items: center;
   position: fixed;
-  z-index: 10;
+  z-index: 15;
   left: 0;
   top: 0;
   background: rgba(250, 250, 250, 0.95);
 `;
 
-//placeholder to stop event propagation
-//https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation
 const ModalContent = styled.div`
-  border-radius: 10px;
-  border: solid 1px #dbdbdb;
+  /* border-radius: 10px;
+  border: solid 1px #dbdbdb; */
 `;
 
 export default function Modal() {
@@ -41,6 +45,10 @@ export default function Modal() {
 
   const handleModalClose = () => {
     dispatch(handleModal({ isOpen: false }));
+    dispatch(signupSuccess(''));
+    dispatch(signupFailure(''));
+    dispatch(loginFailure(''));
+    dispatch(passwordCheckFailure(''));
   };
 
   const renderModalContentComponent = () => {
@@ -74,3 +82,6 @@ export default function Modal() {
     </ModalContainer>
   );
 }
+
+//placeholder to stop event propagation
+//https://developer.mozilla.org/en-US/docs/Web/API/Event/stopPropagation

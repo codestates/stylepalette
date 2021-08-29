@@ -123,13 +123,13 @@ const PalletteContainer = styled.div`
     display: inline;
     position: absolute;
     left: 84%;
-    top: 8%;
+    top: 80px;
     text-align: center;
     max-width: 270px;
     max-height: 280px;
     margin: 15px;
     border-radius: 45px;
-    border: 2px solid rgba(0, 0, 0);
+    border: 2px solid #efefef;
     background-color: white;
   }
 `;
@@ -142,7 +142,7 @@ const MobilePaletteContainer = styled.div`
 `;
 const Pallette = styled.button<colorProps>`
   display: inline-block;
-  border: 1px solid #ececec;
+  border: 1px solid #efefef;
   width: 30px;
   height: 30px;
   margin: 5px 10px;
@@ -167,7 +167,7 @@ const Pallette = styled.button<colorProps>`
     width: 60px;
     height: 60px;
     margin: 15px 10px;
-    border: 2px solid rgba(0, 0, 0);
+    border: 2px solid #efefefef;
   }
 `;
 
@@ -181,17 +181,18 @@ const SkinSelectWrapper = styled.div`
   height: 50px;
 
   @media (min-width: 769px) {
-    left: 7%;
-    top: 16%;
-    border: 2px solid rgba(0, 0, 0);
+    left: 125px;
+    top: 143px;
+    border: 2px solid #efefef;
     border-radius: 15px;
     width: 275px;
     height: 100px;
+    z-index: 10;
   }
 `;
 
 const SkinSelectButton = styled.button<colorProps>`
-  border: 2px solid rgba(0, 0, 0);
+  border: 2px solid #efefefef;
   border-radius: 50%;
   width: 60px;
   height: 60px;
@@ -203,7 +204,7 @@ const SkinSelectButton = styled.button<colorProps>`
     width: 30px;
     height: 30px;
     margin: 5px 10px;
-    border: solid 1px #ececec;
+    border: solid 1px #efefef;
   }
   &:hover {
     animation: hoverColor 0.1s forwards linear alternate;
@@ -223,8 +224,8 @@ const SkinSelectButton = styled.button<colorProps>`
 const SelectContainer = styled.div`
   display: inline-block;
   position: absolute;
-  left: 1%;
-  top: 7%;
+  left: 20px;
+  top: 65px;
   text-align: left;
   max-width: 600px;
   margin: 15px 0;
@@ -241,7 +242,7 @@ const SelectorList = styled.button`
   cursor: pointer;
   border: 2px solid rgba(0, 0, 0);
   border-radius: 15px;
-  background-color: black;
+  background-color: #09214c;
   color: white;
   margin: 8px;
   margin-left: 0px;
@@ -339,8 +340,8 @@ const SubSelectContainer = styled.div`
   height: 50px;
 
   @media (min-width: 769px) {
-    left: 1%;
-    top: 16%;
+    left: 20px;
+    top: 143px;
     text-align: center;
     width: 100px;
     height: 100px;
@@ -354,7 +355,7 @@ const SubSelectButton = styled.button`
   font-style: bold;
   background-color: white;
   cursor: pointer;
-  border: 2px solid black;
+  border: 2px solid #09214c;
   border-radius: 15px;
   &:hover {
     background-color: #eaeaea;
@@ -389,7 +390,7 @@ const NextButton = styled.button`
   border: none;
   border-radius: 50%;
   text-align: center;
-  background-color: black;
+  background-color: #efefef;
   cursor: pointer;
   margin: 10px;
 
@@ -414,7 +415,7 @@ const ResetButton = styled.button`
   border: none;
   border-radius: 50%;
   text-align: center;
-  background-color: black;
+  background-color: #efefef;
   cursor: pointer;
   margin: 10px;
 
@@ -436,7 +437,7 @@ const RecommendSelectWrapper = styled.div`
   position: absolute;
   border-radius: 15px;
   left: 1%;
-  top: 90%;
+  bottom: 8px;
   width: 350px;
   @media (max-width: 768px) {
     display: none;
@@ -453,7 +454,7 @@ const RecommendSelectTab = styled.button`
   margin-left: 0;
   font-style: bold;
   color: white;
-  background-color: black;
+  background-color: #09214c;
   cursor: pointer;
 
   &:hover {
@@ -472,7 +473,7 @@ const RecommendColorWrapper = styled.div`
   bottom: 130px;
   width: 100%;
   height: 72px;
-  border: 2px solid #ececec;
+  border: 2px solid #efefefef;
   border-radius: 15px;
 
   @media (min-width: 481px) {
@@ -484,13 +485,14 @@ const RecommendColorWrapper = styled.div`
     height: 150px;
     text-align: center;
     left: 1%;
-    top: 74%;
+    bottom: 80px;
   }
 `;
 
 const RecommendTabWrapper = styled.div`
   width: 100%;
   display: flex;
+  align-items: center;
   justify-content: flex-end;
 
   @media (min-width: 769px) {
@@ -499,14 +501,17 @@ const RecommendTabWrapper = styled.div`
     padding: 5px;
     padding-left: 10px;
     text-align: left;
-    background-color: black;
+    background: #efefef;
+    justify-content: space-between;
   }
 `;
 
 const RecommendTabName = styled.span`
   font-size: 21px;
   font-style: bold;
-  color: white;
+  color: #09214c;
+  
+}
   @media (max-width: 768px) {
     display: none;
   }
@@ -523,17 +528,13 @@ const RecommendTabButton = styled.button`
   }
 
   @media (min-width: 769px) {
-    border: 1px solid rgba(0, 0, 0);
-    width: 90px;
+    width: 40px;
     height: 40px;
     padding: 5px;
-    text-align: center;
-    color: white;
-    background-color: black;
     font-size: 19px;
-    position: absolute;
     top: -1%;
     left: 86%;
+    z-index: 10;
   }
 `;
 
@@ -591,7 +592,7 @@ const RecommendContent = styled.button<recommandProps>`
   height: 30px;
   border: none;
   margin: 5px;
-  border: 1px solid #ececec;
+  border: 1px solid #efefef;
 
   &:hover {
     opacity: 50%;
@@ -611,7 +612,6 @@ const RecommendContent = styled.button<recommandProps>`
   @media (min-width: 769px) {
     width: 60px;
     height: 80px;
-    border: 1px solid rgba(0, 0, 0);
   }
 `;
 
@@ -649,14 +649,14 @@ const RouletteCenter = styled.div`
   left: 50%;
   width: 180px;
   height: 180px;
-  border: 2px solid rgba(0, 0, 0);
+  border: 2px solid #efefefef;
   border-radius: 50%;
   background-color: white;
-  z-index: 5;
+  z-index: 10;
   margin: -90px 0 0 -90px;
 
   @media (max-width: 768px) {
-    border: 1px solid #ececec;
+    border: 1px solid #efefef;
   }
 `;
 
@@ -668,7 +668,7 @@ const Roulette = styled.button<rouletteProps>`
   height: 300px;
   margin: -150px 0 0 -150px;
 
-  border: 2px solid rgba(0, 0, 0);
+  border: 2px solid #efefefef;
   border-radius: 50%;
   -webkit-clip-path: polygon(0% 0%, 50% 50%, 0% 50%, 0% 0%);
   clip-path: polygon(0% 0%, 50% 50%, 0% 31%, 0% 0%);
@@ -684,7 +684,7 @@ const Roulette = styled.button<rouletteProps>`
     `;
   }}
   @media (max-width: 768px) {
-    border: 1px solid #ececec;
+    border: 1px solid #efefef;
   }
 `;
 
@@ -706,8 +706,6 @@ const MobileMenu = styled.div`
   display: flex;
   flex-grow: 1;
   height: 72px;
-  /* border-top: 1px solid black;
-  border-bottom: 1px solid black; */
   overflow: hidden;
 `;
 
@@ -718,25 +716,28 @@ const MobileMenuItem = styled.button`
   align-items: center;
   flex-grow: 1;
   text-decoration: none;
+  background: #fafafa;
+  outline: none;
+  border: none;
+  padding: 0;
   &:focus,
   &:hover {
     outline: none;
-    color: #dbdbdb;
+    color: white;
+    background: #07689f;
   }
 `;
 const MobileMenuIcon = styled.span`
   display: block;
   margin-bottom: 4px;
   font-size: 26px;
-  color: black;
-  transition: 0.25s ease;
+  color: #09214c;
 `;
 
 const MobileMenuItemLabel = styled.span`
   display: block;
   font-size: 13px;
-  color: black;
-  transition: 0.25s ease;
+  color: #09214c;
 `;
 
 function MainPage() {
@@ -845,6 +846,7 @@ function MainPage() {
   }
 
   function handleIsRecommendFalse(event: React.MouseEvent<HTMLButtonElement>) {
+    console.log('CLILCKED');
     setIsRecommend(false);
   }
 

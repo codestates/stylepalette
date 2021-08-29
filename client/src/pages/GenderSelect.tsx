@@ -128,7 +128,7 @@ const NextButton = styled.button`
   border-radius: 50%;
   text-align: center;
   margin: 10px;
-  background-color: black;
+  background-color: #efefef;
   animation: moveArrow 0.5s infinite linear alternate;
 
   &:disabled {
@@ -137,7 +137,7 @@ const NextButton = styled.button`
   }
 
   &:hover {
-    opacity: 50%;
+    opacity: 50%;s
     animation-play-state: paused;
   }
 
