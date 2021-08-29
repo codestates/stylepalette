@@ -5,9 +5,7 @@ import $ from 'jquery';
 
 import { PrimaryButton } from '../components/Button/Button.styled';
 
-import TestGif_01 from '../images/TestGif/Test_01.gif';
-import TestGif_02 from '../images/TestGif/Test_02.gif';
-import TestGif_03 from '../images/TestGif/Test_03.gif';
+import MainGif from '../images/Gif/Main_Gif.gif';
 import BackGround from '../images/BackGround/Test_Section_BackGround.png';
 
 import Slide_01 from '../images/Slide/Slide_01.png';
@@ -15,6 +13,7 @@ import Slide_02 from '../images/Slide/Slide_02.png';
 import Slide_03 from '../images/Slide/Slide_03.png';
 import Slide_04 from '../images/Slide/Slide_04.png';
 import Slide_05 from '../images/Slide/Slide_05.png';
+import MobileImg from '../images/Mobile.png';
 
 const bannerList = ['성별 선택', '메인 페이지', '결과 페이지', '마이 페이지', '갤러리'];
 const imageList = [Slide_01, Slide_02, Slide_03, Slide_04, Slide_05];
@@ -44,23 +43,39 @@ const TutorialSpan = styled.span`
   }
 `;
 
-const NextLink = styled(Link)`
-  text-decoration: none;
-  position: absolute;
-  top: 68%;
-  left: 50%;
-  margin: 0 0 0 -162px;
-  width: 325px;
-  min-height: 60px;
-  text-align: center;
-  color: white;
+const Section1_NextButton_Container = styled.div`
+  width: 100%;
+  margin-top: 2rem;
 `;
 
-const NextButton = styled(PrimaryButton)`
-  width: 325px;
-  height: 60px;
+const Section1_NextLink = styled(Link)`
+  text-decoration: none;
+  width: 300px;
+  min-height: 70px;
+  color: white;
+
+  @media (max-width: 768px) {
+    width: 200px;
+  }
+
+  @media (max-width: 540px) {
+    width: 150px;
+  }
+`;
+
+const Section1_NextButton = styled(PrimaryButton)`
+  width: 300px;
+  height: 70px;
   margin: 0.5em 1em 0.5em 0;
   font-size: 1.2rem;
+
+  @media (max-width: 768px) {
+    width: 200px;
+  }
+
+  @media (max-width: 540px) {
+    width: 150px;
+  }
 `;
 
 const LandingPage_Section1 = styled.div`
@@ -68,35 +83,53 @@ const LandingPage_Section1 = styled.div`
   height: 100vh;
   display: flex;
   border-bottom: 1px solid #a2d5f2;
+
+  @media (max-width: 768px) {
+    width: 100vw;
+    height: 100vh;
+  }
+
+  @media (max-width: 540px) {
+    width: 100vw;
+    height: 80vh;
+  }
 `;
 
 const LandingPage_Section1_Container = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: center;
-  padding: 17rem 10rem 0 10rem;
+  padding: 0 10em 0 20em;
 
   @media (max-width: 768px) {
-    width: 100vw;
-    height: 100vh;
+    padding-left: 5rem;
+  }
+
+  @media (max-width: 540px) {
+    padding: 0;
+    padding-left: 2rem;
   }
 `;
 
 const LandingPage_Section1_Content_Container = styled.div`
-  width: 640px;
+  width: 45em;
   flex-direction: column;
   align-items: center;
   text-align: left;
+
+  @media (max-width: 540px) {
+    padding-top: 8rem;
+  }
 `;
 
 const LandingPage_Section1_Image = styled.img`
   display: inline;
   position: absolute;
   z-index: -1;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   opacity: 90%;
 `;
 
@@ -111,6 +144,10 @@ const LandingPage_Section1_Content_Title = styled.div`
     font-size: 3rem;
     margin-bottom: 1rem;
   }
+
+  @media (max-width: 540px) {
+    font-size: 2.4rem;
+  }
 `;
 
 const LandingPage_Section1_Content_SubTitle = styled.div`
@@ -120,6 +157,10 @@ const LandingPage_Section1_Content_SubTitle = styled.div`
   margin-bottom: 0.4rem;
   color: #fafafa;
   text-shadow: 2px 2px 5px #333333;
+
+  @media (max-width: 540px) {
+    font-size: 16px;
+  }
 `;
 
 const LandingPage_Section2 = styled.div`
@@ -129,6 +170,10 @@ const LandingPage_Section2 = styled.div`
   background-color: #fafafa;
   padding: 10rem 0;
   border-bottom: 1px solid #a2d5f2;
+
+  @media (max-width: 540px) {
+    padding: 5rem 0;
+  }
 `;
 
 const LandingPage_Section2_Container = styled.div`
@@ -144,6 +189,10 @@ const LandingPage_Section2_Container = styled.div`
     padding: 0 10rem;
     flex-direction: column;
   }
+
+  @media (max-width: 540px) {
+    padding: 0 1rem;
+  }
 `;
 
 const LandingPage_Section2_Content_Container = styled.div`
@@ -155,6 +204,11 @@ const LandingPage_Section2_Content_Container = styled.div`
   @media (max-width: 768px) {
     padding-right: 0;
     flex-direction: row;
+  }
+
+  @media (max-width: 540px) {
+    padding-right: 0;
+    flex-direction: column;
   }
 `;
 
@@ -169,16 +223,25 @@ const LandingPage_Section2_Image_Container = styled.div`
     margin-top: 20px;
     margin-right: 0;
   }
+
+  @media (max-width: 540px) {
+    width: 352px;
+    height: 212px;
+  }
 `;
 
 const LandingPage_Section2_Image = styled.img`
   width: 100%;
-  height: 500px;
+  height: 100%;
   border: 2px solid #a2d5f2;
   border-radius: 5px;
 
   @media (max-width: 768px) {
     height: 360px;
+  }
+
+  @media (max-width: 540px) {
+    height: 207px;
   }
 `;
 
@@ -200,6 +263,10 @@ const LandingPage_Section2_Content_Normal_Title = styled.div`
   @media (max-width: 768px) {
     font-size: 2rem;
   }
+
+  @media (max-width: 540px) {
+    margin-bottom: 0;
+  }
 `;
 
 const LandingPage_Section2_Content_SubTitle_Container = styled.div`
@@ -209,6 +276,10 @@ const LandingPage_Section2_Content_SubTitle_Container = styled.div`
   @media (max-width: 768px) {
     width: 300px;
     padding: 50px 0 0 0;
+  }
+
+  @media (max-width: 540px) {
+    padding-top: 10px;
   }
 `;
 
@@ -249,6 +320,10 @@ const LandingPage_Section3_Container = styled.div`
   @media (max-width: 768px) {
     flex-direction: column;
   }
+
+  @media (max-width: 540px) {
+    padding: 0 2rem;
+  }
 `;
 
 const LandingPage_Section3_Image_Wrapper = styled.div`
@@ -258,6 +333,10 @@ const LandingPage_Section3_Image_Wrapper = styled.div`
 
   @media (max-width: 768px) {
     width: 640px;
+  }
+
+  @media (max-width: 540px) {
+    width: 352px;
   }
 `;
 
@@ -270,6 +349,11 @@ const LandingPage_Section3_Image_Container = styled.div`
     width: 640px;
     height: 360px;
   }
+
+  @media (max-width: 540px) {
+    width: 352px;
+    height: 207px;
+  }
 `;
 
 const LandingPage_Section3_Image_Slide_Container = styled.div`
@@ -278,6 +362,11 @@ const LandingPage_Section3_Image_Slide_Container = styled.div`
   @media (max-width: 768px) {
     width: 640px;
     height: 370px;
+  }
+
+  @media (max-width: 540px) {
+    width: 352px;
+    height: 212px;
   }
 `;
 
@@ -301,6 +390,12 @@ const LandingPage_Section3_Image_Banner = styled.button`
   background-color: transparent !important;
   font-weight: 500;
   font-size: 1.1rem;
+
+  @media (max-width: 540px) {
+    font-size: 0.5rem;
+    width: 70px;
+    height: 40px;
+  }
 `;
 
 const LandingPage_Section3_Other_Image_Banner = styled.button`
@@ -313,6 +408,12 @@ const LandingPage_Section3_Other_Image_Banner = styled.button`
   background-color: transparent !important;
   font-weight: 500;
   font-size: 1.1rem;
+
+  @media (max-width: 540px) {
+    font-size: 0.5rem;
+    width: 70px;
+    height: 40px;
+  }
 `;
 
 const LandingPage_Section3_Image = styled.img`
@@ -325,6 +426,11 @@ const LandingPage_Section3_Image = styled.img`
   @media (max-width: 768px) {
     width: 640px;
     height: 360px;
+  }
+
+  @media (max-width: 540px) {
+    width: 352px;
+    height: 207px;
   }
 `;
 
@@ -339,6 +445,10 @@ const LandingPage_Section3_Content_Container = styled.div`
     margin-bottom: 2rem;
     flex-direction: row;
   }
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+  }
 `;
 
 const LandingPage_Section3_Content_Normal_Title_Container = styled.div`
@@ -349,6 +459,11 @@ const LandingPage_Section3_Content_Normal_Title_Container = styled.div`
     padding-left: 5rem;
     width: 350px;
     margin-right: 1rem;
+  }
+
+  @media (max-width: 540px) {
+    padding-left: 1rem;
+    margin-right: 0;
   }
 `;
 
@@ -373,6 +488,10 @@ const LandingPage_Section3_Content_Normal_Title_Mobile = styled.div`
   @media (max-width: 768px) {
     display: block;
   }
+
+  @media (max-width: 540px) {
+    margin-bottom: 0.5rem;
+  }
 `;
 
 const LandingPage_Section3_Content_Normal_SubTitle_Container = styled.div`
@@ -382,6 +501,11 @@ const LandingPage_Section3_Content_Normal_SubTitle_Container = styled.div`
   @media (max-width: 768px) {
     width: 360px;
     padding-top: 3.5rem;
+  }
+
+  @media (max-width: 540px) {
+    padding-left: 1rem;
+    padding-top: 1.5rem;
   }
 `;
 
@@ -420,6 +544,10 @@ const LandingPage_Section4 = styled.div`
   @media (max-width: 768px) {
     height: 115vh;
   }
+
+  @media (max-width: 540px) {
+    height: 100vh;
+  }
 `;
 
 const LandingPage_Section4_Container = styled.div`
@@ -429,10 +557,11 @@ const LandingPage_Section4_Container = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0 10rem 0 10rem;
+  padding: 0 1rem 0 10rem;
 
   @media (max-width: 768px) {
     flex-direction: column;
+    padding: 0 10rem 0 10rem;
   }
 `;
 
@@ -446,27 +575,38 @@ const LandingPage_Section4_Content_Container = styled.div`
     flex-direction: row;
     margin-bottom: 3rem;
   }
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+  }
 `;
 
 const LandingPage_Section4_Image_Container = styled.div`
-  width: 800px;
+  width: 1024px;
   text-align: center;
-  margin-left: 7rem;
+  margin-left: 3rem;
 
   @media (max-width: 768px) {
     width: 650px;
     margin-left: 0;
   }
+
+  @media (max-width: 540px) {
+    width: 352px;
+  }
 `;
 
 const LandingPage_Section4_Image = styled.img`
   width: 100%;
-  height: 450px;
-  border: 2px solid #a2d5f2;
+  height: 700px;
   border-radius: 5px;
 
   @media (max-width: 768px) {
     height: 360px;
+  }
+
+  @media (max-width: 540px) {
+    height: 207px;
   }
 `;
 
@@ -484,6 +624,10 @@ const LandingPage_Section4_Content_Normal_Title = styled.div`
 
   @media (max-width: 768px) {
     font-size: 2rem;
+  }
+
+  @media (max-width: 540px) {
+    margin-bottom: 0;
   }
 `;
 
@@ -505,6 +649,11 @@ const LandingPage_Section4_Content_Normal_SubTitle = styled.div`
     padding-top: 3.6rem;
     font-size: 1.1rem;
   }
+
+  @media (max-width: 540px) {
+    padding-left: 0;
+    padding-top: 1.5rem;
+  }
 `;
 
 const LandingPage_Section5 = styled.div`
@@ -522,6 +671,10 @@ const LandingPage_Section5 = styled.div`
     height: 80vh;
     padding: 0;
   }
+
+  @media (max-width: 540px) {
+    height: 60vh;
+  }
 `;
 
 const Section5_Content = styled.div`
@@ -532,6 +685,22 @@ const Section5_Content = styled.div`
 
   @media (max-width: 768px) {
     font-size: 2.2rem;
+  }
+
+  @media (max-width: 540px) {
+    display: none;
+  }
+`;
+
+const Section5_Content_Mobile = styled.div`
+  display: none;
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 5rem;
+  color: #fafafa;
+
+  @media (max-width: 540px) {
+    display: block;
   }
 `;
 
@@ -544,6 +713,10 @@ const Section5_NextLink = styled(Link)`
   @media (max-width: 768px) {
     width: 200px;
   }
+
+  @media (max-width: 540px) {
+    width: 150px;
+  }
 `;
 
 const Section5_NextButton = styled(PrimaryButton)`
@@ -555,6 +728,10 @@ const Section5_NextButton = styled(PrimaryButton)`
   @media (max-width: 768px) {
     width: 200px;
   }
+
+  @media (max-width: 540px) {
+    width: 150px;
+  }
 `;
 
 function LandingPage() {
@@ -562,7 +739,7 @@ function LandingPage() {
   const [isChanged, setIsChanged] = useState<boolean>(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }, []);
 
   useEffect(() => {
@@ -584,16 +761,13 @@ function LandingPage() {
   });
 
   function handleClickScrollTo() {
-    window.scrollTo(0, 0);
+    // window.scrollTo(0, 0);
   }
 
   return (
     <>
       <LandingPage_Section1>
         <LandingPage_Section1_Image src={BackGround} />
-        <NextLink to="/genderselect">
-          <NextButton onClick={handleClickScrollTo}>시작하기</NextButton>
-        </NextLink>
         <LandingPage_Section1_Container>
           <LandingPage_Section1_Content_Container>
             <LandingPage_Section1_Content_Title>
@@ -608,6 +782,11 @@ function LandingPage() {
               옷장에 있는 옷의 색상을 미리 매치시켜보세요!
             </LandingPage_Section1_Content_SubTitle>
           </LandingPage_Section1_Content_Container>
+          <Section1_NextButton_Container>
+            <Section1_NextLink to="/genderselect">
+              <Section1_NextButton onClick={handleClickScrollTo}>시작하기</Section1_NextButton>
+            </Section1_NextLink>
+          </Section1_NextButton_Container>
         </LandingPage_Section1_Container>
       </LandingPage_Section1>
       <LandingPage_Section2>
@@ -641,7 +820,7 @@ function LandingPage() {
             </LandingPage_Section2_Content_SubTitle_Container>
           </LandingPage_Section2_Content_Container>
           <LandingPage_Section2_Image_Container>
-            <LandingPage_Section2_Image src={TestGif_03}></LandingPage_Section2_Image>
+            <LandingPage_Section2_Image src={MainGif}></LandingPage_Section2_Image>
           </LandingPage_Section2_Image_Container>
         </LandingPage_Section2_Container>
       </LandingPage_Section2>
@@ -744,12 +923,17 @@ function LandingPage() {
             </LandingPage_Section4_Content_Normal_SubTitle_Container>
           </LandingPage_Section4_Content_Container>
           <LandingPage_Section4_Image_Container>
-            <LandingPage_Section4_Image src={TestGif_01} />
+            <LandingPage_Section4_Image src={MobileImg} />
           </LandingPage_Section4_Image_Container>
         </LandingPage_Section4_Container>
       </LandingPage_Section4>
       <LandingPage_Section5>
-        <Section5_Content>나만의 옷들로 지금 코디를 시작해보세요!</Section5_Content>
+        <Section5_Content>나만의 옷들로 코디를 시작해보세요!</Section5_Content>
+        <Section5_Content_Mobile>
+          나만의 옷들로
+          <br />
+          코디를 시작해보세요!
+        </Section5_Content_Mobile>
         <Section5_NextLink to="/genderselect">
           <Section5_NextButton onClick={handleClickScrollTo}>시작하기</Section5_NextButton>
         </Section5_NextLink>
