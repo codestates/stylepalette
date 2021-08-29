@@ -24,7 +24,7 @@ const LogoWrapper = styled.span`
 const LogoSpan = styled.span`
   color: white;
   font-size: 1.6rem;
-  font-family: 'Sacramento', cursive;
+  font-family: 'Lobster', cursive;
 `;
 
 const CopyRightWrapper = styled.div`

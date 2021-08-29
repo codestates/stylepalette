@@ -126,9 +126,7 @@ function PostSharing() {
         const data = res.data;
         return data;
       })
-      .catch((res) => {
-        console.log(res.data);
-      });
+      .catch((res) => {});
 
     let formData = new FormData();
     formData.append('result', mainResultBlob, `${postId.postid}.png`);
@@ -140,12 +138,8 @@ function PostSharing() {
         },
         withCredentials: true,
       })
-      .then((res) => {
-        console.log(res.data);
-      })
-      .catch((res) => {
-        console.log(res.data);
-      });
+      .then((res) => {})
+      .catch((res) => {});
 
     await dispatch(getAllPosts());
 

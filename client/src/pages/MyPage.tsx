@@ -8,6 +8,7 @@ import { getUser } from '../redux/selectors';
 
 const MyPageWrapper = styled.div`
   width: 100vw;
+  min-height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
@@ -152,8 +153,6 @@ function MyPage() {
   useEffect(() => {
     // get user info
     dispatch(getUserInfo({ userid: user.userid }));
-    window.scrollTo(0, 0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, user.userid]);
 
   const handleClickPostInfo = (postid: number | null) => {

@@ -35,7 +35,7 @@ const SignUpHeader = styled.h1`
   justify-content: center;
   padding-top: 2em;
   color: #ff7e67;
-  font-family: 'Sacramento', cursive;
+  font-family: 'Lobster', cursive;
 `;
 
 const SignUpSubHeader = styled.h2`

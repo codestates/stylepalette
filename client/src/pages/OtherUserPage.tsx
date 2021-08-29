@@ -8,6 +8,7 @@ import { getOtherUser, getPostState } from '../redux/selectors';
 
 const OtherUserPageWrapper = styled.div`
   width: 100vw;
+  min-height: 100vh;
   display: flex;
   background-color: white;
   flex-direction: column;
