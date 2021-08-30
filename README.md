@@ -24,7 +24,7 @@
 
 <details>
 <summary>김규현</summary>
-<div markdown="1">
+
 - Role : Team Leader   
 - Position : Back-end   
 - Stack : `TypeScript` `Node.js` `Sequelize` `Mysql`   
@@ -47,7 +47,7 @@
 <img src = "https://user-images.githubusercontent.com/79002628/127443140-7854dea3-a260-4e29-aa45-fdbb6053a015.png" width="25" height="25" >
 </a>
 
-</div>
+
 </details>
 
 <details>
