@@ -24,6 +24,9 @@
 
 <details>
 <summary>김규현</summary>
+<a href="https://github.com/ggh0223" >
+<img src = "https://user-images.githubusercontent.com/79002628/127443140-7854dea3-a260-4e29-aa45-fdbb6053a015.png" width="25" height="25" >
+</a>
 
 - Role : Team Leader   
 - Position : Back-end   
@@ -43,16 +46,14 @@
         - 소셜로그인 (kakao, google OAuth 2.0)   
         - awsSDK와 multer-S3를 통한 파일 업로드   
         - 그 외 서버측 모든 기능 구현   
-<a href="https://github.com/ggh0223" >
-<img src = "https://user-images.githubusercontent.com/79002628/127443140-7854dea3-a260-4e29-aa45-fdbb6053a015.png" width="25" height="25" >
-</a>
-
-
 </details>
 
 <details>
 <summary>서나연</summary>
-<div markdown="1">
+<a href="https://github.com/nayeonseo" >
+<img src = "https://user-images.githubusercontent.com/79002628/127443140-7854dea3-a260-4e29-aa45-fdbb6053a015.png" width="25" height="25" >
+</a>
+    
 - Role : Team Member   
 - Position : Front-end   
 - Stack :  `TypeScript` `React` `React-hooks` `React-router` `Redux` `Redux-thunk` `Styled-Components` `Axios`   
@@ -76,16 +77,14 @@
         - 갤러리   
     8. 게시물 좋아요와 삭제 기능   
     9. 회원 정보 수정 (이름, 이메일, 프로필 사진, 비밀 번호 변경)   
-<a href="https://github.com/nayeonseo" >
-<img src = "https://user-images.githubusercontent.com/79002628/127443140-7854dea3-a260-4e29-aa45-fdbb6053a015.png" width="25" height="25" >
-</a>
-
-</div>
 </details>
 
 <details>
 <summary>전지호</summary>
-<div markdown="1">
+<a href="https://github.com/wjswlgh96" >
+<img src = "https://user-images.githubusercontent.com/79002628/127443140-7854dea3-a260-4e29-aa45-fdbb6053a015.png" width="25" height="25" >
+</a>
+
 - Role : Team Member   
 - Position : Front-end   
 - Stack : `TypeScript` `React` `React-hooks` `React-router` `Redux` `Styled-Components` `Axios`   
@@ -113,11 +112,6 @@
             - 반응형, PC 버젼 CSS      
         3. 이외의 모든 페이지   
             - PC 버전 CSS   
-<a href="https://github.com/wjswlgh96" >
-<img src = "https://user-images.githubusercontent.com/79002628/127443140-7854dea3-a260-4e29-aa45-fdbb6053a015.png" width="25" height="25" >
-</a>
-
-</div>
 </details>
 
 # 더 알아보기
